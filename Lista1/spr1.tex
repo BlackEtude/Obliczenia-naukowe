@@ -5,7 +5,7 @@
 \coursesemester{V}
 \coursename{Obliczenia naukowe}
 \courseyear{2017/2018}
-\courseteacher{dr Filip Zagórski}
+\courseteacher{dr Marcin Zieliński}
 \coursegroup{czwartek TN, 11:15}
 
 \author{
@@ -18,7 +18,7 @@
 \maketitle
 
 \section{Zadanie 1}
-	\subsection{Macheps}
+	\subsection{Maches}
 		\subsubsection{Opis problemu}
 			Napisanie w języku \texttt{Julia} programu wyznaczającego w sposób iteracyjny epsilony 
 			maszynowe (czyli najmniejsze takie liczby $macheps > 0$, że $1.0 + macheps > 1.0$) 
@@ -30,17 +30,17 @@
 			\begin{enumerate}
 				\item Zdefiniowanie zmiennej $a = 1.0$ wybranego typu;
 				\item (W pętli) Dopóki $1.0 + a > 1.0$ przypisanie aktualnej wartości $a$ w pomocniczej 
-				zmiennej $b$ oraz wykonanie przesunięcia bitowego w prawo dla $a$.
+				zmiennej $b$ oraz wykonanie przesunięcia bitowego w prawo dla~$a$.
 			\end{enumerate}
 			Po zakończeniu wykonywania pętli w zmiennej $a$ pozostanie wartość na tyle
 			mała, że zostanie potraktowana jako zero maszynowe (czyli $1.0 + a = 1.0$). Zmienna
 			$b$ będzie przechowywała ostatnią przypisaną wartość większą niż $0.0$, czyli 
 			poszukiwany $macheps$.
 		\subsubsection{Wyniki}
-			Uzyskano następujące wyniki dla kolejnych typów zmiennopozycyjnych:
+			Uzyskano następujące wyniki dla kolejnych typów zmiennopozycyjnych (Tabela \ref{table:1})
 			\begin{table}[!h]
         		\centering
-        		\footnotesize
+        		%\footnotesize
 				\sisetup{
   					output-exponent-marker = \text{e},
   					table-format=+1.4e+2,
@@ -60,7 +60,7 @@
 		\subsubsection{Wnioski}
 			Uzyskano rozwiązania identyczne ze zwracanymi przez funkcje \texttt{eps}, co dowodzi 
 			prawidłowości przyjętego sposobu rozwiązania problemu.
-			\newline
+			
 			Precyzja arytmetyki($\epsilon$) ma wpływ na to, jak wiele cyfr znaczących liczby jest 
 			reprezentowanych dokładnie i zależy wyłącznie od liczby bitów przeznaczonych na reprezentację 
 			mantysy. W związku z tym istnieje jej bezpośredni związek z wartością epsilona maszynowego. 
@@ -85,6 +85,7 @@
 			\caption{}
 			\end{algorithm}
 			
+			%floatname{algorithm}{Algorytm}
 			Po zakończeniu wykonywania pętli w zmiennej $a$ pozostanie poszukiwana wartość $eta$.
 		\subsubsection{Wyniki}
 			Uzyskano następujące wyniki dla kolejnych typów zmiennopozycyjnych:			
@@ -124,7 +125,7 @@
 			krokami:
 			\begin{enumerate}
 				\item Zdefiniowanie zmiennej $a = 1.0$ wybranego typu;
-				\item (W pętli) Dopóki $a * \texttt{FloatX}(2.0) (gdzie X \in {16,32,64}$ jest skończone, wykonanie przesunięcia bitowego w prawo dla $a$	
+				\item (W pętli) Dopóki $a \cdot \texttt{FloatX}(2.0) (gdzie X \in {16,32,64}$ jest skończone, wykonanie przesunięcia bitowego w prawo dla $a$	
 			\end{enumerate}
 			Po zakończeniu wykonywania pętli w zmiennej $a$ pozostanie wartość równa nieskończoności. Funkcja 
 			\texttt{prevfloat($a$)} umożliwia odczytanie poprzedniej wartości zmiennopozycyjnej danego typu, 
@@ -164,8 +165,15 @@
 		arytmetyce zmiennopozycyjnej) dla wszystkich dostępnych typów zmiennopozycyjnych.
 	\subsection{Opis rozwiązania}
 		Obliczenie wartości wyrażenia z użyciem właściwego rzutowania typów zgodnie z poniższym wzorem:
-		\newline \newline \texttt{FloatX}(3) * ((\texttt{FloatX}(4) / \texttt{FloatX}(3)) - \texttt{FloatX}
-		(1)) - \texttt{FloatX}(1), dla $X\in \{16, 32, 64\}$.
+		$$ 
+		\mathtt{FloatX}(3) * ((\mathtt{FloatX}(4) / \mathtt{FloatX}(3)) - \mathtt{FloatX}
+		(1)) - \mathtt{FloatX}(1), \mbox{ dla } X\in \{16, 32, 64\}.
+		$$
+		
+%		\begin{equation}
+%		
+%\end{equation}				
+		
 	\subsection{Wyniki}
 		Uzyskano następujące wyniki dla kolejnych typów zmiennopozycyjnych:
 			\begin{table}[!h]
@@ -196,7 +204,7 @@
 		Napisanie w języku \texttt{Julia} programu, który eksperymentalnie sprawdzi, że w arytmetyce 
 		\texttt{Float64} liczby zmiennopozycyjne są równomiernie rozmieszczone w $[1,2]$ z krokiem $\delta = 
 		2^{-52}$. Równoznaczne jest to ze stwierdzeniem, iż każda liczby zmiennopozycyjna $x$ z zakresu 
-		$[1,2]$ może zostać przedstawiona jako $x = 1 + k * \delta$ w danej arytmetyce, dla 
+		$[1,2]$ może zostać przedstawiona jako $x = 1 + k \cdot \delta$ w danej arytmetyce, dla 
 		$k = 1,2,\dots,2^{52}-1$ i $\delta = 2^{-52}$.
 	\subsection{Opis rozwiązania}
 		Eksperymentalne sprawdzenie rozmieszczenia liczb zgodnie z poniższym schematem:
@@ -224,9 +232,10 @@
                 	$a$ & {zapis bitowy $a$} \\ \midrule
                 	$1.0$ & $001111111111000\dots0001$ \\ 
  					$1.0+\delta$ & $001111111111000\dots0010$ \\
- 					$1.0+2*\delta$ & $001111111111000\dots0011$ \\
+ 					$1.0+2\cdot\delta$ & $001111111111000\dots0011$ \\
  					\vdots & \vdots \\
- 					$2.0-3*\delta$ & $001111111111111\dots1101$ \\
+ 					$2.0-3
+ 				\cdot\delta$ & $001111111111111\dots1101$ \\
  					$2.0-2\delta$ & $001111111111111\dots1110$ \\
  					$2.0-\delta$ & $001111111111111\dots1111$ \\\bottomrule
             	\end{tabular}
@@ -252,10 +261,10 @@
                 	$a$ & {zapis bitowy $a$} \\ \midrule
                 	$0.5$ & $00111111111000\dots00010$ \\ 
  					$0.5+\delta$ & $00111111111000\dots00100$ \\
- 					$0.5+2*\delta$ & $00111111111000\dots00110$ \\
- 					$0.5+3*\delta$ & $00111111111000\dots01000$  \\
+ 					$0.5+2\cdot\delta$ & $00111111111000\dots00110$ \\
+ 					$0.5+3\cdot\delta$ & $00111111111000\dots01000$  \\
  					\vdots & \vdots \\
- 					$1.0-3*\delta$ & $00111111111111\dots11011$ \\
+ 					$1.0-3\cdot\delta$ & $00111111111111\dots11011$ \\
  					$1.0-2\delta$ & $00111111111111\dots11101$ \\
  					$1.0-\delta$ & $00111111111111\dots11111$ \\\bottomrule
             	\end{tabular}
@@ -265,7 +274,7 @@
 			
 			Analizę rozmieszczenia liczb rozpoczęto od zbadania zmian w zapisie bitowym dla $\delta = 2^{-52}$. Wyniki 
 			widoczne powyżej pokazują cykliczne zwiększanie się $a$ o 2 bity, czyli wartości rozłożone są z dwukrotnie 
-			większym krokiem. Zatem rozmieszczenie dla tego przedziału to $\delta = \frac{1}{2} * 2^{-52} = 2^{-53}$.
+			większym krokiem. Zatem rozmieszczenie dla tego przedziału to $\delta = \frac{1}{2} \cdot 2^{-52} = 2^{-53}$.
 			\newline
 				
 		\item Przedział $[2,4]$
@@ -283,10 +292,10 @@
                 	$a$ & {zapis bitowy $a$} \\ \midrule
                 	$2.0$ & $01000\dots0000$ \\ 
  					$2.0+\delta$ & $01000\dots0000$ \\
- 					$2.0+2*\delta$ & $01000\dots0001$ \\
- 					$2.0+3*\delta$ & $01000\dots0010$ \\
- 					$2.0+4*\delta$ & $01000\dots0010$ \\
- 					$2.0+5*\delta$ & $01000\dots0010$ \\\bottomrule
+ 					$2.0+2\cdot\delta$ & $01000\dots0001$ \\
+ 					$2.0+3\cdot\delta$ & $01000\dots0010$ \\
+ 					$2.0+4\cdot\delta$ & $01000\dots0010$ \\
+ 					$2.0+5\cdot\delta$ & $01000\dots0010$ \\\bottomrule
             	\end{tabular}
             	\caption{Rozmieszczenie liczb w zakresie $[2,4]$ dla $\delta = 2^{-52}$}
 				\label{table:7}
@@ -308,10 +317,10 @@
                 	$a$ & {zapis bitowy $a$} \\ \midrule
                 	$2.0$ & $00111111111000\dots00010$ \\ 
  					$2.0+\delta$ & $00111111111000\dots00100$ \\
- 					$2.0+2*\delta$ & $00111111111000\dots00110$ \\
- 					$2.0+3*\delta$ & $00111111111000\dots01000$  \\
+ 					$2.0+2\cdot\delta$ & $00111111111000\dots00110$ \\
+ 					$2.0+3\cdot\delta$ & $00111111111000\dots01000$  \\
  					\vdots & \vdots \\
- 					$4.0-3*\delta$ & $00111111111111\dots11011$ \\
+ 					$4.0-3\cdot\delta$ & $00111111111111\dots11011$ \\
  					$4.0-2\delta$ & $00111111111111\dots11101$ \\
  					$4.0-\delta$ & $00111111111111\dots11111$ \\\bottomrule
             	\end{tabular}
@@ -323,11 +332,11 @@
 		\end{enumerate}
 	\subsection{Wnioski}
 		Analiza przypadku $[1,2]$ dowodzi równomiernego rozmieszczenia liczb w tym przedziale z krokiem $\delta = 
-		2^{-52}$, czyli prawdziwy jest wzór: $x=1+k*\delta$. Zaobserwowano następujące rozmieszczenie w pozostałych 
+		2^{-52}$, czyli prawdziwy jest wzór: $x=1+k\cdot\delta$. Zaobserwowano następujące rozmieszczenie w pozostałych 
 		przedziałach:
 		\begin{itemize}
-			\item $[0.5,1]$: $x=1+k*\delta, \delta = 2^{-53}$;
-			\item $[2,4]$: $x=1+k*\delta, \delta = 2^{-51}$
+			\item $[0.5,1]$: $x=1+k*\delta, \quad \delta = 2^{-53}$;
+			\item $[2,4]$: $x=1+k*\delta, \qquad \delta = 2^{-51}$
 		\end{itemize}
 \section{Zadanie 4}
 	\subsection{Opis problemu}
@@ -342,7 +351,7 @@
 			\State $b\gets \texttt{Float64}(1.0)$
 			\While {$a<\texttt{Float64}(2.0)$}
 				\If {$((b/a)*a\neq b)$}
-					$wypisz$ $a$
+					wypisz $a$
 				\EndIf
 				\State {$a\gets \texttt{nextfloat}(a)$}
 			\EndWhile
@@ -364,7 +373,7 @@
 		\texttt{Float64}.
 	\subsection{Opis rozwiązania}
 		\begin{enumerate}
-			\item "w przód"
+			\item ,,w przód''
 			\newline
 			$\sum_{i=1}^{n} x_iy_i$
 			
@@ -484,7 +493,7 @@
 \section{Zadanie 7}
 	\subsection{Opis problemu}
 		Obliczenie w języku \texttt{Julia} w arytmetyce \texttt{Float64} przybliżonej wartości pochodnej funkcji
-		$f(x)=\sin{x}+\cos{3x}$ w punkcie $x_0$ oraz błędów $\mid f`(x_0)-\tilde{f}(x_0) \mid$ dla 
+		$f(x)=\sin{x}+\cos{3x}$ w punkcie $x_0$ oraz błędów $\mid f'(x_0)-\tilde{f}(x_0) \mid$ dla 
 		$h=2-n$ $(n=0,1,2,\dots,54)$.
 	\subsection{Opis rozwiązania}
 		Utworzenie funkcji $f(x)$ oraz jej pochodnej $g(x)$, przy czym $g(x)=\cos{x}-3*\sin{3x}$. Stworzenie 
@@ -523,9 +532,6 @@
 		\end{table}		
 		
 	\subsection{Wnioski}
-	NAPISAĆ WNIOSKI!!!
-		Jak wytłumaczyć, że od pewnego momentu zmniejszanie wartości h nie poprawia przybliżenia
-wartości pochodnej? Jak zachowują się wartości 1+h? Obliczone przybliżenia pochodnej
-porównać z dokładną wartością pochodnej, tj. zwróć uwagę na błędy $f`$ dla $h=2-n$ $(n=0,1,2,\dots,54)$.
+%	NAPISAĆ WNIOSKI!!!
 
 \end{document}
