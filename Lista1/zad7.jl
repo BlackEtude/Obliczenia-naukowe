@@ -16,17 +16,17 @@ g(x) = cos(x) - 3 * sin(3 * x)
 x = Float64(1.0)
 n = 54
 
-function aproxderivative(y)
+function aproxderiv(y)
     return ((f(x + y) - f(x)) / y)
 end
 
-function approximationerror(y)
-    return (abs(g(x) - aproxderivative(y)))
+function approxerror(y)
+    return (abs(g(x) - aproxderiv(y)))
 end
 
 println("i:\t\t\t2^h\t\t\t\t2^(h+1)")
 for i = 0: 54
     y = Float64(2.0)^(-i)
     z = Float64(2.0)^(-i+1)
-    println("i=$i\t$(aproxderivative(y))\t$(approximationerror(y))\t$(aproxderivative(z))\t$(approximationerror(z))")
+    println("i=$i\t$(aproxderiv(y))\t$(approxerror(y))\t$(aproxderiv(z))\t$(approxerror(z))")
 end

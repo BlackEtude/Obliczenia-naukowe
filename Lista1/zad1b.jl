@@ -26,10 +26,11 @@ while (a/b > Float32(0.0))
     a /= b
 end
 println("Result for $(typeof(a)): $a, real: $(nextfloat(Float32(0.0)))")
+println("Bits: $(bits(a))")
 
 #Float64
 a = Float64(1.0)
-b = Float32(2.0)
+b = Float64(2.0)
 while (a/b > Float64(0.0))
     a /= b
 end

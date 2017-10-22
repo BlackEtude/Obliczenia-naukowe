@@ -18,7 +18,6 @@ b = Float16(1.0)
 while Float16(1.0) + a > Float16(1.0)
     b = a
     a /= Float16(2.0)
-    println("b:$b\ta:$b")
 end
 println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 1E-5")
 
@@ -31,6 +30,9 @@ while Float32(1.0) + a > Float32(1.0)
     a /= Float32(2.0)
 end
 println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 1E-9")
+
+println("Check:")
+println("1: $(bits(Float16(1.0) + b))")
 
 #Float64
 a = Float64(1.0)
