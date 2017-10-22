@@ -1,50 +1,35 @@
 #Agata Jasionowska - 229726
 
-#=
-Epsilonem maszynowym macheps (ang. machine epsilon) nazywamy najmniejszą
-liczbę macheps > 0 taką, że 1 . 0 ⊕ macheps > 1 . 0 . Napisać program w
-języku Julia wyznaczający iteracyjnie epsilony maszynowe dla wszystkich
-dostępnych typów zmiennopozycyjnych Float16, Float32, Float64, zgodnych
-ze standardem IEEE 754 ( half, single, double), i porównać z wartościami
-zwracanymi przez funkcje: eps(Float16) , eps(Float32), eps(Float64) oraz
-=#
-
-println("Macheps")
-
-#Float16
-a = Float16(1.0)
-b = Float16(1.0)
+#Calculate machine epsilone and print it with defined eps on stdout for Float16 type
+a = Float16(1.0)                    #machine epsilon
+b = Float16(1.0)                    #keep prev value
 
 while Float16(1.0) + a > Float16(1.0)
     b = a
     a /= Float16(2.0)
 end
-println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 1E-5")
+println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b)))")
 
-#Float32
-a = Float32(1.0)
-b = Float32(1.0)
+
+#Calculate machine epsilone and print it with defined eps on stdout for Float32 type
+#Check value of (1.0+macheps)
+a = Float32(1.0)                    #machine epsilon
+b = Float32(1.0)                    #keep prev value
 
 while Float32(1.0) + a > Float32(1.0)
     b = a
     a /= Float32(2.0)
 end
-println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 1E-9")
+println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 1.19209289550781e-07")
+println("Check: $(bits(Float32(1.0) + b))")
 
-println("Check:")
-println("1: $(bits(Float16(1.0) + b))")
 
-#Float64
-a = Float64(1.0)
-b = Float64(1.0)
+#Calculate machine epsilone and print it with defined eps on stdout for Float64 type
+a = Float64(1.0)                    #machine epsilon
+b = Float64(1.0)                    #keep prev value
 
 while Float64(1.0) + a > Float64(1.0)
     b = a
     a /= Float64(2.0)
 end
-println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 1E-9")
-
-#=
-TODO związek macheps z precyzją arytmetyki
-in c: 1.192093e-07
-=#
+println("Result for $(typeof(b)): $b, eps = $(eps(typeof(b))), in C: 2.220446049250313080847263336181640625e-16")

@@ -1,27 +1,11 @@
 #Agata Jasionowska - 229726
 
-#=
-Napisz program w języku Julia realizujący następujący eksperyment
-obliczania iloczynu skalarnego dwóch wektorów: x, y. Zaimplementuj
-poniższe algorytmy i policz sumę na cztery sposoby dla n = 5:
-(a) “w przód”
-(b) “w tył”
-(c) od największego do najmniejszego (dodaj dodatnie liczby w porządku
-od największego do najmniejszego, dodaj ujemne liczby w porządku od
-najmniejszego do największego, a następnie daj do siebie obliczone sumy
-częściowe),
-(d) od najmniejszego do największego (przeciwnie do metody (c)).
-Użyj pojedynczej i podwójnej precyzji (typy Float32 i Float64 w języku
-Julia). Porównaj wyniki z prawidłową wartością (dokładność do 15 cyfr)
-− 1.00657107000000 10^(−11).
-=#
-
-#FLOAT32
-a = Float32(2.718281828)
+#Scalar mult for vector x and y (FLOAT32)
+#Vectors
 x = Float32[2.718281828,-3.141592654,1.414213562,0.5772156649,0.3010299957]
 y = Float32[1486.2497,878366.9879,-22.37492,4773714.647,0.000185049]
 
-#a
+#a algorithm
 sum = Float32(0.0)
 n = length(x)
 for i = 1: n
@@ -29,7 +13,7 @@ for i = 1: n
 end
 println("$(typeof(sum)) 'a' result: $sum")
 
-#b
+#b algorithm
 sum = Float32(0.0)
 while n > 0
       sum += x[n] * y[n]
@@ -37,27 +21,27 @@ while n > 0
 end
 println("$(typeof(sum)) 'b' result: $sum")
 
-#c
-tab = Float32[]
+#c algorithm
+tab = Float32[]                           #table for
 s1 = Float32(0.0)
 s2 = Float32(0.0)
 i = 1
-while i <= length(x)
+while i <= length(x)                      #add x[i]*y[i] to table
       push!(tab, Float32(x[i] * y[i]))
       i += 1
 end
 
-sort!(tab, rev=true)
+sort!(tab, rev=true)                      #rev sort table
 
-for i in tab
+for i in tab                              #add >0 elements
       if(i > 0)
             s1 += i
       end
 end
 
-sort!(tab)
+sort!(tab)                                #sort table
 
-for i in tab
+for i in tab                              #add <0 elements
       if(i < 0)
             s2 += i
       end
@@ -70,18 +54,18 @@ println("$(typeof(sum)) 'c' result: $sum")
 s1 = Float32(0.0)
 s2 = Float32(0.0)
 
-sort!(tab)
+sort!(tab)                                #sort table
 
 for i in tab
-      if(i > 0)
+      if(i > 0)                           #add >0 elements
             s1 += i
       end
 end
 
-sort!(tab, rev=true)
+sort!(tab, rev=true)                      #rev sort table
 
 for i in tab
-      if(i < 0)
+      if(i < 0)                           #add <0 eleme
             s2 += i
       end
 end
@@ -89,7 +73,8 @@ end
 sum = Float32(s1 + s2)
 println("$(typeof(sum)) 'd' result: $sum")
 
-#FLOAT64
+
+#Scalar mult for vector x and y (FLOAT64)
 a = Float64(2.718281828)
 x = Float64[2.718281828,-3.141592654,1.414213562,0.5772156649,0.3010299957]
 y = Float64[1486.2497,878366.9879,-22.37492,4773714.647,0.000185049]
