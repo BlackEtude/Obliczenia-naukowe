@@ -29,7 +29,7 @@
 			skorzystano	z operacji przesunięcia bitowego w prawo zgodnie z podanymi niżej krokami:
 			\begin{enumerate}
 				\item Zdefiniowanie zmiennej $a = 1.0$ wybranego typu;
-				\item (W pętli) Dopóki $1.0 + a > 1.0$ przypisanie aktualnej wartości $a$ w pomocniczej 
+				\item Dopóki $1.0 + a > 1.0$ przypisanie aktualnej wartości $a$ w pomocniczej 
 				zmiennej $b$ oraz wykonanie przesunięcia bitowego w prawo dla~$a$.
 			\end{enumerate}
 			Po zakończeniu wykonywania pętli zmienna	$b$ będzie przechowywała ostatnią przypisaną wartość większą niż $0.0$, czyli 
@@ -47,7 +47,7 @@
 				}
             	\begin{tabular}{llll} \toprule
                 	{typ} & {{$macheps$}} & {\texttt{eps(typ)}} & \texttt{C} \\ \midrule
-                	\texttt{Float16} & \num{9.77e-04} & \num{9.77e-04} & \num{9.77e-04} \\ 
+                	\texttt{Float16} & \num{9.77e-04} & \num{9.77e-04} & \--- \\ 
  					\texttt{Float32} & \num{1.1920929e-07} & \num{1.1920929e-07} & \num{1.19209289550781e-07} \\
  					\texttt{Float64} & \num{2.220446049250313e-16} & \num{2.220446049250313e-16} & \num{2.22044604925031e-16} \\\bottomrule
  					%C Float64 : 2.220446049250313080847263336181640625e-16
@@ -113,7 +113,7 @@
 			
 		\subsubsection{Wnioski}
 			W arytmetyce \texttt{Float32} liczba $eta$ zapisana bitowo to: $$0~00000000~00000000000000000000001$$
-   			Czyli jest to najmniejsza dodatnia liczba, którą można zapisać.
+   			czyli jest to najmniejsza dodatnia liczba, którą można zapisać.
    			Wszystkie bity cechy są równe zero, zatem ta liczba jest nieznormalizowana (subnormal).
 
 	\subsection{MAX}
@@ -128,7 +128,7 @@
 			krokami:
 			\begin{enumerate}
 				\item Zdefiniowanie zmiennej $a = 1.0$ wybranego typu;
-				\item (W pętli) Dopóki $a \cdot \texttt{FloatX}(2.0), ~(gdzie ~X \in {16,32,64})$ jest skończone, wykonanie przesunięcia bitowego w prawo dla $a$;
+				\item Dopóki $a \cdot \texttt{FloatX}(2.0), ~(gdzie ~X \in {16,32,64})$ jest skończone, wykonanie przesunięcia bitowego w prawo dla $a$;
 				\item Wykonanie $a = a \cdot (\texttt{FloatX}(2.0) - eps(a))$.
 			\end{enumerate}
 			Po wyjściu z pętli w zmiennej $a$ pozostanie żądana wartość $MAX$.	
@@ -145,7 +145,7 @@
 				}
             	\begin{tabular}{llll} \toprule
                 	{typ} & {{$a$}} & {\texttt{{realmax}(typ)}} & \texttt{C} \\ \midrule
-                	\texttt{Float16} & \num{6.55e+04} & \num{6.55e+04} & \num{6.5504e+04} \\ 
+                	\texttt{Float16} & \num{6.55e+04} & \num{6.55e+04} & \--- \\ 
  					\texttt{Float32} & \num{3.4028235e+38} & \num{3.4028235e+38} & \num{3.402823466385288598e+38} \\
  					\texttt{Float64} & \num{1.7976931348623157e+308} & \num{1.7976931348623157e+308} & 
  					\num{1.797693134862315708e+308} \\\bottomrule
@@ -188,18 +188,18 @@
   					retain-explicit-plus
 				}
             	\begin{tabular}{lll} \toprule
-                	{typ} & {Kachan} & {$macheps$} \\ \midrule
+                	{typ} & {Kahan} & {$macheps$} \\ \midrule
                 	\texttt{Float16} & \num{-9.77e-04} & \num{9.77e-04} \\ 
  					\texttt{Float32} & \num{1.1920929e-07} & \num{1.1920929e-07} \\
  					\texttt{Float64} & \num{-2.220446049250313e-16} & \num{2.220446049250313e-16} \\\bottomrule
             	\end{tabular}
-            	\caption{Wyniki twierdzenia Kachana wraz z prawidłowymi wartościami.}
+            	\caption{Wyniki twierdzenia Kahana wraz z prawidłowymi wartościami.}
 				\label{table:4}
    			\end{table}
 			
 	\subsubsection{Wnioski}
 		Powyższa tabela pokazuje, że prawidłowe rozwiązanie udało się uzyskać jedynie dla typu 
-		\texttt{Float32}. W dwóch pozostałych przypadkach wynik różnił się bitem znaku. Stwierdzenie Kachana
+		\texttt{Float32}. W dwóch pozostałych przypadkach wynik różnił się bitem znaku. Stwierdzenie Kahana
 		byłoby słuszne, gdyby z wartości wyrażenia wziąć jego wartość bezwzględną.
 \section{Zadanie 3}
 	\subsection{Opis problemu}
@@ -214,7 +214,7 @@
 			\item Utworzenie takiej zmiennej $\delta$, że $\delta = 2^{k}$, $k = 0,-1,-2\dots $ typu 
 			zmiennopozycyjnego;
 			\item Zdefiniowanie zmiennej $a$ pierwszą wartością przedziału;
-			\item (W pętli) Zwiększanie $a$ o wartość $\delta$ oraz wyświetlenie rezultatu
+			\item Zwiększanie $a$ o wartość $\delta$ oraz wyświetlenie rezultatu
 			wraz z jego zapisem bitowym (uzyskany przy pomocy funkcji \texttt{bits($a$)}.
 		\end{enumerate}
 	\subsection{Wyniki}
@@ -245,7 +245,7 @@
 				\label{table:5}
    			\end{table}
    			Można zaobserwować, że liczby z zakresu $[1,2)$ różnią się jedynie mantysą, zaś cecha sprawia, że wyglądają one w następujący sposób:
-   			$2^{0} (==1) \cdot 1.mantissa$. Prowadzi to do wniosku, iż różnica pomiędzy kolejnymi liczbami w tym zakresie jest równa różnicy mantys tych
+   			$2^{0} ~(=1) \cdot 1.mantissa$. Prowadzi to do wniosku, iż różnica pomiędzy kolejnymi liczbami w tym zakresie jest równa różnicy mantys tych
    			liczb. 
    			Zapis bitowy pokazuje, że dodawanie do liczby $a$ wartości $\delta = 2^{-52}$ zwiększa ją o 
 			kolejny jeden bit. 
@@ -267,7 +267,6 @@
                 	$0.5$ & $00111111111000\dots00010$ \\ 
  					$0.5+\delta$ & $00111111111000\dots00100$ \\
  					$0.5+2\cdot\delta$ & $00111111111000\dots00110$ \\
- 					$0.5+3\cdot\delta$ & $00111111111000\dots01000$  \\
  					\vdots & \vdots \\
  					$1.0-3\cdot\delta$ & $00111111111111\dots11011$ \\
  					$1.0-2\delta$ & $00111111111111\dots11101$ \\
@@ -299,7 +298,6 @@
                 		$2.0$ 			& $01000000000000\dots 0000000$ \\ 
  					$2.0+\delta$ 	& $01000000000000\dots 0000001$  \\
  					$2.0+2\cdot\delta$ & $01000000000000\dots 0000010$ \\
- 					$2.0+3\cdot\delta$ & $01000000000000\dots 0000011$  \\
  					\vdots & \vdots \\
  					$4.0-3\cdot\delta$ & $01000000000011\dots 1111101$ \\
  					$4.0-2\delta$ & $01000000000011\dots 1111110$ \\
@@ -321,7 +319,7 @@
 \section{Zadanie 4}
 	\subsection{Opis problemu}
 		Napisanie w języku \texttt{Julia} programu znajdującego eksperymentalnie taką liczbę zmiennopozycyjną 
-		\texttt{Float64} $1<x<2$, że $x\cdot(1/x)\neq1$ (tj. $fl(xfl(1/x))\neq1$) oraz wyznaczenie najmniejszej takiej
+		\texttt{Float64} $1<x<2$, że $x\cdot(1/x)\neq1$ (tj. $fl(x\cdot fl(1/x))\neq1$) oraz wyznaczenie najmniejszej takiej
 		wartości.
 	\subsection{Opis rozwiązania}
 		Zastosowanie programu działającego zgodnie z poniższym pseudokodem:
@@ -339,7 +337,7 @@
 		\end{algorithm}
 		
 	\subsection{Wyniki}
-		W wyniku pracy program znaleziono najmniejsze rozwiązanie równe \\ $1.000000057228997$.
+		W wyniku pracy programu znaleziono najmniejsze rozwiązanie równe \\ $1.000000057228997$.
 		Jest to ciekawy przypadek nieodwracalności dzielenia - próba odwrócenia działania da rozwiązanie : $0.9999999999999999$.
 		Taki rezultat wynika z ograniczoności zapisu i przy wykonywaniu kolejnych operacji może prowadzić do spotęgowania błędu obliczeń.
 	\subsection{Wnioski}
@@ -452,7 +450,8 @@ sum = Float32(s1+s2)
 		
 		Powodem różnic w wynikach obu tych funkcji jest wykonywanie odejmowania na wartościach do siebie zbliżonych.
 		W funkcji $f$ dla bardzo małego $x$ zachodzi wtedy :
-		$\sqrt{x^{2}+1} \approx 1$. Zatem odjęcie liczby bliskiej $1.0$ oraz samej $1.0$ generuje błąd, który dochodzić może do nawet $100\%$.
+		$\sqrt{x^{2}+1} \approx 1$. Zatem odjęcie liczby bliskiej $1.0$ oraz samej $1.0$ generuje błąd, który dochodzić może do nawet $100\%$. Aby zapobiec takim sytuacjom można przekształcać wyrażenie do postaci alternatywnej bądź zastosować 
+		zwiększoną precyzję.
 \section{Zadanie 7}
 	\subsection{Opis problemu}
 		Obliczenie w języku \texttt{Julia} w arytmetyce \texttt{Float64} przybliżonej wartości pochodnej funkcji
@@ -491,12 +490,15 @@ sum = Float32(s1+s2)
  				$53$ & $0.0$ & $0.11694228168853815$ \\
  				$54$ & $0.0$ & $0.11694228168853815$ \\\bottomrule
  			\end{tabular}
- 			\caption{Wartości funkcji $f(x)$ oraz $g(x)$.}
+ 			\caption{Wartości funkcji $f(x)$ oraz błąd.}
 			\label{table:10}
 		\end{table}		
-		Początkowo błąd maleje wraz ze wzrostem argumentu. Dalej jednak ponownie wzrasta od pewnego $n$. Spowodowane jest to utratą danych na skutek
-		dodawania do $1.0$ bardzo małego $h-2^{-n}$.		
+		Początkowo błąd maleje wraz ze wzrostem argumentu, najdokładniejszy wynik udało się uzyskać dla $n=28$. Jednak dalsze 
+		zmniejszanie $h$ prowadziło do coraz większej utraty dokładności obliczeń (znaczny wzrost błędu).	
 	\subsection{Wnioski}
+	Na podstawie otrzymanych wyników można zauważyć znaczną utratę danych na skutek dodawania do $1.0$ bardzo małego $h-2^{-n}$.		
 	Zbyt mała wartość $h$ spowoduje utratę dokładności podczas wykonywania operacji $h+1$, co wpłynie na dalsze błędy obliczeń 
-	(które mogą być względnie duże).
+	(które mogą być względnie duże). Drugą z przyczyn zmniejszonej dokładności rachunków upatrywać można w odejmowaniu bardzo 
+	bliskich wartości liczbowych, w szczególności dla stosunkowo niewielkiego $h$. Związane jest to z utratą cyfr znaczących i 
+	wpływa na zaburzenia wyniku.
 \end{document}
