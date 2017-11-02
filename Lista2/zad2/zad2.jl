@@ -12,8 +12,8 @@ theme = Theme(
     default_color = "red"
 )
 
-f(x) = log(1+exp.(-x))*exp.(x)
-draw(PNG("plotGadfly.png", 6inch, 3inch), plot(f, -10, 10, theme))
+# f(x) = log(1+exp.(-x))*exp.(x)
+# draw(SVG("plotGadfly.svg", 6inch, 3inch), plot(f, -10, 10, theme))
 #
 #
-# println("Expression's limit: $(limit(log(1+exp.(-x))*exp.(x), x => oo))")
+println("Expression's limit: $(limit(log(1+exp.(-x))*exp.(x), x => oo))")
