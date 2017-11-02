@@ -1,0 +1,89 @@
+\documentclass{classrep}
+\usepackage[utf8]{inputenc}
+
+\studycycle{Informatyka, studia dzienne, inż I st.}
+\coursesemester{V}
+\coursename{Obliczenia naukowe}
+\courseyear{2017/2018}
+\courseteacher{dr hab. Paweł Zieliński}
+\coursegroup{czwartek TN, 11:15}
+
+\author{
+  \studentinfo{Agata Jasionowska}{229726}
+}
+
+\title{Laboratorium \ppauza Lista 2}
+\begin{document}
+
+\maketitle
+
+\section{Zadanie 1}
+	\subsection{Opis problemu}
+		Zadanie polegało na ponownym rozwiązaniu zadania 5 z listy 1, jednak na nieznacznie zmienionych danych (usunięto ostatnie cyfry w $x_4$ oraz $x_5$. 
+	\subsection{Opis rozwiązania}
+		W celu obliczenia iloczynów skalarnych użyto kodu zadania 5 listy 1 oraz zmodyfikowanych zgodnie z treścią zadania danych.
+	\subsection{Wyniki}
+		Poniższa tabela prezentuje uzyskane wyniki dla czterech algorytmów obliczających iloczyn skalarny:
+		\begin{table}[!h]
+        	\centering
+        	\footnotesize
+			\sisetup{
+%	  			output-exponent-marker = \text{e},
+%	  			table-format=+1.4e+2,
+%	  			exponent-product={},
+%	  			retain-explicit-plus
+				table-number-alignment = right,
+				table-figures-integer  = 10,
+				table-figures-decimal = 16,
+				table-figures-exponent=2
+			}
+			\begin{tabular}{lSS} \toprule
+				{podpunkt} & {\texttt{Lista1}} & {\texttt{Lista2}} \\ \midrule
+				\texttt{Float32} \\ \cmidrule(r) {1-3}
+				$1$ & -0.4999443 & -0.499944 \\ 
+	 			$2$ & -0.4543457 & -0.4543457 \\
+	 			$3$ & -0.5 & -0.5 \\
+	 			$4$ & -0.5 & -0.5 \\
+	 			\texttt{Float64} \\ \cmidrule(r) {1-3}
+	 			$1$ & -0.4999443 & -0.004296342739891585 \\ 
+	 			$2$ & -0.4543457 & -0.004296342998713953 \\
+	 			$3$ & -0.5 & -0.004296342842280865 \\
+	 			$4$ & -0.5 & -0.004296342842280865 \\ \bottomrule
+	 		\end{tabular}
+	 		\caption{Obliczanie iloczynu skalarnego wektorów.}
+			\label{table:1}
+		\end{table}	
+	\subsection{Wnioski}
+\section{Zadanie 2}
+	\subsection{Opis problemu}
+		W co najmniej dwóch wybranych programach do wizualizacji narysować wykres funkcji $f(x)=e^{x}ln(1+e^{-x})$ oraz policzyć granicę $\lim_{x \to \infty} f(x)$.
+		%\[ \lim_{x \to \infty} f(x) \]
+		
+	\subsection{Opis rozwiązania}
+	\subsection{Wyniki}			
+	\subsubsection{Wnioski}
+\section{Zadanie 3}
+	\subsection{Opis problemu}
+		Rozwiązanie układu równań liniowych $Ax = b$ dla danej macierzy współczynników $A 
+		\in {\rm I\!R^{n \times n}}$ i wektora prawych stron $b \in {\rm I\!R^n}$ za 
+		pomocą algorytmów: eliminacji Gaussa ($x=A/b$)% oraz $x = A^{-1}b$ %(x=inv(A)*b)$
+	\subsection{Opis rozwiązania}
+	\subsection{Wyniki}
+		
+	\subsection{Wnioski}
+\section{Zadanie 4}
+	\subsection{Opis problemu}
+	\subsection{Opis rozwiązania}
+	\subsection{Wyniki}
+	\subsection{Wnioski}
+\section{Zadanie 5}
+	\subsection{Opis problemu}
+	\subsection{Opis rozwiązania}
+	\subsection{Wyniki}
+	\subsection{Wnioski}
+\section{Zadanie 6}
+	\subsection{Opis problemu}
+	\subsection{Opis rozwiązania}
+	\subsection{Wyniki}
+	\subsection{Wnioski}
+\end{document}
