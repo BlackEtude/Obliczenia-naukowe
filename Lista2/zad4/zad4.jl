@@ -1,4 +1,7 @@
 using Polynomials
+using Cairo
+using Fontconfig
+using Gadfly
 
 #Poly - creates polynomial from normal form
 #poly - creates polynomial from roots
@@ -23,36 +26,53 @@ p2 = [1, -210.0-(1.0/(2.0^23)), 20615.0, -1256850.0,
 definedRoots = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0,
     11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0]
 
-function polynomialFunction(p)
+function polynomialFunction(n, p)
     #reverse order in vector
     p = p[end:-1:1]
 
     #calculate roots
-    calcRoots = roots(Poly(p))
+    calcRoots = roots(Polynomials.Poly(p))
 
     #polyval from normal version of polynomial p
     println("\n|P(z)|:")
+    A = zeros(20)
     for i = 1:20
-        println("P($i):", abs(polyval(Poly(p), calcRoots[i])))
+        A[i] = abs(polyval(Polynomials.Poly(p), calcRoots[i]))
+        println("P($i):", abs(polyval(Polynomials.Poly(p), calcRoots[i])))
     end
+    drawPlot(n, 1, A)
 
     #polyval from polynomial from defined roots
     println("\n|p(z)|:")
+    A = zeros(20)
     for i = 1:20
-        println("p($i):", abs(polyval(poly(definedRoots), calcRoots[i])))
+        A[i] = abs(polyval(Polynomials.poly(definedRoots), calcRoots[i]))
+        println("p($i):", abs(polyval(Polynomials.poly(definedRoots), calcRoots[i])))
     end
+    drawPlot(n, 2, A)
 
     println("\n|z-k|:")
+    A = zeros(20)
     for i = 1:20
+        A[i] = abs(calcRoots[i] - definedRoots[i])
         println("|z$i-k|:", abs(calcRoots[i] - definedRoots[i]))
     end
+    drawPlot(n, 3, A)
+end
+
+function drawPlot(n, j, A)
+    X = A * diagm(20:20)
+    draw(PNG("zad4/plot$n$j.png", 8inch, 5inch), plot(X, x = Row.index, y = Col.value, Geom.line, Theme(
+        panel_fill = "white",
+        default_color = "red"
+    )))
 end
 
 #MAIN
 #a
 println("Wilkinson's polynomial")
-# polynomialFunction(p1)
+polynomialFunction(1, p1)
 
 #b
 println("Wilkinson's polynomial with small change")
-polynomialFunction(p2)
+polynomialFunction(2, p2)

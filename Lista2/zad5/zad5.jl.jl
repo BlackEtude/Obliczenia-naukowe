@@ -1,45 +1,58 @@
-using PyPlot
-n = 40
-r = 3
-A = zeros(Float32, n+1)
-B = zeros(Float32, n+1)
-C = zeros(Float64, n+1)
+using Cairo
+using Fontconfig
+using Gadfly
+using DataFrames
 
-#Float32 normal 40 iterations
-p = Float32(0.01)
-A[1] = p
-for i = 1:n
-    println(p)
-    p = p + r * p * (Float32(1.0) - p)
-    A[i+1] = p
+#Float32/Float64 normal 40 iterations
+function iterations{T}(t :: T, n, r)
+    A = zeros(t, n+1)
+    p = t(0.01)
+    A[1] = p
+    for i = 1:n
+        p = p + r * p * (t(1.0) - p)
+        A[i+1] = p
+    end
+    return A
 end
-println(p)
-println()
 
 #10 iterations with floor
-p = Float32(0.01)
-for i = 1:4
-  for j = 1:10
-    println(p)
-    B[10*(i-1) + j] = p
-    p = p + r * p * (Float32(1.0) - p)
-  end
-  p = floor(p,3)
+function iterations2{T}(t :: T, n, r)
+    B = zeros(t, n+1)
+    p = t(0.01)
+    for i = 1:4
+      for j = 1:10
+        B[10*(i-1) + j] = p
+        p = p + r * p * (t(1.0) - p)
+      end
+      p = floor(p,3)
+    end
+    B[n+1] = p;
+    return B
 end
-B[n+1] = p;
-println(p)
-println()
 
-#Float64 normal iterations
-p = Float64(0.01)
-C[1] = p
-for i = 1:n
-    println(p)
-    p = p + r * p * (Float64(1.0) - p)
-    C[i+1] = p
+function drawPlot(n, A, B, label1, label2)
+    df1 = DataFrame(x = 1:41, y = A, Legend = label1)
+    df2 = DataFrame(x = 1:41, y = B, Legend = label2)
+    df = vcat(df1, df2)
+
+    Gadfly.draw(PNG("zad5/plot$n.png", 8inch, 5inch, dpi=700), plot(df, x=:x, y=:y, color=:Legend, Geom.line,
+    Guide.xlabel("Iteration"), Geom.line, Coord.Cartesian(xmin = 0, xmax = 42, ymin = 0),
+    Theme(panel_fill = "white"), Scale.discrete_color_manual("red", "blue")))
+
 end
-println(p)
+# MAIN
+n = 40
+r = 3
+X = Array{Float32}(n+1)
+Y = Array{Float64}(n+1)
+Z = Array{Float32}(n+1)
 
-# plot(A)
-# plot(B)
-# plot(C)
+X = iterations(Float32, n, r)
+# println(X, "\n")
+Y = iterations(Float64, n, r)
+# println(Y, "\n")
+Z = iterations2(Float32, n, r)
+# println(X, "\n")
+
+drawPlot(1, X, Y, "Float32", "Float64")
+drawPlot(2, X, Z, "Float32", "Float32 obcięcie")
