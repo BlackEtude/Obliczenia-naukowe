@@ -1,9 +1,11 @@
 \NeedsTeXFormat{LaTeX2e}
-\LoadClass[12pt,a4paper,authortitle]{mwart}
+\LoadClass[11pt,a4paper,authortitle]{mwart}
 \usepackage[OT4]{polski}
+\usepackage[top=2.7cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
 \usepackage{url,enumerate}
 \usepackage{algpseudocode,algorithm,mathtools,listings}
 \usepackage{booktabs,siunitx}
+\usepackage{graphicx}
 
 \usepackage[usenames,dvipsnames]{xcolor}
 
