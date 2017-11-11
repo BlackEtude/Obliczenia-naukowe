@@ -3,9 +3,12 @@
 \usepackage[OT4]{polski}
 \usepackage[top=2.7cm,bottom=2.5cm,left=2.5cm,right=2.5cm]{geometry}
 \usepackage{url,enumerate}
+\usepackage{array,multirow}
+\usepackage{multicol}
 \usepackage{algpseudocode,algorithm,mathtools,listings}
 \usepackage{booktabs,siunitx}
 \usepackage{graphicx}
+\usepackage{subfig,caption}
 
 \usepackage[usenames,dvipsnames]{xcolor}
 
