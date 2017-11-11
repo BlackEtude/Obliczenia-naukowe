@@ -1,3 +1,5 @@
+#Agata Jasionowska - 229726
+
 using Cairo
 using Fontconfig
 using Gadfly
@@ -9,6 +11,7 @@ theme = Theme(
     default_color = "red"
 )
 
+#Calculate expression x_(x+1) = x_n + c and draw with 'j' label
 function calculateExpression(j, x, c)
     A = zeros(n)
     oldVal = x
@@ -21,12 +24,14 @@ function calculateExpression(j, x, c)
     drawPlot(j, A)
 end
 
+#Draw plot from vector with 'i' label
 function drawPlot(i, A)
     X = A * diagm(40:40)
     Gadfly.draw(PNG("zad6/plot$i.png", 8inch, 5inch, dpi=700), Gadfly.plot(X, x = Row.index, y = Col.value, Geom.line,
     Geom.point, Theme(panel_fill = "white", default_color = "blue")))
 end
 
+#Print vector
 function printVector(A)
   for i = 1:n
       println(A[i])

@@ -1,3 +1,5 @@
+#Agata Jasionowska - 229726
+
 using Cairo
 using Fontconfig
 using Gadfly
@@ -15,7 +17,7 @@ function iterations{T}(t :: T, n, r)
     return A
 end
 
-#10 iterations with floor
+#40 iterations with floor after 10th one
 function iterations2{T}(t :: T, n, r)
     B = zeros(t, n+1)
     p = t(0.01)
@@ -30,16 +32,17 @@ function iterations2{T}(t :: T, n, r)
     return B
 end
 
+#draw plot from two vectors with labels
 function drawPlot(n, A, B, label1, label2)
     df1 = DataFrame(x = 1:41, y = A, Legend = label1)
     df2 = DataFrame(x = 1:41, y = B, Legend = label2)
     df = vcat(df1, df2)
 
-    Gadfly.draw(PNG("zad5/plot$n.png", 8inch, 5inch, dpi=700), plot(df, x=:x, y=:y, color=:Legend, Geom.line,
+    Gadfly.draw(PNG("zad5/plot$n.png", 8inch, 5inch, dpi=600), plot(df, x=:x, y=:y, color=:Legend, Geom.line,
     Guide.xlabel("Iteration"), Geom.line, Coord.Cartesian(xmin = 0, xmax = 42, ymin = 0),
     Theme(panel_fill = "white"), Scale.discrete_color_manual("red", "blue")))
-
 end
+
 # MAIN
 n = 40
 r = 3

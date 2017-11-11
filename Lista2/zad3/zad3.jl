@@ -1,10 +1,12 @@
+#Agata Jasionowska - 229726
+
 include("hilb.jl")
 include("matcond.jl")
 
 n = [5, 10, 20]
 c = [1.0, 10.0, 10^3, 10^7, 10^12, 10^16]
 
-# hilbert matrix
+# Calculate for Hilbert matrix
 println("Hilbert matrix:\n")
 for i = 1:20
     hilbertMatrix = hilb(i)
@@ -14,13 +16,13 @@ for i = 1:20
     result1 = hilbertMatrix \ b
     result2 = inv(hilbertMatrix) * b
 
-    println("Size $i x $i \t cond: $(cond(hilbertMatrix))")
+    println("Size $i x $i \t cond: $(cond(hilbertMatrix)) \t rank: $(rank(hilbertMatrix))")
     println("Error for A \\ b: $(norm(result1 - x) / norm(x))")
     println("Error for inv(A)*b: $(norm(result2 - x) / norm(x))")
     println()
 end
 
-# random matrix
+# Calculate for random matrix
 println("\n\nRandom Matrix\n")
 for i = 1:length(n)
     for j = 1:length(c)

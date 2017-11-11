@@ -1,3 +1,5 @@
+#Agata Jasionowska - 229726
+
 using Polynomials
 using Cairo
 using Fontconfig
@@ -23,14 +25,14 @@ p2 = [1, -210.0-(1.0/(2.0^23)), 20615.0, -1256850.0,
     -12870931245150988800.0, 13803759753640704000.0, -8752948036761600000.0,
     2432902008176640000.0]
 
-definedRoots = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0,
-    11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0, 19.0, 20.0]
+definedRoots = [20.0, 19.0, 18.0, 17.0, 16.0, 15.0, 14.0, 13.0, 12.0, 11.0,
+    10.0, 9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0]
 
+
+#Work with polynomial 'p'
 function polynomialFunction(n, p)
     #reverse order in vector
     p = p[end:-1:1]
-
-    #calculate roots
     calcRoots = roots(Polynomials.Poly(p))
 
     #polyval from normal version of polynomial p
@@ -40,7 +42,7 @@ function polynomialFunction(n, p)
         A[i] = abs(polyval(Polynomials.Poly(p), calcRoots[i]))
         println("P($i):", abs(polyval(Polynomials.Poly(p), calcRoots[i])))
     end
-    drawPlot(n, 1, A)
+    # drawPlot(n, 1, A)
 
     #polyval from polynomial from defined roots
     println("\n|p(z)|:")
@@ -49,7 +51,7 @@ function polynomialFunction(n, p)
         A[i] = abs(polyval(Polynomials.poly(definedRoots), calcRoots[i]))
         println("p($i):", abs(polyval(Polynomials.poly(definedRoots), calcRoots[i])))
     end
-    drawPlot(n, 2, A)
+    # drawPlot(n, 2, A)
 
     println("\n|z-k|:")
     A = zeros(20)
@@ -57,9 +59,10 @@ function polynomialFunction(n, p)
         A[i] = abs(calcRoots[i] - definedRoots[i])
         println("|z$i-k|:", abs(calcRoots[i] - definedRoots[i]))
     end
-    drawPlot(n, 3, A)
+    # drawPlot(n, 3, A)
 end
 
+#draw plot from vector with label 'j'
 function drawPlot(n, j, A)
     X = A * diagm(20:20)
     draw(PNG("zad4/plot$n$j.png", 8inch, 5inch), plot(X, x = Row.index, y = Col.value, Geom.line, Theme(
