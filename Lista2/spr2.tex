@@ -24,7 +24,7 @@
 		$$ x_4 = 0.5772156649 ~~~ x_4' = 0.577215664$$
 		$$ x_5 = 0.3010299957 ~~~ x_5' = 0.301029995$$
 		
-		W dalszej części sprawozdania wartości iloczynu skalarnego dla niezmienionych danych oznaczane będą jako $I$, zaś dla danych po modyfikacji - $I'$.
+		W dalszej części sprawozdania wartości iloczynu skalarnego dla niezmienionych danych oznaczane będą jako $I$, zaś dla danych po modyfikacji -- $I'$.
 	\subsection{Opis rozwiązania}
 		W celu obliczenia iloczynów skalarnych użyto kodu zadania 5 listy 1 na zmodyfikowanych zgodnie z treścią zadania danych wejściowych.
 	\subsection{Wyniki}
@@ -57,10 +57,10 @@
 		\end{table}	
 	\subsection{Wnioski}
 		Uzyskane wyniki pokazują, że usunięcie cyfr zgodnie z poleceniem nie wpłynęło na rezultaty dla obliczeń w arytmetyce \texttt{Float32}. 
-		Wynika to ze stosunkowo niskiej precyzji obliczeń w przypadku tej arytmetyki. Za poparcie tego stwierdzenia może posłużyć analiza zapisu bitowego zmienionych wartości - reprezentacja $x_4$ oraz $x_4'$ wygląda tu identycznie, zaś dla $x_5$ różnica pojawia się dopiero na najmniej znaczącym bicie.Zupełnie odmienna sytuacja ma miejsce w przypadku arytmetyki \texttt{Float64} - rozbieżności są bardzo wyraźne, co wynika ze zwiększonej dokładności. Ma tu zastosowanie podwójna precyzją, czyli 15-17 cyfr znaczących w zapisie dziesiętnym, zaś usunięcie choćby jednej z nich umożliwia przechowanie dokładniejszego wyniku. Ostatecznie rezultaty nie pokrywają się z oczekiwanymi; przyczynia się do tego również fakt, iż dane wektory są prawie prostopadłe(ortogonalne). Głównym problemem w przypadku tego zadania jest niestabilność zastosowanych algorytmów, przy których wskazane jest zastosowanie jak największej precyzji obliczeń. Nieznaczne zmiany wpływają na duże błędy końcowe, co potwierdza, że zadanie jest źle uwarunkowane.
+		Wynika to ze stosunkowo niskiej precyzji obliczeń w przypadku tej arytmetyki. Za poparcie tego stwierdzenia może posłużyć analiza zapisu bitowego zmienionych wartości -- reprezentacja $x_4$ oraz $x_4'$ wygląda tu identycznie, zaś dla $x_5$ różnica pojawia się dopiero na najmniej znaczącym bicie.Zupełnie odmienna sytuacja ma miejsce w przypadku arytmetyki \texttt{Float64} -- rozbieżności są bardzo wyraźne, co wynika ze zwiększonej dokładności. Ma tu zastosowanie podwójna precyzją, czyli 15-17 cyfr znaczących w zapisie dziesiętnym, zaś usunięcie choćby jednej z nich umożliwia przechowanie dokładniejszego wyniku. Ostatecznie rezultaty nie pokrywają się z oczekiwanymi; przyczynia się do tego również fakt, iż dane wektory są prawie prostopadłe(ortogonalne). Głównym problemem w przypadku tego zadania jest niestabilność zastosowanych algorytmów, przy których wskazane jest zastosowanie jak największej precyzji obliczeń. Nieznaczne zmiany wpływają na duże błędy końcowe, co potwierdza, że zadanie jest źle uwarunkowane.
 \section{Zadanie 2}
 	\subsection{Opis problemu}
-		W co najmniej dwóch wybranych programach do wizualizacji narysować wykres funkcji $f(x)=e^{x}ln(1+e^{-x})$ oraz policzyć granicę $\lim_{x \to \infty} f(x)$
+		W co najmniej dwóch wybranych programach do wizualizacji narysować wykres funkcji $f(x)=e^{x}\ln(1+e^{-x})$ oraz policzyć granicę $\lim_{x \to \infty} f(x)$
 		
 	\subsection{Opis rozwiązania}
 		Wykresy zostały narysowane z użyciem programu \texttt{GNUPlot}, pakietu \texttt{Gadfly} oraz \texttt{Wolfram Alpha Cloud}, zaś granicę policzono przy pomocy funkcji \texttt{limit} języka \texttt{Julia} (\texttt{SymPy}).
@@ -93,7 +93,7 @@
 		\end{figure}
 		
 	\subsection{Wnioski}
-		Wykresy obrazują dość silną oscylację funkcji $f(x)$ dla pewnych argumentów $x > 31$ - można zauważyć przyjmowanie wartości większych niż 1 (niezgodność z wyliczoną granicą). Przyczyną takiego zachowania jest wykonywanie mnożenia bardzo małego logarytmu oraz dużej liczby $e(x)$, w efekcie czego generowane są znaczne błędy. Od pewnego $x$ funkcja osiąga stałą wartość równą 0. Powód stanowi bardzo już niewielka wartość $e(-x)$, co przekłada się na $ln(1+e(-x))=ln(1)=0$. Również ten problem jest źle uwarunkowany - małe zmiany danych wpłynęły na duże odchylenia.
+		Wykresy obrazują dość silną oscylację funkcji $f(x)$ dla pewnych argumentów $x > 31$ - można zauważyć przyjmowanie wartości większych niż 1 (niezgodność z wyliczoną granicą). Przyczyną takiego zachowania jest wykonywanie mnożenia bardzo małego logarytmu oraz dużej liczby $e(x)$, w efekcie czego generowane są znaczne błędy. Od pewnego $x$ funkcja osiąga stałą wartość równą 0. Powód stanowi bardzo już niewielka wartość $e(-x)$, co przekłada się na $\ln(1+e(-x))=\ln(1)=0$. Również ten problem jest źle uwarunkowany -- małe zmiany danych wpłynęły na duże odchylenia.
 		
 \section{Zadanie 3}
 	\subsection{Opis problemu}
@@ -105,7 +105,7 @@
 		\end{enumerate}
 		Przeprowadzenie eksperymentów dla macierzy Hilberta $H_n$ z rosnącym stopniem $n > 1$ oraz dla macierzy losowej $R_n$, $n = 5, 10, 20$ z rosnącym wskaźnikiem uwarunkowania $c = 1, 10, 10^3, 10^7, 10^{12}, 10^{16}$, a także obliczenie błędów względnych.
 	\subsection{Opis rozwiązania}
-		W celu rozwiązania zadanego problemu utworzono w języku \texttt{Julia} funkcje konstruujące macierze (do wygenerowania macierzy Hilberta n-stopnia użyto \texttt{hilb(n)}, zaś do losowej - \texttt{matcond(c,n)} z dołączonych plików) i obliczające błędy względne dla dwóch podanych algorytmów.
+		W celu rozwiązania zadanego problemu utworzono w języku \texttt{Julia} funkcje konstruujące macierze (do wygenerowania macierzy Hilberta $n$--stopnia użyto \texttt{hilb($n$)}, zaś do losowej -- \texttt{matcond(c,$n$)} z dołączonych plików) i obliczające błędy względne dla dwóch podanych algorytmów.
 	\subsection{Wyniki}
 		Uzyskane rezultaty prezentują: Tabela \ref{table:2} oraz Tabela \ref{table:3}.
 		\begin{table}[!h]
@@ -118,16 +118,16 @@
 				table-figures-exponent = 3
 			}
 			\begin{tabular}{l|S|S|S} \toprule
-				{n} & {\texttt{cond(n)}} & {Eliminacja Gaussa} & {Odwrotność macierzy} \\ \midrule
+				{$n$} & {\texttt{cond($n$)}} & {Eliminacja Gaussa} & {Odwrotność macierzy} \\ \midrule
 				$1$ & 1.0 & 0.0 & 0.0 \\ 
 	 			$2$ & 1.928147006790397e1 & 5.661048867003676e-16 & 1.4043333874306803e-15 \\
 	 			$3$ & 5.240567775860644e2 & 8.022593772267726e-15 & 0.0 \\
 	 			$4$ & 1.5513738738928138e4 & 3.861787750251888e-13 & 1.156679772130055e-13 \\
 	 			$5$ & 4.7660725024172297e5 & 3.493384412947934e-13 & 1.3440842450589963e-11 \\ 
-	 			$6$ & 1.4951058640747767e7  & 3.10690635252899e-10 & 2.1910589084611527e-10 \\
+	 			$6$ & 1.4951058640747767e7 & 3.10690635252899e-10 & 2.1910589084611527e-10 \\
 	 			$7$ & 4.753673563686169e8 & 1.4088888185246296e-8 & 1.2261030136487262e-8 \\
 	 			$8$ & 1.5257575258900568e10 & 2.2563320836319543e-7 & 3.317498547889283e-7 \\ 
-	 			$9$ & 4.9315447219360736e11  & 1.012295110413279e-5 & 1.0245032992812085e-5 \\
+	 			$9$ & 4.9315447219360736e11 & 1.012295110413279e-5 & 1.0245032992812085e-5 \\
 	 			$10$ & 1.602528535225018e13 & 1.658285788577287e-4 & 3.3373894670513554e-4 \\
 	 			$11$ & 5.225191290892983e14 & 5.615377523997018e-3 & 7.4210143948519e-3 \\ 
 	 			$12$ & 1.8025609727075732e16 & 1.8113059150336838e-1 & 2.0669418205518947e-1 \\
@@ -155,7 +155,7 @@
 				table-figures-exponent = 3
 			}
 			\begin{tabular}{l|l|S|S} \toprule
-				{n} & {c} & {Eliminacja Gaussa} & {Odwrotność macierzy} \\ \midrule
+				{$n$} & {$c$} & {Eliminacja Gaussa} & {Odwrotność macierzy} \\ \midrule
 				$5$ & $1.0$ & 9.930136612989092e-17 & 1.7901808365247238e-16 \\ 
 	 			$5$ & $10$ & 3.1401849173675503e-16 & 3.439900227959406e-16 \\
 	 			$5$ & $10^3$ & 1.912137988767086e-14 & 2.383232787117382e-14 \\
@@ -272,8 +272,8 @@
 			\label{table:5}
 		\end{table}	
 	\subsection{Wnioski}
-		Rzut oka pozwala dostrzec, że uzyskane wyniki różnią się znacznie od oczekiwanych. Miast zer, otrzymano liczby rzędu bilionów. Wyraźnie widoczny jest wzrost błędu wraz ze wzrostem wartości pierwiastka. Różnice początkowo nie są zbyt duże, jednak wraz z kolejnymi etapami obliczeń kumulują się, doprowadzając do tak diametralnych rozbieżności (np. dla $x_0 = 1, ~z_0 = 1-\epsilon, ~|p(x_0)|=\epsilon \cdot 19!)$. Współczynniki wielomianu przekazywane jako argumenty funkcji \texttt{Poly(W)} nie mogą być dokładnie reprezentowane (dostępnych jest od 15 do 17 miejsc na cyfry znaczące systemu dziesiętnego), stąd wynikłe zaburzenia.
-		Przebieg drugiego eksperymentu był analogiczny, poczyniono jednak nieznaczne zmiany w jednym ze współczynników danego wielomianu. W rezultacie otrzymano zauważalne różnice w błędach bezwzględnych obliczonych pierwiastków - są zdecydowanie wyższe niż w przypadku niezmienionego wielomianu Wilkinsona. Dodatkowo istotnym spostrzeżeniem jest uzyskanie pierwiastków należących do liczb zespolonych - część urojona pojawia się od $z_{10}$. Niewielkie zaburzenia wpłynęły znacząco na odkształcenie wyników, zatem zadanie to jest źle uwarunkowane.
+		Rzut oka pozwala dostrzec, że uzyskane wyniki różnią się znacznie od oczekiwanych. Miast zer, otrzymano liczby rzędu bilionów. Wyraźnie widoczny jest wzrost błędu wraz ze wzrostem wartości pierwiastka. Różnice początkowo nie są zbyt duże, jednak wraz z kolejnymi etapami obliczeń kumulują się, doprowadzając do tak diametralnych rozbieżności (np. dla $x_0 = 1, ~ z_0 = 1-\epsilon, ~|p(x_0)|=\epsilon \cdot 19!)$. Współczynniki wielomianu przekazywane jako argumenty funkcji \texttt{Poly(W)} nie mogą być dokładnie reprezentowane (dostępnych jest od 15 do 17 miejsc na cyfry znaczące systemu dziesiętnego), stąd wynikłe zaburzenia.
+		Przebieg drugiego eksperymentu był analogiczny, poczyniono jednak nieznaczne zmiany w jednym ze współczynników danego wielomianu. W rezultacie otrzymano zauważalne różnice w błędach bezwzględnych obliczonych pierwiastków -- są zdecydowanie wyższe niż w przypadku niezmienionego wielomianu Wilkinsona. Dodatkowo istotnym spostrzeżeniem jest uzyskanie pierwiastków należących do liczb zespolonych -- część urojona pojawia się od $z_{10}$. Niewielkie zaburzenia wpłynęły znacząco na odkształcenie wyników, zatem zadanie to jest źle uwarunkowane.
 \section{Zadanie 5}
 	\subsection{Opis problemu}
 		Przeprowadzenie dwóch eksperymentów przy wykorzystaniu następującego modelu wzrostu populacji: $$p_{n+1} := p_n + rp_n(1-p_n), \text{ dla } n = 1, 2, \dots,$$
@@ -320,7 +320,7 @@
 		Analiza drugiego wykresu pozwala dostrzec różnice w regularności przebiegu. Niższa precyzja arytmetyki \texttt{Float32} wpłynęła na stale powiększające się różnice, by osiągnąć swoistą kulminacyjną wartość równą $1.0$. Każda kolejna iteracja oscylowała w pobliżu właśnie tego wyniku.
 		Ciekawym spostrzeżeniem jest fakt, iż dla \texttt{Float64} ma miejsce podobna sytuacja, jednak w znacznie dalszej iteracji. 
 		
-		Powyższe eksperymenty pozwalają dostrzec, że błąd obliczeniowy wyniku, przeniesiony jako wejście kolejnej operacji, potęguje powstały błąd. Jest to typowy przykład sprzężenia zwrotnego - procesu, w którym dane wyjściowe jednego problemu są wejściem kolejnych obliczeń. Zaskakującym jest natomiast fakt nieskorelowania, co wskazuje na istnienie chaosu w systemie czy też może zjawisko niemożności przewidzenia (zgodnie ze sformułowaniem Lorenza). W uniknięciu tego rodzaju sytuacji pomóc może zwiększenie precyzji obliczeń, choć jednak w daleko wybiegających symulacjach powstałe błędy mogą zniekształcić obliczenia w tak dużym stopniu, iż również te wyniki staną się dla badającego bezużyteczne. Biorąc pod uwagę powyższe rozważania, niemożliwym jest uniknięcie błędów zaokrągleń, które są w pewien sposób integralną częścią obliczeń w arytmetyce zmiennopozycyjnej. Taki efekt będzie miał miejsce na każdym urządzeniu, niezależnie od jego mocy obliczeniowej. Stąd prosty wniosek - zadanie jest źle uwarunkowane.
+		Powyższe eksperymenty pozwalają dostrzec, że błąd obliczeniowy wyniku, przeniesiony jako wejście kolejnej operacji, potęguje powstały błąd. Jest to typowy przykład sprzężenia zwrotnego - procesu, w którym dane wyjściowe jednego problemu są wejściem kolejnych obliczeń. Zaskakującym jest natomiast fakt nieskorelowania, co wskazuje na istnienie chaosu w systemie czy też może zjawisko niemożności przewidzenia (zgodnie ze sformułowaniem Lorenza). W uniknięciu tego rodzaju sytuacji pomóc może zwiększenie precyzji obliczeń, choć jednak w daleko wybiegających symulacjach powstałe błędy mogą zniekształcić obliczenia w tak dużym stopniu, iż również te wyniki staną się dla badającego bezużyteczne. Biorąc pod uwagę powyższe rozważania, niemożliwym jest uniknięcie błędów zaokrągleń, które są w pewien sposób integralną częścią obliczeń w arytmetyce zmiennopozycyjnej. Taki efekt będzie miał miejsce na każdym urządzeniu, niezależnie od jego mocy obliczeniowej. Stąd prosty wniosek -- zadanie jest źle uwarunkowane.
 		
 \section{Zadanie 6}
 	\subsection{Opis problemu}
@@ -428,30 +428,22 @@
 				39&-1.0&2.0&1.2926797271549244&0.0&0.0&0.0&-1.0 \\
 				40&-1.0&2.0&-0.3289791230026702&-1.0&-1.0&-1.0&0.0 \\
 			\end{tabular}
-			\caption{Iteracje modelu logistycznego w arytmetykach \texttt{Float32} oraz \texttt{Float64}}
+			\caption{Iteracje w arytmetykach \texttt{Float32} oraz \texttt{Float64}}
 			\label{table:6}
 		\end{table}	
-			
-%		\begin{figure}[htbp]
-%			\centering
-%			\subfloat[1.][Plot3]{\includegraphics[width=0.5\textwidth]{zad6/plot3.png}} \hfill
-%			\subfloat[2.][Plot6]{\includegraphics[width=0.5\textwidth]{zad6/plot6.png}} \hfill
-%			\subfloat[3.][Plot7]{\includegraphics[width=0.5\textwidth]{zad6/plot7.png}}
-%  			\caption{Zestawienie wyników dla konkretnych danych}
-%  			\label{fig:6}
-%		\end{figure}	
+
 	\subsection{Wnioski}
 %		W przypadku pierwszego oraz drugiego eksperymentu uzyskane wyniki są stabilne.
 %		Trzecie doświadczenie jednak pokazuje, jak niewielkie odchylenie ($x_0 = 1.99999999999999$) niesie ze sobą w rezultacie zachowanie nieuporządkowane. Do takich wniosków prowadzić mogło Zadanie 5, jednak tutaj sytuacja jest bardziej złożona.
 %		Dalsze eksperymenty poczyniono na dość radykalnie zmienionych danych blablabla...
 %		Układ, powtarzając za autorem książki "Granice chaosu. Fraktale", jest w stanie idealnie stabilnym.
 		
-		Wizualizacje obu funkcji (Rysunek \ref{fig:4}, \ref{fig:5}) pozwalają wyciągnąć kolejne wnioski.
+		Wizualizacje obu funkcji (Rysunek \ref{fig:5}, \ref{fig:6}) pozwalają wyciągnąć kolejne wnioski.
 		\begin{figure}[htbp]
 			\centering
 			\includegraphics[width=0.8\textwidth]{zad6/Myplot1.png}
   			\caption{$\phi=x^2-2$, $f(x)=x$}
-  			\label{fig:4}
+  			\label{fig:5}
 		\end{figure}	
 		
 		\begin{enumerate}[1.]
@@ -464,13 +456,23 @@
 			\centering
 			\includegraphics[width=0.8\textwidth]{zad6/Myplot2.png}
   			\caption{$\phi=x^2-1$, $f(x)=x$}
-  			\label{fig:5}
+  			\label{fig:6}
 		\end{figure}
 		
 		\begin{enumerate}[1.]
-			\item $x_0 = 1 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ zbieżny do $0$, parzystych - $-1$.
-			\item $x_0 = -1 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ zbieżny do $0$, parzystych - $-1$.
-			\item $x_0 = 0.75 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ (od pewnego $x$) zbieżny do $0$, parzystych - $-1$.
-			\item $x_0 = 0.25 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ (od pewnego $x$) zbieżny do $0$, parzystych - $-1$.
+			\item $x_0 = 1 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ zbieżny do $0$, zaś parzystych: $-1$.
+			\item $x_0 = -1 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ zbieżny do $0$, zaś parzystych: $-1$.
+			\item $x_0 = 0.75 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ (od pewnego $x$) zbieżny do $0$, zaś parzystych: $-1$.
+			\item $x_0 = 0.25 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ (od pewnego $x$) zbieżny do $0$, zaś parzystych: $-1$.
 		\end{enumerate}
 \end{document}
+
+			
+%		\begin{figure}[htbp]
+%			\centering
+%			\subfloat[1.][Plot3]{\includegraphics[width=0.5\textwidth]{zad6/plot3.png}} \hfill
+%			\subfloat[2.][Plot6]{\includegraphics[width=0.5\textwidth]{zad6/plot6.png}} \hfill
+%			\subfloat[3.][Plot7]{\includegraphics[width=0.5\textwidth]{zad6/plot7.png}}
+%  			\caption{Zestawienie wyników dla konkretnych danych}
+%  			\label{fig:6}
+%		\end{figure}	

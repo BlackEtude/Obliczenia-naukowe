@@ -8,9 +8,11 @@
 \usepackage{algpseudocode,algorithm,mathtools,listings}
 \usepackage{booktabs,siunitx}
 \usepackage{graphicx}
-\usepackage{subfig,caption}
+\usepackage{subfig}
 
 \usepackage[usenames,dvipsnames]{xcolor}
+
+\floatname{algorithm}{Algorytm}
 
 %%
 %% Julia definition (c) 2014 Jubobs
