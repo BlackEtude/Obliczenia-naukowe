@@ -433,46 +433,46 @@
 		\end{table}	
 
 	\subsection{Wnioski}
-%		W przypadku pierwszego oraz drugiego eksperymentu uzyskane wyniki są stabilne.
-%		Trzecie doświadczenie jednak pokazuje, jak niewielkie odchylenie ($x_0 = 1.99999999999999$) niesie ze sobą w rezultacie zachowanie nieuporządkowane. Do takich wniosków prowadzić mogło Zadanie 5, jednak tutaj sytuacja jest bardziej złożona.
-%		Dalsze eksperymenty poczyniono na dość radykalnie zmienionych danych blablabla...
-%		Układ, powtarzając za autorem książki "Granice chaosu. Fraktale", jest w stanie idealnie stabilnym.
+		Z analizy zadania poprzedniego (wzrost populacji) nasuwał się wniosek, że tylko operacja podnoszenia do kwadratu jest odpowiedzialna za niestabilność numeryczną. Do odmiennych wniosków dojść można po wnikliwym przestudiowaniu wyników tego problemu. Otóż w przypadku pierwszego i drugiego eksperymentu uzyskane rezultaty są stabilne, jednak już dla $x_0=1.99999999999999$ ma miejsce zachowanie nieuporządkowane (a jest to przecież tylko niewielkie odchylenie od wartości $2.0$). Prowadzi to do konkluzji, iż niektóre dane początkowe mogą dać w rezultacie zachowanie stabilne, inne zaś -- nie.
+		Potwierdzenie tego obecne jest w dalszych doświadczeniach (przy parametrze $c$ zmienionym na $-1$) -- gdyby niemożność przewidywania wynikała wyłącznie z podnoszenia do kwadratu, powyższe zachowanie powtórzyłoby się. Tak się jednak nie dzieje i dla $x_0=1$, $x_0=-1$ funkcja oscyluje, powtarzają się jedynie wartości $-1$ oraz $0$.  Podobne zachowanie ma miejsce w przypadku $x_0=0.75$ i $x_0=0.25$. Układ sprzężenia zwrotnego osiągnął stan, powtarzając za autorem książki "Granice chaosu. Fraktale", idealnie stabilny. Zadanie to jest źle uwarunkowane.
 		
-		Wizualizacje obu funkcji (Rysunek \ref{fig:5}, \ref{fig:6}) pozwalają wyciągnąć kolejne wnioski.
-		\begin{figure}[htbp]
-			\centering
-			\includegraphics[width=0.8\textwidth]{zad6/Myplot1.png}
-  			\caption{$\phi=x^2-2$, $f(x)=x$}
-  			\label{fig:5}
-		\end{figure}	
-		
+				
+		Wizualizacje obu funkcji (Rysunek \ref{fig:5}, \ref{fig:6}) pozwalają wyciągnąć dodatkowe wnioski.
 		\begin{enumerate}[1.]
 			\item $x_0 = 1 ~\Rightarrow~ \phi(x)$ zbieżna do $-1$.
 			\item $x_0 = 2 ~\Rightarrow~ \phi(x)$ zbieżna do $2$.
 			\item $x_0 = 1.99999999999999 ~\Rightarrow~ \phi(x)$ rozbieżna.
 		\end{enumerate}
 		
-		\begin{figure}[htbp]
+		\begin{figure}[!htbp]
+			\centering
+			\includegraphics[width=0.8\textwidth]{zad6/Myplot1.png}
+  			\caption{$\phi=x^2-2$, $f(x)=x$}
+  			\label{fig:5}
+		\end{figure}	
+		
+		
+		\begin{figure}[!htbp]
 			\centering
 			\includegraphics[width=0.8\textwidth]{zad6/Myplot2.png}
   			\caption{$\phi=x^2-1$, $f(x)=x$}
   			\label{fig:6}
 		\end{figure}
 		
+		Z Rysunku \ref{fig:6}:
 		\begin{enumerate}[1.]
 			\item $x_0 = 1 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ zbieżny do $0$, zaś parzystych: $-1$.
 			\item $x_0 = -1 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ zbieżny do $0$, zaś parzystych: $-1$.
 			\item $x_0 = 0.75 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ (od pewnego $x$) zbieżny do $0$, zaś parzystych: $-1$.
 			\item $x_0 = 0.25 ~\Rightarrow$ podciąg wyrazów nieparzystych $\phi(x)$ (od pewnego $x$) zbieżny do $0$, zaś parzystych: $-1$.
 		\end{enumerate}
+		
+		\begin{figure}[!htbp]
+			\centering
+			\subfloat[1.][Eksperyment 3]{\includegraphics[width=0.5\textwidth]{zad6/plot3.png}} \hfill
+			\subfloat[2.][Eksperyment 6]{\includegraphics[width=0.5\textwidth]{zad6/plot6.png}} \hfill
+			\subfloat[3.][Eksperyment 7]{\includegraphics[width=0.5\textwidth]{zad6/plot7.png}}
+  			\caption{Zestawienie wyników iteracji dla wybranych przypadków}
+  			\label{fig:7}
+		\end{figure}	
 \end{document}
-
-			
-%		\begin{figure}[htbp]
-%			\centering
-%			\subfloat[1.][Plot3]{\includegraphics[width=0.5\textwidth]{zad6/plot3.png}} \hfill
-%			\subfloat[2.][Plot6]{\includegraphics[width=0.5\textwidth]{zad6/plot6.png}} \hfill
-%			\subfloat[3.][Plot7]{\includegraphics[width=0.5\textwidth]{zad6/plot7.png}}
-%  			\caption{Zestawienie wyników dla konkretnych danych}
-%  			\label{fig:6}
-%		\end{figure}	
