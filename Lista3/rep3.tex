@@ -23,13 +23,7 @@
 		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą bisekcji.
 	
 	\subsection{Opis rozwiązania}
-		Przebieg tej metody jest następujący:
-		\begin{enumerate}
-			\item Jeżeli funkcja $f$ nie zmienia znaku w przedziale $[a,b]$ --- zwrócenie informacji o błędzie;
-			\item Dopóki $|a-b|>epsilon$, obliczenie $x=\frac{a+b}{2}$;
-			\item Jeżeli $f(x)=0$ to zwrócenie $x$ jako rozwiązania;
-			\item Obranie nowego przedziału ($[a,x]$ lub $[b,x]$), w którym funkcja zmienia znak na przeciwny i powrót do 2.
-		\end{enumerate}	 
+		Przebieg tej metody następuje zgodnie z widocznym Algorytmem \ref{algo:1}.
 	
 		\begin{algorithm}[!htbp]
     			\SetKwInOut{Input}{Input}
@@ -55,18 +49,23 @@
 			\SetKwData{Middle}{e}
 			
 			
-			\Input{
-		    			\Fx - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
-		    			$\A, \B$ - końce przedziału początkowego,\\
-		    			$\Delta, \Eps$ - dokładność obliczeń
+			\Input{(\Fx, \A, \B, \Delta, \Eps), gdzie: \\
+					\begin{tabular}{rcl}
+    						{\Fx} &---& funkcja $f(x)$ zadana jako anonimowa funkcja,\\
+    						{\A, \B} &---& końce przedziału początkowego,\\
+    						{\Delta, \Eps} &---& dokładność obliczeń
+					\end{tabular}
 		    			}
-		    \Output{(\R,~\V,~\It,~\Err), gdzie: \\
-		    			$\R$ - przybliżenie pierwiastka równania $f(x) = 0$, \\
-		    			$\V$ - wartość $f`(\R)$, \\
-		    			$\It$ - liczba wykonanych iteracji, \\
-		    			$\Err$ - sygnalizacja błędu: \\
-		    				\quad $0$ - brak błędu, \\
-		    				\quad $1$ - funkcja nie zmienia znaku w przedziale $[\A,\B]$.
+		    \Output{
+		    			(\R, \V, \It, \Err), gdzie: \\
+		    			\begin{tabular}{rcl}
+			    			{\R} & {---} & przybliżenie pierwiastka równania $f(x) = 0$,\\
+			    			{\V} & {---} &  wartość $f(\R)$,\\
+			    			{\It} & {---} & liczba wykonanych iteracji,\\
+			    			{\Err} & {---} & sygnalizacja błędu: \\
+			    				&&	     $0$ --- brak błędu, \\
+					    		&&		$1$ --- funkcja nie zmienia znaku w przedziale $[\A,\B]$.    			
+					\end{tabular}
 		    	}
 		    	
     			\F{\Mb{\A, \B, \Delta, \Eps}} {
@@ -103,7 +102,7 @@
     			\label{algo:1}
 		\end{algorithm}	
 		
-		Niektóre elementy Algorytmu \ref{algo:1} warto uzupełnić dodatkowym komentarzem. Jako pierwszym ze spostrzeżeń można uczynić sposób obliczania punktu środkowego, czyli instrukcję: $r \leftarrow a+(b-a)/2$. Okazuje się, że w obliczeniach numerycznych o wiele lepszym rozwiązaniem jest obliczanie nowej wielkości poprzez niewielką poprawkę poprzedniej. Dlatego też wyżej wspomniane przypisanie nie ma postaci: $r \leftarrow (a+b)/2$. W pewnych przypadkach zastosowanie takiej konstrukcji mogłoby prowadzić do uzyskania wartości znajdującej się nawet poza przedziałem $[a,b]$.
+		Niektóre elementy pseudokodu warto uzupełnić dodatkowym komentarzem. Jako pierwszym ze spostrzeżeń można uczynić sposób obliczania punktu środkowego, czyli instrukcję: $r \leftarrow a+(b-a)/2$. Okazuje się, że w obliczeniach numerycznych o wiele lepszym rozwiązaniem jest obliczanie nowej wielkości poprzez niewielką poprawkę poprzedniej. Dlatego też wyżej wspomniane przypisanie nie ma postaci: $r \leftarrow (a+b)/2$. W pewnych przypadkach zastosowanie takiej konstrukcji mogłoby prowadzić do uzyskania wartości znajdującej się nawet poza przedziałem $[a,b]$.
 		Drugą sprawą będzie sposób badania zmiany znaku wartości funkcji. Otóż wykorzystanie nierówności $fa\cdot fb < 0$ może prowadzić do nadmiaru lub niedomiaru spowodowanego mnożeniem. Zamiast tego skorzystano z $\texttt{sgn}(fa) \neq \texttt{sgn}(fb)$, unikając w ten sposób zbędnego działania.
 		Ostatnim spostrzeżeniem będzie zwrócenie uwagi na warunki zakończenia obliczeń przez funkcję. Uwzględnia ona warunek $e > \epsilon$ (czy w zadanym przedziale możliwa jest kolejna iteracja), $|e| < \delta$ (gdy uzyskano już wystarczająco mały błąd) oraz $|v| < \epsilon$ (wartość funkcji w punkcie jest dostatecznie bliska zeru). Rozpatrywanie aż trzech kryteriów zakończenia pracy daje algorytmowi pewność w działaniu nawet dla przypadków patologicznych.
 	
@@ -112,13 +111,7 @@
 		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą stycznych (Newtona).
 		
 	\subsection{Opis rozwiązania}	
-		Przebieg tej metody jest następujący:
-		\begin{enumerate}
-			\item Za $x_1$ przyjmowany jest punkt przecięcia stycznej wyprowadzonej dla $x_0$ z osią \texttt{OX};
-			\item Dopóki nie osiągnięto wymaganego przybliżenia, $x_0 = x_1$;
-			\item Kolejne przybliżenie obliczane jest ze wzoru: $x_1 = x_0-\frac{f(x_0)}{pf(x_0)}$, powrót do kroku 2;
-			\item Jeżeli $f(x_0)>epsilon$ zwracany jest błąd, w przeciwnym przypadku rozwiązaniem jest $x_0$.
-		\end{enumerate}	
+		Działanie metody jest zgodnie z Algorytmem \ref{algo:2}.
 	
 		\begin{algorithm}[!htbp]
 			\SetKwData{R}{r}
@@ -136,7 +129,7 @@
     			
     			\SetKwData{Eps}{$\epsilon$}    	
     			\SetKwData{Delta}{$\delta$} 	
-    			\SetKwData{XX}{$x_0$}	
+    			\SetKwData{XX}{x0}	
     			\SetKwData{Maxit}{maxit}
     			\SetKwData{A}{a} 
     			\SetKwData{B}{b}
@@ -144,21 +137,24 @@
     			\SetKwInOut{Input}{Input}
     			\SetKwInOut{Output}{Output}
 
-			\Input{
-		    			$\Fx$, $\Pf$ - funkcja $f(x)$ oraz $f'(x)$ zadane jako anonimowe funkcje,\\
-		    			$\XX$ - przybliżenie początkowe,\\
-		    			$\Delta, \Eps$ - dokładność obliczeń \\
-		    			$\Maxit$ - maksymalna dopuszczalna liczba iteracji
+			\Input{(\Fx, \Pf, \XX, \Delta, \Eps, \Maxit), gdzie: \\
+					\begin{tabular}{rcl}
+    						{\Fx, \Pf} &---& funkcja $f(x)$ oraz $f'(x)$ zadane jako anonimowe funkcje,\\
+    						{\XX} &---& przybliżenie początkowe,\\
+    						{\Delta, \Eps} &---& dokładność obliczeń, \\
+    						{\Maxit} &---& maksymalna dopuszczalna liczba iteracji
+					\end{tabular}
 		    			}
-		    \Output{
-		    			(\R,~\V,~\It,~\Err), gdzie: \\
-		    			$\R$ - przybliżenie pierwiastka równania $f(x) = 0$, \\
-		    			$\V$ - wartość $f(\R)$, \\
-		    			$\It$ - liczba wykonanych iteracji, \\
-		    			$\Err$ - sygnalizacja błędu: \\
-		    				\quad $0$ - metoda zbieżna, \\
-		    				\quad $1$ - nie osiągnięto wymaganej dokładności w \Maxit iteracji, \\
-		    				\quad $2$ - pochodna bliska zeru.
+		    \Output{	(\R, \V, \It, \Err), gdzie: \\
+		    			\begin{tabular}{rcl}
+			    			{\R} & {---} & przybliżenie pierwiastka równania $f(x) = 0$,\\
+			    			{\V} & {---} &  wartość $f(\R)$,\\
+			    			{\It} & {---} & liczba wykonanych iteracji,\\
+			    			{\Err} & {---} & sygnalizacja błędu: \\
+			    				&&	     $0$ --- metoda zbieżna, \\
+					    		&&		$1$ --- nie osiągnięto wymaganej dokładności w \Maxit iteracji, \\
+					    		&&		$2$ --- pochodna bliska zeru.			
+					\end{tabular}
 		    	}
 		    	
     			\F{\Mb{\Fx, \Pf, \XX, \Delta, \Eps, \Maxit}} {
@@ -189,13 +185,7 @@
 		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą siecznych(Eulera).
 	
 	\subsection{Opis rozwiązania}		
-		Przebieg tej metody jest następujący:
-		\begin{enumerate}
-			\item Obliczane są wartości $f_1=f(x_1)$ oraz $f_2=f(x_2)$;
-			\item Dopóki nie osiągnięto wymaganej liczby iteracji, $x_0=x_1-f_1 \cdot \frac{x_1-x_2}{f_1-f_2}$, $f_0=f(x_0)$;
-			\item Jeżeli $|x_1-x_2|<epsilon$, zwrócenie $x_0$ i zakończenie działania;
-			\item Zamiana parametrów i wartości funkcji odpowiednio dla $x_2 \leftarrow x_1$ oraz $x_1 \leftarrow x_0$, powrót do kroku 2.
-		\end{enumerate}
+		Przebieg tej metody następuje zgodnie z Algorytmem \ref{algo:3}.
 		
 		\begin{algorithm}[!htbp]
 			\SetKwData{A}{a}
@@ -219,26 +209,29 @@
     			
     			\SetKwData{Eps}{$\epsilon$}    	
     			\SetKwData{Delta}{$\delta$} 	
-    			\SetKwData{XX}{$x_0$}	
-    			\SetKwData{XY}{$x_1$}	
+    			\SetKwData{XX}{x0}	
+    			\SetKwData{XY}{x1}	
     			\SetKwData{Maxit}{maxit}
     			\SetKwData{A}{a} 
     			\SetKwData{B}{b}
 
-			\Input{		    			
-		    			$\Fx$ - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
-		    			$\XX$, $\XY$ - przybliżenia początkowe,\\
-		    			$\Delta$, $\Eps$ - dokładność obliczeń \\
-		    			$\Maxit$ - maksymalna dopuszczalna liczba iteracji
+			\Input{(\Fx, \XX, \XY, \Delta, \Eps, \Maxit), gdzie: \\
+					\begin{tabular}{rcl}
+    						{\Fx} &---& funkcja $f(x)$ zadana jako anonimowa funkcja,\\
+    						{\XX, \XY} &---& przybliżenia początkowe,\\
+    						{\Delta, \Eps} &---& dokładność obliczeń, \\
+    						{\Maxit} &---& maksymalna dopuszczalna liczba iteracji
+					\end{tabular}
 		    			}
-		    \Output{
-		    			(\R, \V, \It, \Err), gdzie: \\
-		    			$\R$ - przybliżenie pierwiastka równania $f(x) = 0$, \\
-		    			$\V$ - wartość $f(\R)$, \\
-		    			$\It$ - liczba wykonanych iteracji, \\
-		    			$\Err$ - sygnalizacja błędu: \\
-		    				\quad $0$ - metoda zbieżna, \\
-		    				\quad $1$ - nie osiągnięto wymaganej dokładności w \Maxit iteracji.
+		    \Output{	(\R, \V, \It, \Err), gdzie: \\
+		    			\begin{tabular}{rcl}
+			    			{\R} & {---} & przybliżenie pierwiastka równania $f(x) = 0$,\\
+			    			{\V} & {---} &  wartość $f(\R)$,\\
+			    			{\It} & {---} & liczba wykonanych iteracji,\\
+			    			{\Err} & {---} & sygnalizacja błędu: \\
+			    				&&	     $0$ --- metoda zbieżna, \\
+					    		&&		$1$ --- nie osiągnięto wymaganej dokładności w \Maxit iteracji.
+					\end{tabular}	    			
 		    	}
 		    
     			\F{\Mb{\Fx, \XX, \XY, \Delta, \Eps, \Maxit}} {		    
@@ -318,7 +311,7 @@
 		Przykład funkcji podanej w tym zadaniu pokazuje różnice w liczbie iteracji wykonywanych przez każdą z trzech metod wyznaczania pierwiastków równań. Funkcja metody bisekcji wykonała ich najwięcej, bo aż 17, aby uzyskać wynik z zadaną dokładnością. O wiele lepiej radzą tu sobie funkcje siecznych oraz stycznych - wymagana precyzja została osiągnięta już po 4 przebiegach.
 		Uzyskane rezultaty znajdują swoje potwierdzenie w teoretycznej zbieżności wyżej wymienionych metod. Otóż posortowanie według tego współczynnika daje w efekcie następującą kolejność metod: Newtona (kwadratowo), siecznych ($\approx 1.62$, nadliniowo) oraz bisekcji (liniowo). 
 		Przeprowadzenie analizy otrzymanych w Tabeli \ref{algo:1} wyników mogłoby prowadzić do śmiałego wniosku, iż ostatnia z nich jest nie tylko najwolniejsza, ale także najmniej dokładna. Bardziej trafnym jest jednak zauważenie, że zwrócona przez metodę bisekcji wartość jest najbliższa zadanej dokładności (przez co można by nazwać ją najbardziej "stabilną" z wszystkich badanych). 
-		W przypadku dwóch pozostałych --- zbiegały one szybciej, co doprowadziło finalnie do osiągnięci większej dokładności oraz obliczenia pierwiastka najbliższego rzeczywistemu. Warto mieć na uwadze, iż wybór odmiennej funkcji bądź przedziałów skutkować może uzyskaniem zupełnie innych 
+		W przypadku dwóch pozostałych --- zbiegały one szybciej, co doprowadziło finalnie do osiągnięcia większej dokładności oraz obliczenia pierwiastka najbliższego rzeczywistemu. Warto mieć na uwadze, iż wybór odmiennej funkcji bądź przedziałów skutkować może uzyskaniem zupełnie innych rezultatów.
 		
 %		Zauważenia wymaga fakt, iż każdy krok metody siecznych wymaga obliczenia tylko jednej wartości funkcji, zaś w metodzie Newtona trzeba obliczyć dwie takie wartości, mianowicie $f(x)$ i $f'(x)$. W obu metodach najbardziej kosztowne jest właśnie obliczanie wartości funkcji i w tym sensie para kroków metody siecznych jest porównywalna z jednym krokiem metody Newtona.
 \section{Zadanie 5}
@@ -352,12 +345,12 @@
 				$[0.0,1.0]$ & 0.619140625 & $9$ \\ 
 	 			$[1.0,2.0]$ & 1.5120849609375 & $13$ \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{...}
+	 		\caption{Miejsca zerowe $f(x)=3x-\exp(x)$ obliczone z pomocą metody bisekcji.}
 			\label{table:2}
 		\end{table}	
 		
 	\subsection{Wnioski}
-		Ważnym czynnikiem wpływającym na pomyślne znalezienie pierwiastków funkcji metodą bisekcji jest umiejętny dobór przedziału początkowego. Należy zwrócić uwagę, iż w tym przypadku uruchomienie jej dla przedziału $[0.0,2.0]$ zwróci błąd związany z niezmiennością znaku. Jednak po wyszczególnieniu $[0.0,1.0]$ i $[1.0,2.0]$ znalezienie miejsc zerowych $f(x)$ nie nastręcza problemów. Pomocne w czynności wyboru startowego przedziału może być na przykład analiza wykresu funkcji.
+		Ważnym czynnikiem wpływającym na pomyślne znalezienie pierwiastków funkcji metodą bisekcji jest umiejętny dobór przedziału początkowego. Należy zwrócić uwagę, iż w tym przypadku uruchomienie jej dla przedziału $[0.0,2.0]$ zwróci błąd związany z niezmiennością znaku. Jednak po wyszczególnieniu $[0.0,1.0]$ i $[1.0,2.0]$ znalezienie miejsc zerowych $f(x)$ nie nastręcza problemów. Pomocna w czynności wyboru startowego przedziału może być na przykład analiza wykresu funkcji, którą zastosowano w rozwiązaniu tego problemu. Zadanie okazałoby się jednak znacznie trudniejsze, gdyby takie rozwiązanie nie było dostępne. W związku ze stosunkowo niewielką długością przedziałów, niezbędna byłaby dobra znajomość przebiegu zadanej funkcji bądź przeprowadzenie wielu eksperymentów. 
 		
 \section{Zadanie 6}
 	\subsection{Opis problemu}
@@ -365,43 +358,36 @@
 		
 	\subsection{Opis rozwiązania}
 		W rozwiązaniu zadania zastosowano metody \texttt{mbisekcji}, \texttt{msiecznych} oraz \texttt{mstycznych}, utworzone w zadaniach 1-3.
-		Rozpoczęto od przeprowadzenia analizy wykresów (Rysunek \ref{fig:2}) zadanych funkcji w celu określenia trafnych parametrów.
+		Rozpoczęto od przeprowadzenia analizy wykresów (Rysunek \ref{fig:2}) zadanych funkcji w celu określenia najlepszych parametrów.
 		
 		\begin{figure}[!htbp]
 			\centering
 			\subfloat[1.][$f_1(x)=\exp(1-x)-1$]{\includegraphics[width=0.5\textwidth]{zadania/plot61.png}} \hfill
 			\subfloat[2.][$f_2(x)=x\exp(-x)$]{\includegraphics[width=0.5\textwidth]{zadania/plot62.png}}
-  			\caption{...}
+  			\caption{}
   			\label{fig:2}
 		\end{figure}		
 		
-	
-		\begin{enumerate}[1)]
-			\item $f_1(x)$ \\
-			Z wykresu z łatwością można odczytać prawidłowe rozwiązanie, jakim jest $x=1.0$.
-			Dla metody bisekcji unikano sytuacji, gdy pierwiastek znajduje się w środku przedziału początkowego. Wykonywanie funkcji kończy się wtedy już po pierwszej iteracji, co nie jest interesujące w tym zadaniu.
-			Podczas używania metody Newtona należało uważać przy dobieraniu $x_0$, gdyż pochodna dąży do $0$, co jest niepożądane dla tej metody.
-			W funkcji metody siecznych wybranie zbyt dużych wartości przybliżeń sprawi, że obliczenia wykonane są na bliskich sobie wartościach i działanie zakończy się szybko ze względu na osiągnięcie założonej precyzji.
-			
-			\item $f_2(x)$ \\
-			Już sam wzór funkcji wskazuje właściwy pierwiastek, czyli $x=0.0$. Podczas używania metody bisekcji ponownie unikano obierania takich przedziałów, że pierwiastek leżał dokładnie w ich połowie. Tym razem jednak wybrano przedział, w którym wartość $0.0$ znajduje się znacznie bliżej środka niż dla funkcji $f_1(x)$. 
-		Dla pozostałych dwóch metod zastosowano podobne środki ostrożności co w przypadku funkcji z punktu 1).
-		\end{enumerate}
-		
-		
 	\subsection{Wyniki}
+			Z wykresu z łatwością odczytać można prawidłowe rozwiązanie $f_1(x)=\exp(1-x)-1$, jakim jest $x=1.0$.
+			Dla metody bisekcji unikano sytuacji, gdy pierwiastek znajduje się w środku przedziału początkowego. Podczas używania metody Newtona należało uważać przy dobieraniu $x_0$, gdyż pochodna dąży do $0$, co jest niepożądane dla tej metody. W funkcji metody siecznych wybranie zbyt dużych wartości przybliżeń sprawi, że obliczenia wykonane są na bliskich sobie wartościach i działanie zakończy się szybko ze względu na osiągnięcie założonej precyzji.
+			\\
+			
+			W przypadku funkcji $f_2(x)=x\exp(-x)$ już sam jej wzór wskazuje właściwy pierwiastek, czyli $x=0.0$. Zastosowano podobne środki ostrożności co w przypadku funkcji $f_1(x)$.
 		\begin{table}[!hpbt]
         		\centering
         		\footnotesize
 			\sisetup{
 				table-number-alignment = right,
-				table-figures-integer = 1,
+				table-figures-integer = 2,
 				table-figures-decimal = 16,
-				table-figures-exponent = 1
+				table-figures-exponent = 2
 			}
-			\begin{tabular}{llSSl} \toprule
+			\begin{tabular}{llSSc} \toprule
 				{metoda} & {początkowe dane} &{$x$} & {$f(x)$} & {liczba iteracji}\\ \midrule
 				bisekcji & $[a,b]=[0.1,1.2]$ & 0.9999938964843748 & 6.103534251789e-6 & $14$ \\ 
+				bisekcji & $[a,b]=[-0.1,1.4]$ & 1.000006103515625 & -6.103496998477453e-6 & $14$ \\ 
+				bisekcji & $[a,b]=[0.0,150]$ & 0.9999990463256836 & 9.536747711536009e-7 & $21$ \\
 	 			stycznych & $x_0=0.3$ & 0.9999999866969493 & 1.3303050661050975e-8 & $4$ \\
 	 			siecznych & $x_0=-0.4,~x_1=1.3$ & 1.0000026160714057 & -2.6160679837961e-6 & $7$ \\ 
 	 			siecznych & $x_0=-2.0,~x_1=2.0$ & 1.0000063854903036 & -6.385469916381226e-6 & $23$ \\ \bottomrule
@@ -409,27 +395,27 @@
 	 		\caption{$f_1(x)=\exp(1-x)-1$.}
 			\label{table:3}
 		\end{table}
-			
+		
 		\begin{table}[!hpbt]
         		\centering
         		\footnotesize
 			\sisetup{
 				table-number-alignment = right,
-				table-figures-integer = 1,
+				table-figures-integer = 2,
 				table-figures-decimal = 16,
-				table-figures-exponent = 1
+				table-figures-exponent = 2
 			}
-			\begin{tabular}{llSSl} \toprule
+			\begin{tabular}{llSSc} \toprule
 				{metoda} & {początkowe dane} &{$x$} & {$f(x)$} & {liczba iteracji}\\ \midrule
-				bisekcji & $[a,b]=[-0.4,0.7]$ & -4.5776367187399074e-6 & -4.577657673545798e-6 & $16$ \\ 
-	 			stycznych & $x_0=0.4$ & -8.878980981560664e-6 & -8.879059818213929e-6 & $4$ \\  	
-	 			siecznych & $x_0=-1.0,~x_1=0.3$ & 9.44134425373555e-6 & 9.441255115175028e-6 & $23$ \\
-	 			siecznych & $x_0=-0.1,~x_1=0.9$ & 1.10233618098865e-6 & 1.102334965844264e-6 & $6$ \\ \bottomrule
+				bisekcji & $[a,b]=[-0.4,0.7]$ & -4.5776367187399074e-6 & -4.577657673545798e-6 & 16 \\ 
+	 			stycznych & $x_0=0.4$ & -8.878980981560664e-6 & -8.879059818213929e-6 & 4 \\  	
+	 			siecznych & $x_0=-1.0,~x_1=0.3$ & 9.44134425373555e-6 & 9.441255115175028e-6 & 23 \\
+	 			siecznych & $x_0=-0.1,~x_1=0.9$ & 1.10233618098865e-6 & 1.102334965844264e-6 & 6 \\ \bottomrule
 	 		\end{tabular}
 	 		\caption{$f_2(x)=x\exp(-x)$.}
 			\label{table:4}			
 		\end{table}	
-		
+
 		\begin{table}[!hpbt]
         		\centering
         		\footnotesize
@@ -439,44 +425,29 @@
 				table-figures-decimal = 16,
 				table-figures-exponent = 1
 			}
-			\begin{tabular}{lSSl} \toprule
-				{$x_0$} & {$x$} & {$f(x)$} & {liczba iteracji}\\ \midrule
-				$1.5$ & 0.9999999810061002 & 1.8993900008368314e-8 & $5$ \\ 
-				$2.5$ & 0.9999999710783241 & 2.892167638712806e-8 & $9$ \\
-	 			$4.5$ & 0.9999999995278234 & 4.721765201054495e-10 & $21$ \\
-	 			$5.0$ & 0.9999996427095682 & 3.572904956339329e-7 & $54$ \\
-	 			$7.5$ & 0.9999999573590406 & 4.264096031825204e-8 & $147$ \\
-	 			$10.0$ & 0.9999999484165362 & 5.15834650549607e-8 & $401$ \\ \bottomrule
+			\begin{tabular}{lSScc} \toprule
+				{$x_0$} & {$x$} & {$f(x)$} & {liczba iteracji} & {błąd} \\ \midrule
+				\multicolumn{4}{c}{$f_1$} \\ \hline
+				$1.5$ & 0.9999999984736215 & 1.5263785790864404e-9 & $4$ & 0\\ 
+				$2.5$ & 0.9999934982589662 & 6.501762170207925e-6 & $6$ & 0\\
+	 			$5.5$ & 0.9999998543788339 & 1.4562117667260566e-7 & $89$ & 0\\
+	 			$7.5$ & {---} & {---} & {---} & 1\\
+	 			$13$ & {---} & {---} & {---} & 2\\ \hline
+	 			\multicolumn{4}{c}{$f_2$} \\ \hline
+	 			$1.0$ & {---} & {---} & {---} & 2 \\ 
+	 			$2.0$ & 14.398662765680003 & 8.036415344217211e-6 & $10$ & 0\\ 
+	 			$5.0$ & 15.194283983439147 & 3.827247505782993e-6 & $9$ & 0\\
+	 			$10.0$ & 14.380524159896261 & 8.173205649825554e-6 & $4$ & 0\\ 
+	 			$50.0$ & 50.0 & 9.643749239819589e-21 & $0$ & 2\\ \bottomrule
 	 		\end{tabular}
-	 		\caption{Metoda Newtona dla $f_1(x)=\exp(1-x)-1$ i $x_0\in{(1,\infty)}$.}
+	 		\caption{Metoda Newtona dla $f_1(x)=\exp(1-x)-1$ oraz $f_2(x)=x\exp(-x)$.}
 			\label{table:5}			
-		\end{table}	
-		
-		\begin{table}[!hpbt]
-        		\centering
-        		\footnotesize
-			\sisetup{
-				table-number-alignment = right,
-				table-figures-integer = 1,
-				table-figures-decimal = 16,
-				table-figures-exponent = 1
-			}
-			\begin{tabular}{lSSl} \toprule
-				{$x_0$} & {$x$} & {$f(x)$} & {liczba iteracji}\\ \midrule
-				$2.0$ & 0.9999999810061002 & 1.8993900008368314e-8 & $5$ \\ 
-				$3.0$ & 0.9999999710783241 & 2.892167638712806e-8 & $9$ \\
-	 			$4.0$ & 0.9999999995278234 & 4.721765201054495e-10 & $21$ \\
-	 			$5.0$ & 0.9999996427095682 & 3.572904956339329e-7 & $54$ \\
-	 			$6.0$ & 0.9999999573590406 & 4.264096031825204e-8 & $147$ \\
-	 			$7.0$ & 0.9999999484165362 & 5.15834650549607e-8 & $401$ \\  \bottomrule
-	 		\end{tabular}
-	 		\caption{Metoda Newtona dla $f_2(x)=x\exp(-x)$ i $x_0>1$.}
-			\label{table:6}			
 		\end{table}	
 
 	\subsection{Wnioski}
-		Zestawienie wyników z tabel widocznych powyżej pozwala na wyciągnięcie kilku wniosków. Otóż metoda bisekcji nie ma żadnych ograniczeń związanych z przebiegiem zadanej funkcji oraz jej pochodnej (w przeciwieństwie np. do metody Newtona). Niezależnie od przesunięć przedziału względem poprawnego pierwiastka wylicza wynik w tym samym tempie zależnym od wielkości przedziału (ma to sens, gdyż metoda ta polega na sukcesywnym dzieleniu przedziału na pół aż do momentu uzyskania takiego o satysfakcjonująco małym rozmiarze). Metoda stycznych najlepiej radzi sobie z wyznaczaniem pierwiastka, gdy kluczem jest szybkość --- ze wszystkich badanych metod zwracała ona rozwiązanie po najmniejszej liczbie wykonanych iteracji. Nie oznacza to jednak, że jest najlepszym wyborem w każdej sytuacji --- należy brać pod uwagę jej ograniczenia, nakładane przez konieczność obliczania pochodnej funkcji.  \\
+		Zestawienie wyników z Tabel \ref{table:3} oraz \ref{table:4} widocznych powyżej pozwala na wyciągnięcie kilku wniosków. Otóż metoda bisekcji nie ma żadnych ograniczeń związanych z przebiegiem zadanej funkcji oraz jej pochodnej (w przeciwieństwie np. do metody Newtona). Niezależnie od przesunięć przedziału względem poprawnego pierwiastka wylicza wynik w tym samym tempie zależnym od wielkości przedziału (ma to sens, gdyż metoda ta polega na sukcesywnym dzieleniu przedziału na pół aż do momentu uzyskania takiego o satysfakcjonująco małym rozmiarze). Metoda stycznych najlepiej radzi sobie z wyznaczaniem pierwiastka, gdy kluczem jest szybkość --- ze wszystkich badanych metod zwracała ona rozwiązanie po najmniejszej liczbie wykonanych iteracji. Nie oznacza to jednak, że jest najlepszym wyborem w każdej sytuacji --- należy brać pod uwagę jej ograniczenia, nakładane przez konieczność obliczania pochodnej funkcji.  \\
 	
+		Zadanie 
 		TEMP NOTES:	 \\
 		Wnioski dla wyników metody Newtona przy szczególnych argumentach!!!		
 		Dla pierwszego: nie udało się wyliczyć dla $x_0=8$ - wciąż niewystarczająca była obrana liczba iteracji wynosząca $it=10000000000$.
