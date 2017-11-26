@@ -102,7 +102,9 @@
     			\caption{Metoda bisekcji}
 		\end{algorithm}	
 		
-		Niektóre elementy widocznego algorytmu mogą wymagać dodatkowego komentarza. Jako pierwszą
+		Niektóre elementy widocznego algorytmu warto uzupełnić dodatkowym komentarzem. Jako pierwszym ze spostrzeżeń można uczynić sposób obliczania punktu środkowego, czyli instrukcję: $r \leftarrow a+(b-a)/2$. Okazuje się, że w obliczeniach numerycznych o wiele lepszym rozwiązaniem jest obliczanie nowej wielkości poprzez niewielką poprawkę poprzedniej. Dlatego też wyżej wspomniane przypisanie nie ma postaci: $r \leftarrow (a+b)/2$. W pewnych przypadkach zastosowanie takiej konstrukcji mogłoby prowadzić do uzyskania wartości znajdującej się nawet poza przedziałem $[a,b]$.
+		\\ Drugą sprawą będzie sposób badania zmiany znaku wartości funkcji. Otóż wykorzystanie nierówności $fa\cdot fb < 0$ może prowadzić do nadmiaru lub niedomiaru spowodowanego mnożeniem. Zamiast tego skorzystano z $sgn(fa) \neq sgn(fb)$, unikając w ten sposób zbędnego działania.
+		\\ Ostatnim spostrzeżeniem będzie zwrócenie uwagi na warunki zakończenia obliczeń przez funkcję. Uwzględnia ona warunek $e > \epsilon$ (czy w zadanym przedziale możliwa jest kolejna iteracja), $|e| < \delta$ (gdy uzyskano już wystarczająco mały błąd) oraz $|v| < \epsilon$ (wartość funkcji w punkcie jest dostatecznie bliska zeru). Uwzględnienie aż trzech kryteriów zakończenia pracy daje algorytmowi pewność w działaniu nawet dla przypadków patologicznych.
 	
 \section{Zadanie 2}
 	\subsection{Opis problemu}
@@ -221,7 +223,6 @@
     			\SetKwData{A}{a} 
     			\SetKwData{B}{b}
 
-
 			\Input{		    			
 		    			$\Fx$ - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
 		    			$\XX$, $\XY$ - przybliżenia początkowe,\\
@@ -269,7 +270,7 @@
 	
 \section{Zadanie 4}
 	\subsection{Opis problemu}
-		Przy użyciu metod zaprogramowanych w poprzednich zadaniach wyznaczenie pierwiastka równania $sin{x}-(\frac{1}{2}x)^2=0$ dla poniższych danych:
+		Przy użyciu metod zaprogramowanych w poprzednich zadaniach wyznaczenie pierwiastka równania $\sin{x}-(\frac{1}{2}x)^2=0$ dla poniższych danych:
 		\begin{enumerate}[1.]
 			\item Metodą bisekcji z przedziałem początkowym $[1.5,2],~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$;
 			\item Metodą Newtona z przybliżeniem początkowym $x_0=1.5,~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$;
@@ -283,7 +284,7 @@
 		\begin{figure}[!htbp]
 			\centering
 			\includegraphics[width=0.8\textwidth]{zadania/plot41.png}
-  			\caption{Wykres funkcji $sin{x}-(\frac{1}{2}x)^2=0$.}
+  			\caption{Wykres funkcji $\sin{x}-(\frac{1}{2}x)^2=0$.}
   			\label{fig:3}
 		\end{figure}	
 		
@@ -306,7 +307,7 @@
 	 			$2.$ & 1.933753779789742 & -2.2423316314856834e-8 & 4 \\
 	 			$3.$ & 1.9337509005356321 & 3.783706985283075e-6 & 4 \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{$sin{x}-(\frac{1}{2}x)^2=0$ dla danych z zadania.}
+	 		\caption{$\sin{x}-(\frac{1}{2}x)^2=0$ dla danych z zadania.}
 			\label{table:1}
 		\end{table}	
 		
@@ -354,7 +355,7 @@
 		
 \section{Zadanie 6}
 	\subsection{Opis problemu}
-		Znalezienie pierwiastków funkcji $f_1(x)=exp^{1-x}-1$ oraz $f_2(x)=x\exp^{-x}$ przy pomocy metod: bisekcji, stycznych oraz siecznych z dokładnością obliczeń $\delta=10^{-4}$, $\epsilon=10^{-4}$. Należy zadbać o dobór odpowiedniego przedziału oraz przybliżeń początkowych.
+		Znalezienie pierwiastków funkcji $f_1(x)=\exp^{1-x}-1$ oraz $f_2(x)=x\exp^{-x}$ przy pomocy metod: bisekcji, stycznych oraz siecznych z dokładnością obliczeń $\delta=10^{-4}$, $\epsilon=10^{-4}$. Należy zadbać o dobór odpowiedniego przedziału oraz przybliżeń początkowych.
 		
 	\subsection{Opis rozwiązania}
 		W rozwiązaniu zadania zastosowano metody \texttt{mbisekcji}, \texttt{msiecznych} oraz \texttt{mstycznych}, utworzone w zadaniach 1-3.
@@ -362,7 +363,7 @@
 		
 		\begin{figure}[!htbp]
 			\centering
-			\subfloat[1.][$f_1(x)=exp^{1-x}-1$]{\includegraphics[width=0.5\textwidth]{zadania/plot61.png}} \hfill
+			\subfloat[1.][$f_1(x)=\exp^{1-x}-1$]{\includegraphics[width=0.5\textwidth]{zadania/plot61.png}} \hfill
 			\subfloat[2.][$f_2(x)=x\exp^{-x}$]{\includegraphics[width=0.5\textwidth]{zadania/plot62.png}}
   			\caption{...}
   			\label{fig:2}
@@ -399,7 +400,7 @@
 	 			siecznych & $x_0=-0.4,~x_1=1.3$ & 1.0000026160714057 & -2.6160679837961e-6 & $7$ \\ 
 	 			siecznych & $x_0=-2.0,~x_1=2.0$ & 1.0000063854903036 & -6.385469916381226e-6 & $23$ \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{$f_1(x)=exp^{1-x}-1$.}
+	 		\caption{$f_1(x)=\exp^{1-x}-1$.}
 			\label{table:3}
 		\end{table}
 			
@@ -441,7 +442,7 @@
 	 			$7.5$ & 0.9999999573590406 & 4.264096031825204e-8 & $147$ \\
 	 			$10.0$ & 0.9999999484165362 & 5.15834650549607e-8 & $401$ \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{Metoda Newtona dla $f_1(x)=exp^{1-x}-1$ i $x_0\in{(1,\infty)}$.}
+	 		\caption{Metoda Newtona dla $f_1(x)=\exp^{1-x}-1$ i $x_0\in{(1,\infty)}$.}
 			\label{table:5}			
 		\end{table}	
 		
