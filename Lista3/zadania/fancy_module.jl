@@ -1,3 +1,5 @@
+#Agata Jasionowska - 229726
+
 module fancy_module
 
 export mbisekcji
@@ -135,7 +137,7 @@ function msiecznych(f, x0 :: Float64, x1 :: Float64, delta :: Float64, epsilon :
     if abs(value_a) > epsilon && abs(b - a) > delta
         err = 1
     end
-    return (a, value_a, it_num, err)
+    return (a, value_a, it, err)
 end
 
 end
