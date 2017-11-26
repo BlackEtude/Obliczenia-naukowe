@@ -100,11 +100,12 @@
     			\KwRet (\R, \Valuer, \It, 0)\;
     			}
     			\caption{Metoda bisekcji}
+    			\label{algo:1}
 		\end{algorithm}	
 		
-		Niektóre elementy widocznego algorytmu warto uzupełnić dodatkowym komentarzem. Jako pierwszym ze spostrzeżeń można uczynić sposób obliczania punktu środkowego, czyli instrukcję: $r \leftarrow a+(b-a)/2$. Okazuje się, że w obliczeniach numerycznych o wiele lepszym rozwiązaniem jest obliczanie nowej wielkości poprzez niewielką poprawkę poprzedniej. Dlatego też wyżej wspomniane przypisanie nie ma postaci: $r \leftarrow (a+b)/2$. W pewnych przypadkach zastosowanie takiej konstrukcji mogłoby prowadzić do uzyskania wartości znajdującej się nawet poza przedziałem $[a,b]$.
-		\\ Drugą sprawą będzie sposób badania zmiany znaku wartości funkcji. Otóż wykorzystanie nierówności $fa\cdot fb < 0$ może prowadzić do nadmiaru lub niedomiaru spowodowanego mnożeniem. Zamiast tego skorzystano z $sgn(fa) \neq sgn(fb)$, unikając w ten sposób zbędnego działania.
-		\\ Ostatnim spostrzeżeniem będzie zwrócenie uwagi na warunki zakończenia obliczeń przez funkcję. Uwzględnia ona warunek $e > \epsilon$ (czy w zadanym przedziale możliwa jest kolejna iteracja), $|e| < \delta$ (gdy uzyskano już wystarczająco mały błąd) oraz $|v| < \epsilon$ (wartość funkcji w punkcie jest dostatecznie bliska zeru). Uwzględnienie aż trzech kryteriów zakończenia pracy daje algorytmowi pewność w działaniu nawet dla przypadków patologicznych.
+		Niektóre elementy Algorytmu \ref{algo:1} warto uzupełnić dodatkowym komentarzem. Jako pierwszym ze spostrzeżeń można uczynić sposób obliczania punktu środkowego, czyli instrukcję: $r \leftarrow a+(b-a)/2$. Okazuje się, że w obliczeniach numerycznych o wiele lepszym rozwiązaniem jest obliczanie nowej wielkości poprzez niewielką poprawkę poprzedniej. Dlatego też wyżej wspomniane przypisanie nie ma postaci: $r \leftarrow (a+b)/2$. W pewnych przypadkach zastosowanie takiej konstrukcji mogłoby prowadzić do uzyskania wartości znajdującej się nawet poza przedziałem $[a,b]$.
+		Drugą sprawą będzie sposób badania zmiany znaku wartości funkcji. Otóż wykorzystanie nierówności $fa\cdot fb < 0$ może prowadzić do nadmiaru lub niedomiaru spowodowanego mnożeniem. Zamiast tego skorzystano z $\texttt{sgn}(fa) \neq \texttt{sgn}(fb)$, unikając w ten sposób zbędnego działania.
+		Ostatnim spostrzeżeniem będzie zwrócenie uwagi na warunki zakończenia obliczeń przez funkcję. Uwzględnia ona warunek $e > \epsilon$ (czy w zadanym przedziale możliwa jest kolejna iteracja), $|e| < \delta$ (gdy uzyskano już wystarczająco mały błąd) oraz $|v| < \epsilon$ (wartość funkcji w punkcie jest dostatecznie bliska zeru). Rozpatrywanie aż trzech kryteriów zakończenia pracy daje algorytmowi pewność w działaniu nawet dla przypadków patologicznych.
 	
 \section{Zadanie 2}
 	\subsection{Opis problemu}
@@ -180,6 +181,7 @@
     			\KwRet (\R, \Valuer, \It, 1)\;
     			}
     			\caption{Metoda stycznych}
+    			\label{algo:2}
 		\end{algorithm}	
 	
 \section{Zadanie 3}
@@ -266,11 +268,13 @@
     			\KwRet (\A, \Valuea, \It, 1)\;
     			}
     			\caption{Metoda siecznych}
+    			\label{algo:3}
 		\end{algorithm}	
-	
+			
+		W widocznym Algorytmie \ref{algo:3} wartym podkreślenia jest cel zastosowania funkcji \texttt{swap}. Przestawia ona końce przedziału $a$ i $b$, gdy utrzymanie $|f(a)| \leq |f(b)|$ tego wymaga. Dlatego też, począwszy od drugiego kroku, wartości bezwzględne funkcji w kolejnych punktach są nierosnące.
 \section{Zadanie 4}
 	\subsection{Opis problemu}
-		Przy użyciu metod zaprogramowanych w poprzednich zadaniach wyznaczenie pierwiastka równania $\sin{x}-(\frac{1}{2}x)^2=0$ dla poniższych danych:
+		Przy użyciu metod zaprogramowanych w poprzednich zadaniach wyznaczenie pierwiastka równania $\sin(x)-(\frac{1}{2}x)^2=0$ dla poniższych danych:
 		\begin{enumerate}[1.]
 			\item Metodą bisekcji z przedziałem początkowym $[1.5,2],~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$;
 			\item Metodą Newtona z przybliżeniem początkowym $x_0=1.5,~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$;
@@ -278,13 +282,12 @@
 		\end{enumerate}
 		
 	\subsection{Opis rozwiązania}
-		Zastosowanie funkcji utworzonych w zadaniach 1-3.
-		Miejsca zerowe zadanej funkcji widoczne są na Rysunku \ref{fig:3}.
+		Zastosowano metody utworzone w zadaniach 1-3 wraz z zaimplementowaną funkcją $f(x)=\sin(x)-(\frac{1}{2}x)^2$ oraz jej pochodną $pf(x)=\cos(x)-\frac{1}{2}x$ (niezbędną przy korzystaniu z metody stycznych).  Miejsca zerowe zadanej funkcji widoczne są na Rysunku \ref{fig:3}.
 		
 		\begin{figure}[!htbp]
 			\centering
 			\includegraphics[width=0.8\textwidth]{zadania/plot41.png}
-  			\caption{Wykres funkcji $\sin{x}-(\frac{1}{2}x)^2=0$.}
+  			\caption{Wykres funkcji $\sin(x)-(\frac{1}{2}x)^2=0$.}
   			\label{fig:3}
 		\end{figure}	
 		
@@ -307,27 +310,30 @@
 	 			$2.$ & 1.933753779789742 & -2.2423316314856834e-8 & 4 \\
 	 			$3.$ & 1.9337509005356321 & 3.783706985283075e-6 & 4 \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{$\sin{x}-(\frac{1}{2}x)^2=0$ dla danych z zadania.}
+	 		\caption{$\sin(x)-(\frac{1}{2}x)^2=0$ dla danych z zadania.}
 			\label{table:1}
 		\end{table}	
 		
 	\subsection{Wnioski}
-		Funkcja metody biekcji wykonała znacznie więcej iteracji, bo aż 17. Jednak w efekcie końcowym to ona zwróciła wynik z najmniejsza dokładnością. 
-		O wiele lepiej radzą tu sobie funkcje siecznych oraz stycznych, osiągając wymaganą dokładność już po 4 iteracjach. Jako zwycięzcę wytypować można metodę Newtona, bowiem osiągnęła ona najdokładniejszy wynik.
+		Przykład funkcji podanej w tym zadaniu pokazuje różnice w liczbie iteracji wykonywanych przez każdą z trzech metod wyznaczania pierwiastków równań. Funkcja metody bisekcji wykonała ich najwięcej, bo aż 17, aby uzyskać wynik z zadaną dokładnością. O wiele lepiej radzą tu sobie funkcje siecznych oraz stycznych - wymagana precyzja została osiągnięta już po 4 przebiegach.
+		Uzyskane rezultaty znajdują swoje potwierdzenie w teoretycznej zbieżności wyżej wymienionych metod. Otóż posortowanie według tego współczynnika daje w efekcie następującą kolejność metod: Newtona (kwadratowo), siecznych ($\approx 1.62$, nadliniowo) oraz bisekcji (liniowo). 
+		Przeprowadzenie analizy otrzymanych w Tabeli \ref{algo:1} wyników mogłoby prowadzić do śmiałego wniosku, iż ostatnia z nich jest nie tylko najwolniejsza, ale także najmniej dokładna. Bardziej trafnym jest jednak zauważenie, że zwrócona przez metodę bisekcji wartość jest najbliższa zadanej dokładności (przez co można by nazwać ją najbardziej "stabilną" z wszystkich badanych). 
+		W przypadku dwóch pozostałych --- zbiegały one szybciej, co doprowadziło finalnie do osiągnięci większej dokładności oraz obliczenia pierwiastka najbliższego rzeczywistemu. Warto mieć na uwadze, iż wybór odmiennej funkcji bądź przedziałów skutkować może uzyskaniem zupełnie innych 
 		
+%		Zauważenia wymaga fakt, iż każdy krok metody siecznych wymaga obliczenia tylko jednej wartości funkcji, zaś w metodzie Newtona trzeba obliczyć dwie takie wartości, mianowicie $f(x)$ i $f'(x)$. W obu metodach najbardziej kosztowne jest właśnie obliczanie wartości funkcji i w tym sensie para kroków metody siecznych jest porównywalna z jednym krokiem metody Newtona.
 \section{Zadanie 5}
 	\subsection{Opis problemu}
-		Wyznaczenie przy pomocy metody bisekcji wartości zmiennej $x$, dla której następuje przecięcie wykresów funkcji $y=3x$ oraz $y=\exp^x$ dla dokładności $\delta=10^{-4}$, $\epsilon=10^{-4}$.
+		Wyznaczenie przy pomocy metody bisekcji wartości zmiennej $x$, dla której następuje przecięcie wykresów funkcji $y=3x$ oraz $y=\exp(x)$ dla dokładności $\delta=10^{-4}$, $\epsilon=10^{-4}$.
 	
 	\subsection{Opis rozwiązania}
 		W celu rozwiązania zadania zastosowano metodę \texttt{mbisekcji} utworzoną w zadaniu 1.
-		Aby określić miejsce przecięcia zadanych funkcji należy znaleźć taki punkt, dla którego przyjmują one identyczną wartość dla tego samego argumentu, czyli $f(x)=3x-\exp^x$. 	\\
+		Aby określić miejsce przecięcia zadanych funkcji należy znaleźć taki punkt, dla którego przyjmują one identyczną wartość dla tego samego argumentu, czyli $f(x)=3x-\exp(x)$. 	\\
 		 Najprostszym sposobem określenia przedziałów początkowych będzie analiza wykresu obu funkcji. Z Rysunku \ref{fig:1} wywnioskować można, iż poszukiwane wyniki znajdą się w przedziałach $[0.0,1.0]$ oraz $[1.0,2.0]$.
 		
 		\begin{figure}[!htbp]
 			\centering
 			\includegraphics[width=0.8\textwidth]{zadania/plot51.png}
-  			\caption{Wykres funkcji $y=3x$ oraz $y=\exp^x$.}
+  			\caption{Wykres funkcji $y=3x$ oraz $y=\exp(x)$.}
   			\label{fig:1}
 		\end{figure}	
 		
@@ -355,7 +361,7 @@
 		
 \section{Zadanie 6}
 	\subsection{Opis problemu}
-		Znalezienie pierwiastków funkcji $f_1(x)=\exp^{1-x}-1$ oraz $f_2(x)=x\exp^{-x}$ przy pomocy metod: bisekcji, stycznych oraz siecznych z dokładnością obliczeń $\delta=10^{-4}$, $\epsilon=10^{-4}$. Należy zadbać o dobór odpowiedniego przedziału oraz przybliżeń początkowych.
+		Znalezienie pierwiastków funkcji $f_1(x)=\exp(1-x)-1$ oraz $f_2(x)=x\exp(-x)$ przy pomocy metod: bisekcji, stycznych oraz siecznych z dokładnością obliczeń $\delta=10^{-4}$, $\epsilon=10^{-4}$. Należy zadbać o dobór odpowiedniego przedziału oraz przybliżeń początkowych.
 		
 	\subsection{Opis rozwiązania}
 		W rozwiązaniu zadania zastosowano metody \texttt{mbisekcji}, \texttt{msiecznych} oraz \texttt{mstycznych}, utworzone w zadaniach 1-3.
@@ -363,8 +369,8 @@
 		
 		\begin{figure}[!htbp]
 			\centering
-			\subfloat[1.][$f_1(x)=\exp^{1-x}-1$]{\includegraphics[width=0.5\textwidth]{zadania/plot61.png}} \hfill
-			\subfloat[2.][$f_2(x)=x\exp^{-x}$]{\includegraphics[width=0.5\textwidth]{zadania/plot62.png}}
+			\subfloat[1.][$f_1(x)=\exp(1-x)-1$]{\includegraphics[width=0.5\textwidth]{zadania/plot61.png}} \hfill
+			\subfloat[2.][$f_2(x)=x\exp(-x)$]{\includegraphics[width=0.5\textwidth]{zadania/plot62.png}}
   			\caption{...}
   			\label{fig:2}
 		\end{figure}		
@@ -400,7 +406,7 @@
 	 			siecznych & $x_0=-0.4,~x_1=1.3$ & 1.0000026160714057 & -2.6160679837961e-6 & $7$ \\ 
 	 			siecznych & $x_0=-2.0,~x_1=2.0$ & 1.0000063854903036 & -6.385469916381226e-6 & $23$ \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{$f_1(x)=\exp^{1-x}-1$.}
+	 		\caption{$f_1(x)=\exp(1-x)-1$.}
 			\label{table:3}
 		\end{table}
 			
@@ -420,7 +426,7 @@
 	 			siecznych & $x_0=-1.0,~x_1=0.3$ & 9.44134425373555e-6 & 9.441255115175028e-6 & $23$ \\
 	 			siecznych & $x_0=-0.1,~x_1=0.9$ & 1.10233618098865e-6 & 1.102334965844264e-6 & $6$ \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{$f_2(x)=x\exp^{-x}$.}
+	 		\caption{$f_2(x)=x\exp(-x)$.}
 			\label{table:4}			
 		\end{table}	
 		
@@ -442,7 +448,7 @@
 	 			$7.5$ & 0.9999999573590406 & 4.264096031825204e-8 & $147$ \\
 	 			$10.0$ & 0.9999999484165362 & 5.15834650549607e-8 & $401$ \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{Metoda Newtona dla $f_1(x)=\exp^{1-x}-1$ i $x_0\in{(1,\infty)}$.}
+	 		\caption{Metoda Newtona dla $f_1(x)=\exp(1-x)-1$ i $x_0\in{(1,\infty)}$.}
 			\label{table:5}			
 		\end{table}	
 		
@@ -464,7 +470,7 @@
 	 			$6.0$ & 0.9999999573590406 & 4.264096031825204e-8 & $147$ \\
 	 			$7.0$ & 0.9999999484165362 & 5.15834650549607e-8 & $401$ \\  \bottomrule
 	 		\end{tabular}
-	 		\caption{Metoda Newtona dla $f_2(x)=x\exp^{-x}$ i $x_0>1$.}
+	 		\caption{Metoda Newtona dla $f_2(x)=x\exp(-x)$ i $x_0>1$.}
 			\label{table:6}			
 		\end{table}	
 
