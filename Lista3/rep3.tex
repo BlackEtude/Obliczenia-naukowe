@@ -23,95 +23,97 @@
 		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą bisekcji.
 	
 	\subsection{Opis rozwiązania}
-		Zastosowanie metody bisekcji wymaga spełnienia pewnych założeń:
-		\begin{enumerate}[1.]
-			\item funkcja $f(x)$ jest ciągła w przedziale domkniętym $[a,b]$,
-			\item funkcja przyjmuje różne znaki na końcach przedziału $f(a)f(b)<0$.
-		\end{enumerate}
-		
-		Przebieg algorytmu dla tej metody jest następujący:
+		Przebieg tej metody jest następujący:
 		\begin{enumerate}
 			\item Jeżeli funkcja $f$ nie zmienia znaku w przedziale $[a,b]$ --- zwrócenie informacji o błędzie;
-			\item Dopóki $|a-b|>epsilon$, obliczenie $x=\dfrac{a+b}{2}$;
+			\item Dopóki $|a-b|>epsilon$, obliczenie $x=\frac{a+b}{2}$;
 			\item Jeżeli $f(x)=0$ to zwrócenie $x$ jako rozwiązania;
 			\item Obranie nowego przedziału ($[a,x]$ lub $[b,x]$), w którym funkcja zmienia znak na przeciwny i powrót do 2.
-		\end{enumerate}	
+		\end{enumerate}	 
 	
 		\begin{algorithm}[!htbp]
     			\SetKwInOut{Input}{Input}
     			\SetKwInOut{Output}{Output}
     			
+    			\SetKwProg{F}{Function}{}{}
+    			\SetKwFunction{Sgn}{sgn}
+    			\SetKwFunction{Mb}{mbisekcji}
+    			\SetKwFunction{Fx}{f}
+    			
+    			\SetKwData{Eps}{$\epsilon$}    	
+    			\SetKwData{Delta}{$\delta$} 		
+    			\SetKwData{A}{a} 
+    			\SetKwData{B}{b} 
+    			
     			\SetKwData{R}{r}
-			\SetKwData{Err}{err}
 			\SetKwData{V}{v}
 			\SetKwData{Valuer}{v}
 			\SetKwData{Valuea}{fa}
 			\SetKwData{Valueb}{fb}
+			\SetKwData{Err}{err}
 			\SetKwData{It}{it}
 			\SetKwData{Middle}{e}
-
-    			\underline{mbisekcji} ($f,~a,~b,~delta,~epsilon$)\;
-		    \Input{
-		    			$f$ - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
-		    			$a,b$ - końce przedziału początkowego,\\
-		    			$delta, epsilon$ - dokładność obliczeń}
-		    \Output{
-		    			(\R,~\V,~\It,~\Err), gdzie: \\
+			
+			
+			\Input{
+		    			\Fx - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
+		    			$\A, \B$ - końce przedziału początkowego,\\
+		    			$\Delta, \Eps$ - dokładność obliczeń
+		    			}
+		    \Output{(\R,~\V,~\It,~\Err), gdzie: \\
 		    			$\R$ - przybliżenie pierwiastka równania $f(x) = 0$, \\
-		    			$\V$ - wartość $f(\R)$, \\
+		    			$\V$ - wartość $f`(\R)$, \\
 		    			$\It$ - liczba wykonanych iteracji, \\
 		    			$\Err$ - sygnalizacja błędu: \\
 		    				\quad $0$ - brak błędu, \\
-		    				\quad $1$ - funkcja nie zmienia znaku w przedziale $[a,b]$.
+		    				\quad $1$ - funkcja nie zmienia znaku w przedziale $[\A,\B]$.
 		    	}
+		    	
+    			\F{\Mb{\A, \B, \Delta, \Eps}} {
+		    
 		    \R $\leftarrow 0$\;
 		    \Valuer $\leftarrow 0$\;
-		    	\Valuea $\leftarrow f(a)$\;
-		    	\Valueb $\leftarrow f(b)$\;
-		    	\Middle $\leftarrow b - a$\;
+		    	\Valuea $\leftarrow$ \Fx{\A}\;
+		    	\Valueb $\leftarrow$ \Fx{\B}\;
+		    	\Middle $\leftarrow \B - \A$\;
 		    	\It $\leftarrow 0$\;
-		    \If{$sgn(\Valuea) = sgn(\Valueb)$} {
-		    		\Err $\leftarrow 1$\;
-		    		\KwRet $(\R,~\Valuer,~\It,~\Err)$\;
+		    \If{$\Sgn(\Valuea) = \Sgn(\Valueb)$} {
+		    		\KwRet (\R, \Valuer, \It, 1) \;
 		    	}
-		    	\While{\Middle $> epsilon$} {
+		    	\While{\Middle $>$ \Eps} {
 		    		\It $\leftarrow \It + 1$\;
     				\Middle $\leftarrow \Middle / 2$\;
-    				\R $\leftarrow a + \Middle$\;
-    				\Valuer $\leftarrow f(\R)$\;
-    				\If{$|\Middle| < delta$ OR $|\Valuer| < epsilon$} {
-    					\KwRet $(\R,~\Valuer,~\It,~\Err)$\;
+    				\R $\leftarrow$ \A + \Middle\;
+    				\Valuer $\leftarrow$ \Fx{\R}\;
+    				\If{$|\Middle| < \Delta \lor |\Valuer| < \Eps$} {
+    					\KwRet (\R, \Valuer, \It, 0)\;
     				}
-    				\eIf{$sign(\Valuer) \neq sign(\Valuea)$} {
-    					$b \leftarrow \R$\;
-    					\Valueb $\leftarrow \Valuer$\;
+    				\eIf{$\Sgn(\Valuer) \neq \Sgn(\Valuea)$} {
+    					\B $\leftarrow$ \R\;
+    					\Valueb $\leftarrow$ \Valuer\;
     				}
     				{
-    				$a \leftarrow \R$\;
-    				$\Valuea \leftarrow \Valuer$\;
+    				\A $\leftarrow$ \R\;
+    				\Valuea $\leftarrow$ \Valuer\;
     				}
     			}
-    			\KwRet $(\R,~\Valuer,~\It,~\Err)$\;
+    			\KwRet (\R, \Valuer, \It, 0)\;
+    			}
     			\caption{Metoda bisekcji}
 		\end{algorithm}	
+		
+		Niektóre elementy widocznego algorytmu mogą wymagać dodatkowego komentarza. Jako pierwszą
 	
 \section{Zadanie 2}
 	\subsection{Opis problemu}
 		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą stycznych (Newtona).
 		
-	\subsection{Opis rozwiązania}
-		W przypadku stosowania metody Newtona przyjmuje się kilka założeń co do danej funkcji $f$:
-		\begin{enumerate}[1.]
-			\item w przedziale domkniętym $[a,b]$ znajduje się dokładnie jeden pierwiastek,
-			\item funkcja przyjmuje różne znaki na końcach przedziału $f(a)f(b)<0$,
-			\item pierwsza i druga pochodna $f$ mają stały znak w tym przedziale.
-		\end{enumerate}
-		
+	\subsection{Opis rozwiązania}	
 		Przebieg tej metody jest następujący:
 		\begin{enumerate}
 			\item Za $x_1$ przyjmowany jest punkt przecięcia stycznej wyprowadzonej dla $x_0$ z osią \texttt{OX};
 			\item Dopóki nie osiągnięto wymaganego przybliżenia, $x_0 = x_1$;
-			\item Kolejne przybliżenie obliczane jest ze wzoru: $x_1 = x_0-\dfrac{f(x_0)}{pf(x_0)}$, powrót do kroku 2;
+			\item Kolejne przybliżenie obliczane jest ze wzoru: $x_1 = x_0-\frac{f(x_0)}{pf(x_0)}$, powrót do kroku 2;
 			\item Jeżeli $f(x_0)>epsilon$ zwracany jest błąd, w przeciwnym przypadku rozwiązaniem jest $x_0$.
 		\end{enumerate}	
 	
@@ -123,47 +125,58 @@
 			\SetKwData{It}{it}
 			\SetKwData{X}{x}
 			
+			\SetKwProg{F}{Function}{}{}
+    			\SetKwFunction{Sgn}{sgn}
+    			\SetKwFunction{Mb}{mstycznych}
+    			\SetKwFunction{Fx}{f}
+    			\SetKwFunction{Pf}{pf}
+    			
+    			\SetKwData{Eps}{$\epsilon$}    	
+    			\SetKwData{Delta}{$\delta$} 	
+    			\SetKwData{XX}{$x_0$}	
+    			\SetKwData{Maxit}{maxit}
+    			\SetKwData{A}{a} 
+    			\SetKwData{B}{b}
+			
     			\SetKwInOut{Input}{Input}
     			\SetKwInOut{Output}{Output}
 
-    			\underline{mstycznych} $(f,~pf,~x_0,~delta,~epsilon,~maxit)$\;
-		    \Input{
-		    			$f,~pf$ - funkcja $f(x)$ oraz $f'(x)$ zadane jako anonimowe funkcje,\\
-		    			$x_0$ - przybliżenie początkowe,\\
-		    			$delta,~epsilon$ - dokładność obliczeń,\\
-		    			$maxit$ - maksymalna dopuszczalna liczba iteracji
+			\Input{
+		    			$\Fx$, $\Pf$ - funkcja $f(x)$ oraz $f'(x)$ zadane jako anonimowe funkcje,\\
+		    			$\XX$ - przybliżenie początkowe,\\
+		    			$\Delta, \Eps$ - dokładność obliczeń \\
+		    			$\Maxit$ - maksymalna dopuszczalna liczba iteracji
 		    			}
 		    \Output{
 		    			(\R,~\V,~\It,~\Err), gdzie: \\
-		    			\R~ - przybliżenie pierwiastka równania $f(x) = 0$, \\
-		    			\V~ - wartość $f(\R)$, \\
-		    			\It~ - liczba wykonanych iteracji, \\
-		    			\Err~ - sygnalizacja błędu: \\
+		    			$\R$ - przybliżenie pierwiastka równania $f(x) = 0$, \\
+		    			$\V$ - wartość $f(\R)$, \\
+		    			$\It$ - liczba wykonanych iteracji, \\
+		    			$\Err$ - sygnalizacja błędu: \\
 		    				\quad $0$ - metoda zbieżna, \\
-		    				\quad $1$ - nie osiągnięto wymaganej dokładności w $maxit$ iteracji, \\
+		    				\quad $1$ - nie osiągnięto wymaganej dokładności w \Maxit iteracji, \\
 		    				\quad $2$ - pochodna bliska zeru.
 		    	}
-		    	\R $\leftarrow x_0$\;
-		    	\Err $\leftarrow 0$\;
-		    	\Valuer $\leftarrow f(\R)$\;
+		    	
+    			\F{\Mb{\Fx, \Pf, \XX, \Delta, \Eps, \Maxit}} {
+		    
+		    	\R $\leftarrow$ \XX\;
+		    	\Valuer $\leftarrow \Fx{\R}$\;
 		    	\It $\leftarrow 0$\;
-		    \If{$|pf(\R)| < epsilon$} {
-		    		\Err $\leftarrow 2$\;
-		    		\KwRet $(\R,~\Valuer,~\It,~\Err)$\;
+		    \If{$|\Pf{\R}| < \Eps$} {
+		    		\KwRet (\R, \Valuer, \It, 2)\;
 		    	}
-		    	\For{\It $\gets 1$ \KwTo $maxit$} {
-		    		\X $\leftarrow \R - (\Valuer / pf(\R))$\;
-		    		\Valuer $\leftarrow f(\X)$\;
-		    		\If{$|\R - \X| < delta$ or $|\Valuer| < epsilon$} {
+		    	\For{\It $\gets 1$ \KwTo \Maxit} {
+		    		\X $\leftarrow \R - (\Valuer / \Pf{\R})$\;
+		    		\Valuer $\leftarrow \Fx{\X}$\;
+		    		\If{$|\R - \X| < \Delta \lor |\Valuer| < \Eps$} {
 		    			\R $\leftarrow \X$\;
-		    			\KwRet $(\R,~\Valuer,~\It,~\Err)$\;
+		    			\KwRet (\R, \Valuer, \It, 0)\;
 		    		}
-		    		\R $\leftarrow \X$\;
+		    		\R $\leftarrow$ \X\;
     			}
-    			\If{$|\Valuer| > epsilon$} {
-    				\Err $\leftarrow 1$\;
+    			\KwRet (\R, \Valuer, \It, 1)\;
     			}
-    			\KwRet $(\R,~\Valuer,~\It,~\Err)$\;
     			\caption{Metoda stycznych}
 		\end{algorithm}	
 	
@@ -172,17 +185,10 @@
 		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą siecznych(Eulera).
 	
 	\subsection{Opis rozwiązania}		
-		Dla metody siecznych przyjmuje się kilka założeń co do funkcji $f$:
-		\begin{enumerate}[1.]
-			\item $f$ jest ciągła,
-			\item w przedziale domkniętym $[a,b]$ pierwsza pochodna jest różna od zera,
-			\item funkcja przyjmuje różne znaki na końcach przedziału $f(a)f(b)<0$.
-		\end{enumerate}
-		
 		Przebieg tej metody jest następujący:
 		\begin{enumerate}
 			\item Obliczane są wartości $f_1=f(x_1)$ oraz $f_2=f(x_2)$;
-			\item Dopóki nie osiągnięto wymaganej liczby iteracji, $x_0=x_1-f_1 \cdot \dfrac{x_1-x_2}{f_1-f_2}$, $f_0=f(x_0)$;
+			\item Dopóki nie osiągnięto wymaganej liczby iteracji, $x_0=x_1-f_1 \cdot \frac{x_1-x_2}{f_1-f_2}$, $f_0=f(x_0)$;
 			\item Jeżeli $|x_1-x_2|<epsilon$, zwrócenie $x_0$ i zakończenie działania;
 			\item Zamiana parametrów i wartości funkcji odpowiednio dla $x_2 \leftarrow x_1$ oraz $x_1 \leftarrow x_0$, powrót do kroku 2.
 		\end{enumerate}
@@ -199,65 +205,88 @@
 			\SetKwData{S}{s}
     			\SetKwInOut{Input}{Input}
     			\SetKwInOut{Output}{Output}
-    			\SetKwInOut{OR}{OR}
+    			
+    			\SetKwProg{F}{Function}{}{}
+    			\SetKwFunction{Sgn}{sgn}
+    			\SetKwFunction{Swap}{swap}
+    			\SetKwFunction{Mb}{msiecznych}
+    			\SetKwFunction{Fx}{f}
+    			\SetKwFunction{Pf}{pf}
+    			
+    			\SetKwData{Eps}{$\epsilon$}    	
+    			\SetKwData{Delta}{$\delta$} 	
+    			\SetKwData{XX}{$x_0$}	
+    			\SetKwData{XY}{$x_1$}	
+    			\SetKwData{Maxit}{maxit}
+    			\SetKwData{A}{a} 
+    			\SetKwData{B}{b}
 
-    			\underline{msiecznych} $(f,~x_0,~x_1,~delta,~epsilon,~maxit)$\;
-		    \Input{
-		    			$f$ - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
-		    			$x_0,~x_1$ - przybliżenia początkowe,\\
-		    			$delta,~epsilon$ - dokładność obliczeń,\\
-		    			$maxit$ - maksymalna dopuszczalna liczba iteracji
+
+			\Input{		    			
+		    			$\Fx$ - funkcja $f(x)$ zadana jako anonimowa funkcja,\\
+		    			$\XX$, $\XY$ - przybliżenia początkowe,\\
+		    			$\Delta$, $\Eps$ - dokładność obliczeń \\
+		    			$\Maxit$ - maksymalna dopuszczalna liczba iteracji
 		    			}
 		    \Output{
-		    			(\R,~\V,~\It,~\Err), gdzie: \\
-		    			\R~ - przybliżenie pierwiastka równania $f(x) = 0$, \\
-		    			\V~ - wartość $f(\R)$, \\
-		    			\It~ - liczba wykonanych iteracji, \\
-		    			\Err~ - sygnalizacja błędu: \\
+		    			(\R, \V, \It, \Err), gdzie: \\
+		    			$\R$ - przybliżenie pierwiastka równania $f(x) = 0$, \\
+		    			$\V$ - wartość $f(\R)$, \\
+		    			$\It$ - liczba wykonanych iteracji, \\
+		    			$\Err$ - sygnalizacja błędu: \\
 		    				\quad $0$ - metoda zbieżna, \\
-		    				\quad $1$ - nie osiągnięto wymaganej dokładności w $maxit$ iteracji.
+		    				\quad $1$ - nie osiągnięto wymaganej dokładności w \Maxit iteracji.
 		    	}
-		    	\A $\leftarrow x_0$\;
-		    	\B $\leftarrow x_1$\;
-		    	\Valuea $\leftarrow f(\A)$\;
-		    	\Valueb $\leftarrow f(\B)$\;
+		    
+    			\F{\Mb{\Fx, \XX, \XY, \Delta, \Eps, \Maxit}} {		    
+		    
+		    	\A $\leftarrow$ \XX\;
+		    	\B $\leftarrow$ \XY\;
+		    	\Valuea $\leftarrow$ \Fx{\A}\;
+		    	\Valueb $\leftarrow$ \Fx{\B}\;
 		    	\It $\leftarrow 0$\;
-		    \Err $\leftarrow 0$\;
 		    	
-		    	\For{\It $\gets 1$ \KwTo $maxit$} {
+		    	\For{\It $\gets 1$ \KwTo \Maxit} {
 		    		\If{$|\Valuea| > |\Valueb|$} {
-		    			$swap(\A, \B)$\;
-		    			$swap(\Valuea, \Valueb)$\;
+		    			\Swap{\A, \B}\;
+		    			\Swap{\Valuea, \Valueb}\;
 		    		}
 		    		\S $\leftarrow (\B - \A) / (\Valueb - \Valuea)$\;
 		    		\B $\leftarrow \A$\;
 		    		\Valueb $\leftarrow \Valuea$\;
 		    		
 		    		\A $\leftarrow \A - (\Valuea \cdot \S)$\;
-		    		\Valuea $\leftarrow f(\A)$\;		    		
+		    		\Valuea $\leftarrow \Fx{\A}$\;		    		
 		    		
-    				\If{$|\Valuea| < epsilon$ \texttt{OR} $|\B - \A| < delta$} {
-    					\KwRet $(\A,~\Valuea,~\It,~\Err)$\;
+    				\If{$|\Valuea| < \Eps \lor |\B - \A| < \Delta$} {
+    					\KwRet (\A, \Valuea, \It, 0)\;
     				}
     			}
-    			\If{$|\Valuea| > epsilon$ \texttt{AND} $|\B - \A| > delta$} {
-    				\Err $\leftarrow 1$\;
+    			\KwRet (\A, \Valuea, \It, 1)\;
     			}
-    			\KwRet $(\A,~\Valuea,~\It,~\Err)$\;
     			\caption{Metoda siecznych}
 		\end{algorithm}	
 	
 \section{Zadanie 4}
 	\subsection{Opis problemu}
-		Przy użyciu metod zaprogramowanych w poprzednich zadaniach wyznaczenie pierwiastka równania $sin{x}-(\dfrac{1}{2}x)^2=0$ dla poniższych danych:
+		Przy użyciu metod zaprogramowanych w poprzednich zadaniach wyznaczenie pierwiastka równania $sin{x}-(\frac{1}{2}x)^2=0$ dla poniższych danych:
 		\begin{enumerate}[1.]
-			\item Metodą bisekcji z przedziałem początkowym $[1.5,2],~\delta=\dfrac{1}{2}10^{-5},~\epsilon=\dfrac{1}{2}10^{-5}$;
-			\item Metodą Newtona z przybliżeniem początkowym $x_0=1.5,~\delta=\dfrac{1}{2}10^{-5},~\epsilon=\dfrac{1}{2}10^{-5}$;
-			\item Metodą siecznych z przybliżeniem początkowym $x_0=1,~x_1=2,~\delta=\dfrac{1}{2}10^{-5},~\epsilon=\dfrac{1}{2}10^{-5}$.
+			\item Metodą bisekcji z przedziałem początkowym $[1.5,2],~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$;
+			\item Metodą Newtona z przybliżeniem początkowym $x_0=1.5,~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$;
+			\item Metodą siecznych z przybliżeniem początkowym $x_0=1,~x_1=2,~\delta=\frac{1}{2}10^{-5},~\epsilon=\frac{1}{2}10^{-5}$.
 		\end{enumerate}
 		
 	\subsection{Opis rozwiązania}
 		Zastosowanie funkcji utworzonych w zadaniach 1-3.
+		Miejsca zerowe zadanej funkcji widoczne są na Rysunku \ref{fig:3}.
+		
+		\begin{figure}[!htbp]
+			\centering
+			\includegraphics[width=0.8\textwidth]{zadania/plot41.png}
+  			\caption{Wykres funkcji $sin{x}-(\frac{1}{2}x)^2=0$.}
+  			\label{fig:3}
+		\end{figure}	
+		
 	
 	\subsection{Wyniki}
 		Uzyskane rezultaty widoczne są w Tabeli \ref{table:1}.
@@ -277,7 +306,7 @@
 	 			$2.$ & 1.933753779789742 & -2.2423316314856834e-8 & 4 \\
 	 			$3.$ & 1.9337509005356321 & 3.783706985283075e-6 & 4 \\ \bottomrule
 	 		\end{tabular}
-	 		\caption{$sin{x}-(\dfrac{1}{2}x)^2=0$ dla danych z zadania}
+	 		\caption{$sin{x}-(\frac{1}{2}x)^2=0$ dla danych z zadania.}
 			\label{table:1}
 		\end{table}	
 		
@@ -296,8 +325,8 @@
 		
 		\begin{figure}[!htbp]
 			\centering
-			\includegraphics[width=0.5\textwidth]{zadania/plot51.png}
-  			\caption{Wykres funkcji w programie Mathematica.}
+			\includegraphics[width=0.8\textwidth]{zadania/plot51.png}
+  			\caption{Wykres funkcji $y=3x$ oraz $y=\exp^x$.}
   			\label{fig:1}
 		\end{figure}	
 		

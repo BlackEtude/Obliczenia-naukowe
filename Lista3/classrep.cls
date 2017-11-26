@@ -7,6 +7,8 @@
 \usepackage{multicol}
 \usepackage{amsmath,mathtools,listings}
 \usepackage[linesnumbered,ruled]{algorithm2e}
+\SetAlgorithmName{Algorytm}{algorytm}{Algorytmy}
+\DontPrintSemicolon
 \usepackage{booktabs,siunitx}
 \usepackage{graphicx}
 \usepackage{subfig}
