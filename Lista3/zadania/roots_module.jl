@@ -1,6 +1,6 @@
 #Agata Jasionowska - 229726
 
-module fancy_module
+module roots_module
 
 export mbisekcji
 export mstycznych

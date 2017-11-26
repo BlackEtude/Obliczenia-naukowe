@@ -182,7 +182,7 @@
 	
 \section{Zadanie 3}
 	\subsection{Opis problemu}
-		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą siecznych(Eulera).
+		Implementacja funkcji rozwiązującej równanie $f(x)=0$ metodą siecznych (Eulera).
 	
 	\subsection{Opis rozwiązania}		
 		Przebieg tej metody następuje zgodnie z Algorytmem \ref{algo:3}.
@@ -340,7 +340,7 @@
 				table-figures-integer = 1,
 				table-figures-decimal = 12
 			}
-			\begin{tabular}{lSl} \toprule
+			\begin{tabular}{lSc} \toprule
 				{przedział} & {$x$} & {liczba iteracji}\\ \midrule
 				$[0.0,1.0]$ & 0.619140625 & $9$ \\ 
 	 			$[1.0,2.0]$ & 1.5120849609375 & $13$ \\ \bottomrule
@@ -369,11 +369,8 @@
 		\end{figure}		
 		
 	\subsection{Wyniki}
-			Z wykresu z łatwością odczytać można prawidłowe rozwiązanie $f_1(x)=\exp(1-x)-1$, jakim jest $x=1.0$.
-			Dla metody bisekcji unikano sytuacji, gdy pierwiastek znajduje się w środku przedziału początkowego. Podczas używania metody Newtona należało uważać przy dobieraniu $x_0$, gdyż pochodna dąży do $0$, co jest niepożądane dla tej metody. W funkcji metody siecznych wybranie zbyt dużych wartości przybliżeń sprawi, że obliczenia wykonane są na bliskich sobie wartościach i działanie zakończy się szybko ze względu na osiągnięcie założonej precyzji.
-			\\
-			
-			W przypadku funkcji $f_2(x)=x\exp(-x)$ już sam jej wzór wskazuje właściwy pierwiastek, czyli $x=0.0$. Zastosowano podobne środki ostrożności co w przypadku funkcji $f_1(x)$.
+			Ze wzorów oraz wykresów funkcji $f_1$ oraz $f_2$ z łatwością odczytać można prawidłowe rozwiązania, którymi są odpowiednio $x=1.0$ oraz $x=0.0$. Poniższe dwie tabele (\ref{table:3} i \ref{table:4}) prezentują rozwiązania dla trzech metod obliczania pierwiastków równań dla różnych danych początkowych, zaś Tabela \ref{table:5} --- rezultaty eksperymentów z wartością początkową $x_0$ dla metody stycznych.
+
 		\begin{table}[!hpbt]
         		\centering
         		\footnotesize
@@ -388,7 +385,8 @@
 				bisekcji & $[a,b]=[0.1,1.2]$ & 0.9999938964843748 & 6.103534251789e-6 & $14$ \\ 
 				bisekcji & $[a,b]=[-0.1,1.4]$ & 1.000006103515625 & -6.103496998477453e-6 & $14$ \\ 
 				bisekcji & $[a,b]=[0.0,150]$ & 0.9999990463256836 & 9.536747711536009e-7 & $21$ \\
-	 			stycznych & $x_0=0.3$ & 0.9999999866969493 & 1.3303050661050975e-8 & $4$ \\
+				bisekcji & $[a,b]=[-3.0,3.0]$ & 1.0 & 0.0 & $2$ \\ 
+	 			Newtona & $x_0=0.3$ & 0.9999999866969493 & 1.3303050661050975e-8 & $4$ \\
 	 			siecznych & $x_0=-0.4,~x_1=1.3$ & 1.0000026160714057 & -2.6160679837961e-6 & $7$ \\ 
 	 			siecznych & $x_0=-2.0,~x_1=2.0$ & 1.0000063854903036 & -6.385469916381226e-6 & $23$ \\ \bottomrule
 	 		\end{tabular}
@@ -408,9 +406,9 @@
 			\begin{tabular}{llSSc} \toprule
 				{metoda} & {początkowe dane} &{$x$} & {$f(x)$} & {liczba iteracji}\\ \midrule
 				bisekcji & $[a,b]=[-0.4,0.7]$ & -4.5776367187399074e-6 & -4.577657673545798e-6 & 16 \\ 
-	 			stycznych & $x_0=0.4$ & -8.878980981560664e-6 & -8.879059818213929e-6 & 4 \\  	
+	 			Newtona & $x_0=0.4$ & -8.878980981560664e-6 & -8.879059818213929e-6 & 4 \\  	
 	 			siecznych & $x_0=-1.0,~x_1=0.3$ & 9.44134425373555e-6 & 9.441255115175028e-6 & 23 \\
-	 			siecznych & $x_0=-0.1,~x_1=0.9$ & 1.10233618098865e-6 & 1.102334965844264e-6 & 6 \\ \bottomrule
+	 			siecznych & $x_0=10,~x_1=20$ & 20.00090808104888 & 4.118752554492817e-8 & 1 \\ \bottomrule
 	 		\end{tabular}
 	 		\caption{$f_2(x)=x\exp(-x)$.}
 			\label{table:4}			
@@ -430,9 +428,10 @@
 				\multicolumn{4}{c}{$f_1$} \\ \hline
 				$1.5$ & 0.9999999984736215 & 1.5263785790864404e-9 & $4$ & 0\\ 
 				$2.5$ & 0.9999934982589662 & 6.501762170207925e-6 & $6$ & 0\\
+				$4.0$ & 0.9999999995278234 & 4.721765201054495e-10 & $21$ & 0\\
 	 			$5.5$ & 0.9999998543788339 & 1.4562117667260566e-7 & $89$ & 0\\
-	 			$7.5$ & {---} & {---} & {---} & 1\\
-	 			$13$ & {---} & {---} & {---} & 2\\ \hline
+	 			$7.5$ & 0.9999994332744109 & 5.667257496622113e-7 & $662$ & 0\\
+	 			$9$ & {---} & {---} & {---} & 2\\ \hline
 	 			\multicolumn{4}{c}{$f_2$} \\ \hline
 	 			$1.0$ & {---} & {---} & {---} & 2 \\ 
 	 			$2.0$ & 14.398662765680003 & 8.036415344217211e-6 & $10$ & 0\\ 
@@ -445,12 +444,11 @@
 		\end{table}	
 
 	\subsection{Wnioski}
-		Zestawienie wyników z Tabel \ref{table:3} oraz \ref{table:4} widocznych powyżej pozwala na wyciągnięcie kilku wniosków. Otóż metoda bisekcji nie ma żadnych ograniczeń związanych z przebiegiem zadanej funkcji oraz jej pochodnej (w przeciwieństwie np. do metody Newtona). Niezależnie od przesunięć przedziału względem poprawnego pierwiastka wylicza wynik w tym samym tempie zależnym od wielkości przedziału (ma to sens, gdyż metoda ta polega na sukcesywnym dzieleniu przedziału na pół aż do momentu uzyskania takiego o satysfakcjonująco małym rozmiarze). Metoda stycznych najlepiej radzi sobie z wyznaczaniem pierwiastka, gdy kluczem jest szybkość --- ze wszystkich badanych metod zwracała ona rozwiązanie po najmniejszej liczbie wykonanych iteracji. Nie oznacza to jednak, że jest najlepszym wyborem w każdej sytuacji --- należy brać pod uwagę jej ograniczenia, nakładane przez konieczność obliczania pochodnej funkcji.  \\
-	
-		Zadanie 
-		TEMP NOTES:	 \\
-		Wnioski dla wyników metody Newtona przy szczególnych argumentach!!!		
-		Dla pierwszego: nie udało się wyliczyć dla $x_0=8$ - wciąż niewystarczająca była obrana liczba iteracji wynosząca $it=10000000000$.
-		Dla drugiego: podanie argumentu początkowego $x_0=1.0$ powodowało zwrócenie błędu --- pochodna bliska wartości $0.0$.
+		Zestawienie wyników z Tabel \ref{table:3}, \ref{table:4} oraz \ref{table:5} widocznych powyżej pozwala na wyciągnięcie kilku wniosków. Otóż metoda bisekcji nie ma żadnych ograniczeń związanych z przebiegiem zadanej funkcji oraz jej pochodnej (w przeciwieństwie np. do metody Newtona). Niezależnie od przesunięć przedziału względem poprawnego pierwiastka wylicza wynik w tym samym tempie zależnym od konkretnej wielkości przedziału (uzasadnia to fakt, iż metoda ta polega na sukcesywnym dzieleniu przedziału na pół). Dodatkowo warto zauważyć, że wybranie takie przedziału, w którym szukany pierwiastek leży dokładnie w jego środku prowadzi do uzyskania dokładnego rozwiązania. Dla $f_1$ metoda jest zbieżna nawet przy przedziałach o dużym rozmiarze, potrzebując jednak wtedy znacznie większej liczby iteracji. W przypadku drugiej z funkcji takie przedziały stanowią już jednak niebezpieczeństwo - działanie zakończyć się może po jednym kroku w wyniku osiągnięcia wartości dostatecznie bliskiej zeru, mimo iż będzie ona bardzo odległa od pierwiastka rzeczywistego. \\
+		 Metoda stycznych najlepiej radzi sobie z wyznaczaniem pierwiastka, gdy kluczem jest szybkość --- ze wszystkich badanych metod zwracała ona rozwiązanie po najmniejszej liczbie wykonanych iteracji. Nie oznacza to jednak, że jest najlepszym wyborem w każdej sytuacji --- należy brać pod uwagę jej ograniczenia, nakładane przez konieczność obliczania pochodnej funkcji. Niebezpieczeństwo stanowi moment, gdy funkcja staje się niemal stała, przez co pochodna osiąga wartość bliską zero. W przypadku $f_1$ przyjmowanie kolejno coraz wyższych wartości początkowych poczynając od $1.0$ sprawia, że gwałtownie wzrasta liczba iteracji potrzebnych do pomyślnego wykonania obliczeń, aż do momentu, w którym metoda staje się rozbieżna (dla $x_0=8.0$ stale niewystarczająca była wartość $maxit$ rzędu $10^{10}$). Z kolei rezultat przekazania do funkcji $f_2$ wartości początkowej równej $1.0$ nie jest niczym zaskakującym --- otrzymywany błąd wynika oczywiście z pochodnej równej zero. Każda wartość przybliżenia początkowego większa niż $1.0$ powoduje uzyskanie rezultatu odległego od faktycznego pierwiastka. \\
+		 W funkcji metody siecznych wybranie zbyt dużych wartości przybliżeń sprawiało, że obliczenia wykonane na bliskich sobie wartościach powodowały szybkie zakończenie działania ze względu na osiągnięcie założonej precyzji. Analogicznie do metody stycznych opisanej wyżej, metoda siecznych dla odległych od faktycznego pierwiastka przybliżeń początkowych nie jest w stanie zwrócić rzeczywistego zera.
+		 
+		
+		
 		
 \end{document}

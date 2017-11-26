@@ -1,7 +1,7 @@
 #Agata Jasionowska - 229726
 
-include("fancy_module.jl")
-using fancy_module
+include("roots_module.jl")
+using roots_module
 
 f(x) = x^2 - 9
 df(x) = 2*x
