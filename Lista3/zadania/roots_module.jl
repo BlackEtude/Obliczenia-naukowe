@@ -68,8 +68,7 @@ function mstycznych(f, pf, x0 :: Float64, delta :: Float64, epsilon :: Float64, 
    value_r = f(r)
    it = 0
    err = 0
-
-   if abs(pf(r)) < epsilon
+   if abs(pf(r)) < eps(Float64)
       err = 2
       return (r, value_r, it, err)
    end
