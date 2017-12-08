@@ -7,33 +7,33 @@ export warNewton
 export naturalna
 export rysujNnfx
 
-using PyPlot
+# using Plots
+using Cairo
+using Fontconfig
+using Gadfly
+using DataFrames
+# plotly()
 
-#= Calc Difference quotients
-    PARAMS
-    @IN x - vector of nodes
-    @IN f - vector of values of function f
+#= calculate difference quotients
+    PARAMS:
+    x - vector of nodes
+    f - vector of values of function f
 
     RETURN:
-    Vector fx - Difference quotients
+    fx - vector of computed difference quotients
 =#
 function ilorazyRoznicowe(x :: Vector{Float64}, f :: Vector{Float64})
-    local fx :: Vector{Float64}
-    local i :: Int
-    local j :: Int
-    local len :: Int
+    m = length(f)
+    fx = Vector{Float64}(m)
 
-    len = length(f)
-    fx = Vector{Float64}(len)
-
-    #Copy
-    for i = 1: len
+    # copy to vector fx
+    for i = 1: m
         fx[i] = f[i]
     end
 
-    #Calc Difference quotients
-    for i = 2: len
-		for j = len: -1: i
+    # calculate difference quotients
+    for i = 2: m
+		for j = m: -1: i
 			fx[j] = (fx[j] - fx[j - 1]) / (x[j] - x[j - i + 1])
 		end
 	end
@@ -41,107 +41,98 @@ function ilorazyRoznicowe(x :: Vector{Float64}, f :: Vector{Float64})
     return fx
 end
 
-#= Calc poly value with Newton form using Horner algorithm
-    PARAMS
-    @IN x - vector with nodes
-    @IN fx - vector with Difference quotients
-    @IN t - poly point where we calc value
-
-    RETURN:
-    poly value
-=#
-function warNewton(x :: Vector{Float64}, fx :: Vector{Float64}, t :: Float64)
-    local val :: Float64
-    local i :: Int
-    local len :: Int
-
-    len = length(fx)
-    val = fx[len]
-
-	for i= len - 1: -1: 1
-		val = fx[i] + (t - x[i]) * val
-	end
-
-    return val
-end
-
-#=
+#= calculate polynomial value with Newton form using Horner algorithm
     PARAMS:
     x - vector with nodes
-    fx - vector with difference quotients
+    fx - vector of difference quotients
+    t - polynomial point where we calc value
 
     RETURN:
-    a - vector with
+    p_val - polynomial value in t
 =#
-function naturalna(x::Vector{Float64}, fx::Vector{Float64})
+function warNewton(x :: Vector{Float64}, fx :: Vector{Float64}, t :: Float64)
+    m = length(fx)
+    nt = fx[m]
+
+	for i = m - 1: -1: 1
+		nt = fx[i] + (t - x[i]) * nt
+	end
+
+    return nt
 end
 
-#= Calc interpolation and draw plot poly anf function
+#= calculate coefficients of interpolating polynomial (natural form)
+    PARAMS:
+    x - vector of nodes
+    fx - vector of difference quotients
+
+    RETURN:
+    a - vector with coefficients
+=#
+function naturalna(x::Vector{Float64}, fx::Vector{Float64})
+    m = length(fx)
+    a = Vector{Float64}(m)
+    a[m] = fx[m]
+
+    for i = m-1: -1: 1
+        a[i] = fx[i]-a[i+1]*x[i]
+        for j = i+1 : m-1
+            a[j] = a[j]-a[j+1]*x[i]
+        end
+    end
+
+    return a
+end
+
+#= calculate interpolation and draw plot with polynomial and function
 
     PARAMS
-    @IN f - function
-    @IN a - min range
-    @IN b- max range
-    @IN n - poly deg
+    f - function
+    a - min range
+    b - max range
+    n - polynomial deg
 =#
 
 function rysujNnfx(f, a :: Float64, b :: Float64, n :: Int)
-    local x :: Vector{Float64} # nodes
-    local fx :: Vector{Float64} # Difference quotients
-    local val :: Vector{Float64} # val of f(xi)
+    x = Vector{Float64}(n + 1)      # nodes
+    y = Vector{Float64}(n + 1)      # value of f(x_i)
+    fx = Vector{Float64}(n + 1)     # difference quotients
 
-    # Real values
-    local r_val :: Vector{Float64}
-    local r_x :: Vector{Float64}
+    mult = 15                       #multiplier for more detailed plot
+    kh = 0.0
+    max = n + 1
+    h = (b - a) / (max - 1)
 
-    #Value from Horner algorithm
-    local h_val :: Vector{Float64}
+    plot_x = Vector{Float64}(mult * (n + 1))
+    plot_y = Vector{Float64}(mult * (n + 1))
+    plot_h = Vector{Float64}(mult * (n + 1))
 
-    local move :: Float64 # points movement
-    local h :: Float64
-
-    local i :: Int
-    local max_loop :: Int
-    local mult :: Int
-
-    #INIT
-    x = Vector{Float64}(n + 1)
-    val = Vector{Float64}(n + 1)
-    fx = Vector{Float64}(n + 1)
-
-    mult = 5
-
-    r_val = Vector{Float64}( mult * (n + 1) )
-    r_x = Vector{Float64}( mult * (n + 1) )
-    h_val = Vector{Float64}( mult * (n + 1) )
-
-
-    move = 0.0
-    max_loop = n + 1
-
-    h = (b - a) / (max_loop - 1)
-
-    for i = 1: max_loop
-        x[i] = a + move
-        val[i] = f(x[i])
-        move += h
+    for i = 1: max
+        x[i] = a + kh
+        y[i] = f(x[i])
+        kh += h
     end
 
-    fx = ilorazyRoznicowe(x, val);
+    fx = ilorazyRoznicowe(x, y);
 
-    move = 0.0
-    max_loop *= mult
-    h = (b - a) / (max_loop - 1)
+    kh = 0.0
+    max *= mult
+    h = (b - a) / (max - 1)
 
-    for i = 1: max_loop
-        r_x[i] = a + move
-        h_val[i] = warNewton(x, fx, r_x[i])
-        r_val[i] = f(r_x[i])
-        move += h
+    for i = 1: max
+        plot_x[i] = a + kh
+        plot_h[i] = warNewton(x, fx, plot_x[i])
+        plot_y[i] = f(plot_x[i])
+        kh += h
     end
 
-    plot(r_x, r_val, linewidth=2.0,color = "blue")
-    plot(r_x, h_val, linewidth=2.0,color = "red")
+    # draw plot
+    df1 = DataFrame(x = plot_x, y = plot_y, Legend = "f(x)")
+    df2 = DataFrame(x = plot_x, y = plot_h, Legend = "w(x)")
+    df = vcat(df1, df2)
+    Gadfly.draw(PNG("plot5$a$b$n.png", 8inch, 5inch, dpi=600), plot(df, x=:x, y=:y, color=:Legend, Geom.line,
+    Geom.line, Coord.Cartesian(xmin = a, xmax = b), Theme(panel_fill = "white"),
+    Scale.discrete_color_manual("red", "blue")))
 
 end
 end
