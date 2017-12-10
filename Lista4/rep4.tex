@@ -13,7 +13,7 @@
   \studentinfo{Agata Jasionowska}{229726}
 }
 
-\title{Laboratorium \ppauza Lista 3}
+\title{Laboratorium \ppauza Lista 4}
 \begin{document}
 
 \maketitle
@@ -79,24 +79,22 @@
 	
 \section{Zadanie 2}
 	\subsection{Opis problemu}
-		Zadanie polegało na implementacji funkcji obliczającej wartość wielomianu interpolacyjnego w postaci Newtona w zadanym punkcie za pomocą uogólnionego algorytmu Hornera.
-		$$p_k(x) = \sum_{i=0}^k c_i \prod_{j=0}^{i-1}(x-x_j).$$
+		Zadanie polegało na implementacji funkcji obliczającej wartość wielomianu interpolacyjnego stopnia $n$ w postaci Newtona $N_n(x)$ w zadanym punkcie za pomocą uogólnionego algorytmu Hornera.
+		$$N_n(x) = \sum_{i=0}^k c_i \prod_{j=0}^{i-1}(x-x_j),$$
+		gdzie $c_i$ jest ilorazem różnicowym stopnia $i$, zaś $x_j$ --- węzłem interpolacji.
 		
-		Metoda Newtona, pomimo iż jest trudniejsza w implementacji niż np metoda Lagrange'a i wymaga większej ilości oddzielnych "kroków", jest dużo lepiej uwarunkowana numerycznie, przez co warta poznania pod kątem stosowania na maszynach cyfrowych. W metodzie najpierw wyznaczane są odpowiednie ilorazy różnicowe, a dopiero później z ich użyciem obliczana jest interpolowana funkcja.
-		
-		Następujący wzór podaje postać Newtona wielomianu $w$:
-		$$w(x)=\sum_{k=0}^n b_kp_k(x),$$
-		dla punktów rzeczywistych $x_0, x_1,\ldots$, wielomianów $p_0, p_1, \ldots$ oraz $w \in \prod_n$.
-		Uogólniony algorytm Hornera prezentuje się następująco:
+		Metoda Newtona, pomimo iż jest trudniejsza w implementacji niż np metoda Lagrange'a i wymaga większej ilości oddzielnych "kroków", jest dużo lepiej uwarunkowana numerycznie, przez co warta poznania pod kątem stosowania na maszynach cyfrowych. W metodzie najpierw wyznaczane są odpowiednie ilorazy różnicowe, a dopiero później z ich użyciem --- interpolowana funkcja.
+				
+	\subsection{Opis rozwiązania}	
+		W rozwiązaniu zadania posłużono się uogólnionym algorytmem Hornera, który prezentuje się następująco:
 		$$\begin{aligned}
 			&w_n(x) := f[x_0, x_1, \ldots, x_n];&\\
 			&w_k(x) := w_{k+1}(x-x_k)+ f[x_0, x_1, \ldots, x_k]	\quad(k=n-1, n-2, \ldots, 0);&\\
 			&N_n(x) = w_0(x).
 		\end{aligned}$$
-				
-	\subsection{Opis rozwiązania}	
-		Na podstawie przedstawionego wyżej algorytmu Hornera możliwe jest napisanie funkcji wyznaczającej wartość wielomianu w punkcie w czasie O(n).
-		Szczegóły przedstawiono w poniżej (Algorytm \ref{algo:2}).
+		
+		Na jego podstawie możliwe było napisanie funkcji wyznaczającej wartość wielomianu w punkcie w czasie O(n).
+		Szczegóły przedstawiono poniżej (Algorytm \ref{algo:2}).
 	
 		\begin{algorithm}[!htbp]
 			\SetKwInOut{Input}{Input}
@@ -140,10 +138,12 @@
 \section{Zadanie 3}
 	\subsection{Opis problemu}
 		Zadanie polegało na implementacji funkcji obliczającej współczynniki postaci naturalnej wielomianu interpolacyjnego w postaci Newtona.
-		
-		
+				
 	\subsection{Opis rozwiązania}
-		Przebieg tej metody następuje zgodnie z Algorytmem \ref{algo:3}.
+		U podstaw rozwiązania problemu wyznaczenia współczynników naturalnych leży stosunkowo prosty mechanizm. Otóż w wielomianie interpolacyjnym współczynnik $a_n$ przy najwyższej potędze argumentu jest równe $c_n$, zaś z tego faktu, posługując się wspomnianym już wcześniej uogólnionym algorytmem Hornera, wynika także, że $w_n$ jest również równy $a_n$. Bazując na uzyskanej równości każdy kolejny krok algorytmu będzie polegał na tworzeniu wartości $a_i$ w oparciu o współczynniki uprzednio policzone (stojące przy wyższych potęgach). 
+		Znalezienie zależności pomiędzy kolejnymi $a_i$ polega na przejściu po wszystkich $w_i$ w dół (poczynając od $i = n$) i modyfikowaniu współczynników tak, aby dla każdego $w_i$ doprowadzić w danym momencie do postaci naturalnej. Nietrudno wyliczyć zmiany wprowadzane w każdym $a_i$, zatem uzyskanie takiej postaci przy każdym przebiegu nie nastręcza problemów. 
+		
+		Działanie tej metody prezentuje Algorytm \ref{algo:3}.
 	
 		\begin{algorithm}[!htbp]
 			\SetKwInOut{Input}{Input}
@@ -155,9 +155,10 @@
 			\SetKwData{X}{x}
 			\SetKwData{FX}{fx}
 			\SetKwData{A}{a}
-			\SetKwData{J}{j}
+			\SetKwData{J}{k}
 			\SetKwData{I}{i}
-			\SetKwData{N}{n}
+			\SetKwData{N}{m}
+			\SetKwData{P}{p}
 			
 			\Input{
 					\begin{tabular}{rcl}
@@ -176,9 +177,11 @@
 		    		\N $\gets$ \LEN{\FX}\;
 		    		\A[\N] $\gets \FX[\N]$\;
 		    		\For{\I $\gets \N-1$ \KwDownTo $1$} {
-		    			$\A[\I] \gets \FX[\I] - \A[\I+1] * \X[\I]$\; 
-		    			\For{$\J \gets \I+1$ \KwDownTo $\N-1$} {
-		    				$\A[\J] \gets \A[\J] - \A[\J+1] * \X[\I]$\; 	
+		    			\P $\gets \A[\I+1] * \X[\I]$\;
+		    			$\A[\I] \gets \FX[\I] - \P$\; 
+		    			\For{$\J \gets \I+1$ \KwTo $\N-1$} {
+		    				\P $\gets \A[\J+1] * \X[\I]$\;
+		    				$\A[\J] \gets \A[\J] - \P$\; 	
 					}	
 		    		}
 		    		\KwRet \A\;
@@ -188,14 +191,12 @@
     			\label{algo:3}
 		\end{algorithm}	
 				
-
 \section{Zadanie 4}
 	\subsection{Opis problemu}
 		Zadanie polegało na implementacji funkcji, która interpoluje zadaną funkcję $f(x)$ w przedziale $[a,b]$ za pomocą wielomianu interpolacyjnego stopnia $n$ w postaci Newtona, a następnie rysuje ten wielomian oraz $f(x)$.
 
-
 	\subsection{Opis rozwiązania}
-		W celu rozwiązania zadania zastosowano metody \texttt{ilorazyRoznicowe} oraz \texttt{warNewton} utworzone w poprzednich zadaniach. Rysowanie wykresów zrealizowano przy pomocy funkcji pakietu \texttt{Gadfly}.
+		Funkcja \texttt{rysujNnfx} rozpoczyna od wyznaczenia węzłów interpolacji oraz wartości, jakie przyjmuje w nich funkcja $f$, a następnie oblicza ilorazy różnicowe (\texttt{ilorazyRoznicowe} z Zadania 1.) dla zadanych węzłów. W celu uzyskania bardziej precyzyjnych wykresów, funkcję jak i wielomian interpolacyjny poddano próbkowaniu --- $25\cdot (n+1)$ równooddalonych punktów, dla których to obliczane są wartości wielomianu z wykorzystaniem funkcji \texttt{warNewton} z Zadania 2. Wygenerowane w ten sposób dane służą narysowaniu finalnych wykresów, które zrealizowano przy pomocy funkcji pakietu \texttt{Gadfly}.
 		
 		Przebieg tej metody następuje zgodnie z Algorytmem \ref{algo:4}.
 		
@@ -206,9 +207,10 @@
     			\SetKwProg{Fun}{Function}{}{}
     			
     			\SetKwFunction{LEN}{length}
-    			\SetKwFunction{Ff}{naturalna}
+    			\SetKwFunction{Ff}{rysujNnfx}
     			\SetKwFunction{iloraz}{ilorazyRoznicowe}{}
     			\SetKwFunction{NEW}{warNewton}{}
+    			\SetKwFunction{DRAW}{rysuj}{}
     			
 			\SetKwData{F}{f}
 			\SetKwData{FX}{fx}
@@ -245,7 +247,7 @@
 		    		\KH $\gets$ 0\;
 		    		\MAX $\gets \N+1$\;
 		    		\H $\gets (\B-\A)/(\MAX-1)$\;
-		    		\MULT $\gets 15$\;
+		    		\MULT $\gets 25$\;
 		    		\For{\I $\gets 1$ \KwTo \MAX} {
 		    			$\X[\I] \gets \A + \KH$\;
 		    			$\Y[\I] \gets \F(\X[\I])$\;	
@@ -261,42 +263,46 @@
 		    			$\PLY[\I] \gets \F(\PLX[\I])$\;	
 		    			\KH $\gets$ \KH + \H\;
 		    		}
+		    		\DRAW{\PLX, \PLY}\;
+		    		\DRAW{\PLX, \PLH}\;
     			}
-   			\caption{Wielomian interpolacyjny Newtona}
+   			\caption{Rysowanie funkcji oraz wielomianu ją interpolującego.}
     			\label{algo:4}
 		\end{algorithm}	
 		
 \section{Zadanie 5}	
 	\subsection{Opis problemu}
-		Celem zadania było przetestowanie utworzonej w Zadaniu 4 funkcji \texttt{rysujNnfx} na następujących przykładach:
+		Celem zadania było przetestowanie utworzonej w Zadaniu 4. funkcji \texttt{rysujNnfx} na następujących przykładach:
 			\begin{enumerate}[(a)]
 				\item $\exp{x},~ [0,1],~ n = 5, 10, 15$,
 				\item $x^2 \sin{x},~ [-1,1],~ n = 5, 10, 15$.
 			\end{enumerate}
 	\subsection{Opis rozwiązania}	
-		
+		Funkcję \texttt{rysujNnfx} wywołano dla powyższych danych.
 		
 	\subsection{Wyniki}
+		Uzyskane wykresy przedstawiono na Rysunkach \ref{fig:1}-\ref{fig:2}.
 			
-		\begin{figure}[!htbp]
+		\begin{figure}[!h]
 			\centering
 			\subfloat[1.][$n=5$]{\includegraphics[width=0.5\textwidth]{zad5/plota1.png}} \hfill
 			\subfloat[2.][$n=10$]{\includegraphics[width=0.5\textwidth]{zad5/plota2.png}} \hfill
 			\subfloat[3.][$n=15$]{\includegraphics[width=0.5\textwidth]{zad5/plota3.png}}
-  			\caption{$\exp{x}$}
+  			\caption{Wykres funkcji $\exp{x}$ oraz jej wielomianu interpolacyjnego o zadanym stopniu.}
   			\label{fig:1}
 		\end{figure}		
 		
-		\begin{figure}[!htbp]
+		\begin{figure}[!h]
 			\centering
 			\subfloat[1.][$n=5$]{\includegraphics[width=0.5\textwidth]{zad5/plotb1.png}} \hfill
 			\subfloat[2.][$n=10$]{\includegraphics[width=0.5\textwidth]{zad5/plotb2.png}} \hfill
 			\subfloat[3.][$n=5$]{\includegraphics[width=0.5\textwidth]{zad5/plotb3.png}}
-  			\caption{$x^2 \cdot \sin{x}$}
+  			\caption{Wykres funkcji $x^2 \cdot \sin{x}$ oraz jej wielomianu interpolacyjnego o zadanym stopniu.}
   			\label{fig:2}
 		\end{figure}	
 		
 	\subsection{Wnioski}
+		Analiza przedstawionych powyżej wykresów pozwala na zaobserwowanie braku rozbieżności w przypadku obu funkcji --- na zadanych przedziałach wielomiany interpolacyjne niemal pokrywają się z odpowiadającą funkcją. Już w przypadku wielomianu o stopniu $n=5$ powstałe różnice są rzędu $10^{-6}$, malejąc wraz ze zwiększaniem stopnia. W tych konkretnych przypadkach zastosowanie równoodległych węzłów interpolacji (na których to użyciu oparto rozwiązanie Zadania 4.) poskutkowało uzyskaniem niezwykle dobrych przybliżeń.
 	
 \section{Zadanie 6}	
 	\subsection{Opis problemu}
@@ -306,31 +312,35 @@
 				\item $\frac{1}{1+x^2},~ [-5,5],~ n = 5, 10, 15$.
 			\end{enumerate}
 	\subsection{Opis rozwiązania}
+		Funkcję \texttt{rysujNnfx} wywołano dla powyższych danych.
 	\subsection{Wyniki}	
-		\begin{figure}[!htbp]
+		Uzyskane wykresy przedstawiono na Rysunkach \ref{fig:3}-\ref{fig:4}.	
+	
+		\begin{figure}[!h]
 			\centering
 			\subfloat[1.][$n=5$]{\includegraphics[width=0.5\textwidth]{zad6/plota1.png}} \hfill
 			\subfloat[2.][$n=10$]{\includegraphics[width=0.5\textwidth]{zad6/plota2.png}} \hfill
 			\subfloat[3.][$n=15$]{\includegraphics[width=0.5\textwidth]{zad6/plota3.png}}
-  			\caption{$|x|$}
+  			\caption{Wykres funkcji $|x|$ oraz jej wielomianu interpolacyjnego o zadanym stopniu.}
   			\label{fig:3}
 		\end{figure}		
 	
 		
-		\begin{figure}[!htbp]
+		\begin{figure}[!h]
 			\centering
 			\subfloat[1.][$n=5$]{\includegraphics[width=0.5\textwidth]{zad6/plotb1.png}} \hfill
 			\subfloat[2.][$n=10$]{\includegraphics[width=0.5\textwidth]{zad6/plotb2.png}} \hfill
 			\subfloat[3.][$n=15$]{\includegraphics[width=0.5\textwidth]{zad6/plotb3.png}}
-  			\caption{$\frac{1}{1+x^2}$}
+  			\caption{Wykres funkcji $\frac{1}{1+x^2}$ oraz jej wielomianu interpolacyjnego o zadanym stopniu.}
   			\label{fig:4}
 		\end{figure}	
 	\subsection{Wnioski}	
-		W przypadku funkcji $|x|$ duże odchylenia spowodowane były tym, iż nie jest ona różniczkowalna.
+		Wyniki uzyskane dla tego zadania pokazują wyraźne rozbieżności pomiędzy wykresem funkcji a jej wielomianami interpolacyjnymi.
+		W przypadku $|x|$ duże odchylenia spowodowane były głównie faktem, iż nie jest ona różniczkowalna.
 		
 		Dla drugiej funkcji zaobserwować można ciekawe zjawisko. Otóż początkowo ze wzrostem liczby węzłów przybliżenie poprawia się, jednak sytuacja ulega zmianie wraz z dalszym zwiększaniem $n$ --- widoczne jest znaczne odchylenie, szczególnie uwydatnione na końcach przedziałów. Taki efekt nosi nazwę zjawiska Rungego i oznacza pogorszenie jakości interpolacji wielomianowej, mimo zwiększenia liczby jej węzłów.
 		Zastosowanie podziału równoległego skutkuje stosunkowo niewielką liczbą punktów na krawędziach przedziału, przez co wielomian interpolacyjny zdecydowanie odbiega tam od właściwej wartości funkcji, zaś stan ten pogarsza się przy zagęszczeniu węzłów równoodległych.
-		Aby zwiększyć dokładność interpolacji należy zmienić rozkład punktów. Problem ten sformułował rosyjski matematyk P.L. Czebyszew, jako problem znalezienia wielomianu, który najlepiej przybliżałby zero na danym przedziale. 
+		Aby zwiększyć dokładność interpolacji należy zatem zmienić rozkład punktów. Taki problem sformułował rosyjski matematyk P.L. Czebyszew, jako problem znalezienia wielomianu, który najlepiej przybliżałby zero na danym przedziale. 
 		
 		W celu uniknięcia zaobserwowanych błędów najlepszym rozwiązaniem byłoby zastosowanie interpolacji z węzłami rozmieszczonymi gęściej w pobliżu miejsc "oscylacji" (np. miejsca zerowe wielomianu Czebyszewa).
 		

@@ -7,12 +7,10 @@ export warNewton
 export naturalna
 export rysujNnfx
 
-# using Plots
 using Cairo
 using Fontconfig
 using Gadfly
 using DataFrames
-# plotly()
 
 #= calculate difference quotients
     PARAMS:
@@ -26,7 +24,6 @@ function ilorazyRoznicowe(x :: Vector{Float64}, f :: Vector{Float64})
     m = length(f)
     fx = Vector{Float64}(m)
 
-    # copy to vector fx
     for i = 1: m
         fx[i] = f[i]
     end
@@ -48,7 +45,7 @@ end
     t - polynomial point where we calc value
 
     RETURN:
-    p_val - polynomial value in t
+    nt - polynomial value in t
 =#
 function warNewton(x :: Vector{Float64}, fx :: Vector{Float64}, t :: Float64)
     m = length(fx)
@@ -75,9 +72,11 @@ function naturalna(x::Vector{Float64}, fx::Vector{Float64})
     a[m] = fx[m]
 
     for i = m-1: -1: 1
-        a[i] = fx[i]-a[i+1]*x[i]
-        for j = i+1 : m-1
-            a[j] = a[j]-a[j+1]*x[i]
+        p = a[i+1] * x[i]
+        a[i] = fx[i] - p
+        for k = i+1 : m-1
+            p = a[k+1] * x[i]
+            a[k] = a[k] - p
         end
     end
 
@@ -92,13 +91,12 @@ end
     b - max range
     n - polynomial deg
 =#
-
 function rysujNnfx(f, a :: Float64, b :: Float64, n :: Int)
     x = Vector{Float64}(n + 1)      # nodes
     y = Vector{Float64}(n + 1)      # value of f(x_i)
     fx = Vector{Float64}(n + 1)     # difference quotients
 
-    mult = 15                       #multiplier for more detailed plot
+    mult = 25                       #multiplier for more detailed plot
     kh = 0.0
     max = n + 1
     h = (b - a) / (max - 1)
@@ -133,6 +131,5 @@ function rysujNnfx(f, a :: Float64, b :: Float64, n :: Int)
     Gadfly.draw(PNG("plot5$a$b$n.png", 8inch, 5inch, dpi=600), plot(df, x=:x, y=:y, color=:Legend, Geom.line,
     Geom.line, Coord.Cartesian(xmin = a, xmax = b), Theme(panel_fill = "white"),
     Scale.discrete_color_manual("red", "blue")))
-
 end
 end
