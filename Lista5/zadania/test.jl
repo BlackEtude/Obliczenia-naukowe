@@ -30,10 +30,13 @@ function lu(A, n, l, b)
     solveLUPivots(A, b, n, l, p)
 end
 
-sleep(2)
-println("n;time;memory")
-test()
-
+# println("n;time;memory")
+# test()
+(A, n, l) = readMatrixFromFile("Dane50000_1_1/A.txt")
+b = readVectorFromFile("Dane50000_1_1/b.txt")
+p = matrixToLUPivots(A, n, l)
+c = solveLUPivots(A, b, n, l, p)
+println(c)
 
 # p = matrixToLUPivots(A, n, l)
 # println(solveLUPivots(A, b, n, l, p))

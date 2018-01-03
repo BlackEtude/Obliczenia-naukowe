@@ -97,8 +97,18 @@ end
     b - computed right side vector
 =#
 function computeRightSideVector(A::SparseMatrixCSC{Float64, Int64}, n::Int64, l::Int64)
-	x = ones(Float64, n)
-	b = transpose(A)*x
+	b = zeros(Float64, n)
+	for i in 1 : n
+		sourceC = convert(Int64, max(l * floor((i-1) / l) - 1, 1))
+		lastC = convert(Int64, min(l + l * floor((i-1) / l), n))
+		for j in sourceC : lastC
+			b[i] += A[j, i]
+		end
+
+		if (i + l > n)
+			b[i] += A[i + l, i]
+		end
+	end
 	return b
 end
 
@@ -183,8 +193,9 @@ function gaussWithPivots(A::SparseMatrixCSC{Float64, Int64}, b::Vector{Float64},
 
 	x = Array{Float64}(n)
 	for i in n : -1 : 1
+		lastColumn = convert(Int64, min(2 * l + l * floor((p[i] + 1) / l), n))
 		sum = 0
-		for j in i + 1 : n
+		for j in i + 1 : lastColumn
 			sum += A[j, p[i]] * x[j]
 		end
 		x[i] = (b[p[i]] - sum) / A[i, p[i]]
@@ -193,7 +204,7 @@ function gaussWithPivots(A::SparseMatrixCSC{Float64, Int64}, b::Vector{Float64},
 end
 
 #=
-	Make LU decomposition for given matrix
+	Performs LU decomposition for given matrix
 	PARAMS:
 	A - sparse matrix
 	n - matrix size
@@ -217,7 +228,7 @@ function matrixToLU(A::SparseMatrixCSC{Float64, Int64}, n::Int64, l::Int64)
 end
 
 #=
-	Make LU decomposition with pivot
+	Performs LU decomposition with pivot
 	PARAMS:
 	A - sparse matrix
 	n - matrix size
@@ -255,7 +266,7 @@ function matrixToLUPivots(A::SparseMatrixCSC{Float64, Int64}, n::Int64, l::Int64
 end
 
 #=
-	Solves system of linear equations from LU decomposition
+	Solves system of linear equations for LU decomposition
 	PARAMS:
 	A - sparse matrix
 	b - right side vector
@@ -289,7 +300,7 @@ function solveLU(A::SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n::Int6
 end
 
 #=
- 	Solves system of linear equations from LU decomposition with pivot
+ 	Solves system of linear equations for LU decomposition with pivot
 	PARAMS:
 	A - sparse matrix
 	b - right side vector
@@ -314,7 +325,8 @@ function solveLUPivots(A::SparseMatrixCSC{Float64, Int64}, b::Vector{Float64}, n
 	x = Array{Float64}(n)
 	for i in n : -1 : 1
 		sum = 0
-		for j in i + 1 : n
+		lastColumn = convert(Int64, min(2 * l + l * floor((p[i] + 1) / l), n))
+		for j in i + 1 : lastColumn
 			sum += A[j, p[i]] * x[j]
 		end
 		x[i] = (z[i] - sum) / A[i, p[i]]

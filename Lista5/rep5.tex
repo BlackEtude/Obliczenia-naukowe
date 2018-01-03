@@ -450,20 +450,20 @@ Złożoność obliczeniowa rozkładu $\mL\mU$ jest równa złożoności obliczen
 	Utworzone metody zostały poddane dalszym testom - uśredniono wyniki czasowe oraz pamięciowe 100 prób dla losowych macierzy identycznego rozmiaru, zaś jako wielkość bloku przyjęto $\ell=4$. Rezultaty widoczne są na wykresach (Rysunek \ref{fig:2} i \ref{fig:3}). Sprawdzono także, jak prezentują się czasy rozwiązywania układów równań dla tej samej macierzy i różnych prawych stron z użyciem metody Gaussa i rozkładu $\mL\mU$ (Rysunek \ref{fig:1} (b)), a także porównano czasy obliczeń metody eliminacji Gaussa z jej standardową wersją (Rysunek \ref{fig:1} (a)).	
 	
 	\begin{figure}[!h]
-		\subfloat[1.][Standardowa eliminacja Gaussa a metoda dostosowana do postaci macierzy]{\includegraphics[width=0.5\textwidth]{plots/time4.png}}
+		\subfloat[1.][Standardowa eliminacja Gaussa a metoda dostosowana do postaci macierzy]{\includegraphics[width=0.5\textwidth]{plots/time4.png}} \hfill
 		\subfloat[1.][Czas rozwiązywania jednego z układów równań dla tej samej macierzy (100 prób)]{\includegraphics[width=0.5\textwidth]{plots/time3.png}} 
 		\caption{}  
 		\label{fig:1}  
 	
 		\subfloat[1.][]{\includegraphics[width=0.5\textwidth]{plots/time1.png}} \hfill
 		\subfloat[2.][]{\includegraphics[width=0.5\textwidth]{plots/time2.png}}
-		\caption{Złożoność czasowa eliminacji Gaussa i rozkładu LU bez (a) oraz z (b) wyborem elementu głównego.}  
+		\caption{Złożoność czasowa eliminacji Gaussa i rozkładu $\mL\mU$ bez (a) oraz z (b) wyborem elementu głównego.}  
 		\label{fig:2} 
 		
 		\centering
 		\subfloat[1.][]{\includegraphics[width=0.5\textwidth]{plots/memory1.png}} \hfill
 		\subfloat[2.][]{\includegraphics[width=0.5\textwidth]{plots/memory2.png}}
-		\caption{Złożoność pamięciowa eliminacji Gaussa i rozkładu LU bez (a) oraz z (b) wyborem elementu głównego.}
+		\caption{Złożoność pamięciowa eliminacji Gaussa i rozkładu $\mL\mU$ bez (a) oraz z (b) wyborem elementu głównego.}
 		\label{fig:3}
 	\end{figure}
 	
