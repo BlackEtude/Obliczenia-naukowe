@@ -146,6 +146,7 @@
 				\SetKwFunction{ge}{gauss}
 				\SetKwFunction{Min}{$\min$}
 	
+				\footnotesize
 			    \Input{\\
 			    \begin{tabular}{rcl}
 		  			{\A} & ---& macierz,\\
@@ -185,6 +186,7 @@
 	    			\KwRet \X\;
 				}
 	\caption{Metoda eliminacji Gaussa.}\label{alg:gauss}
+	\normalsize
 	\end{algorithm} 
 	
 	\subsubsection{Wariant z wyborem elementu głównego}
@@ -234,6 +236,7 @@
 				\SetKwFunction{Min}{$\min$}
 				\SetKwFunction{Swap}{swap}
 	
+				\footnotesize
 			    \Input{\\
 		    \begin{tabular}{rcl}
 	  			{\A} & ---& macierz,\\
@@ -277,6 +280,7 @@
 	    			\KwRet \X\;
 				}
 	\caption{Metoda eliminacji Gaussa z częściowym wyborem elementu głównego.}\label{alg:pivotgauss}
+	\normalsize
 	\end{algorithm} 	
 	
 	\subsection{Rozkład LU}
@@ -333,6 +337,7 @@ Złożoność obliczeniowa rozkładu $\mL\mU$ jest równa złożoności obliczen
 				\SetKwFunction{ge}{solveLU}
 				\SetKwFunction{Min}{$\min$}
 	
+				\footnotesize
 			    \Input{\\
 		    \begin{tabular}{rcl}
 	  			{\A} & ---& macierz przekształcona do postaci, w której elementy na i ponad \\
@@ -370,6 +375,7 @@ Złożoność obliczeniowa rozkładu $\mL\mU$ jest równa złożoności obliczen
 				}
 	\caption{Rozwiązywanie układu równań z rozkładu $\mL\mU$ macierzy.}\label{alg:LU-sol}
 	\end{algorithm} 
+	\normalsize
 	
 	\begin{algorithm}[h]
 			\LinesNumbered
@@ -396,6 +402,7 @@ Złożoność obliczeniowa rozkładu $\mL\mU$ jest równa złożoności obliczen
 			\SetKwFunction{ge}{solveLU\_with\_pivot}
 			\SetKwFunction{Min}{$\min$}
 
+			\footnotesize
 		    \Input{\\
 		    \begin{tabular}{rcl}
 	  			{\A} & ---& macierz przekształcona do postaci, w której elementy na i ponad \\
@@ -432,36 +439,70 @@ Złożoność obliczeniowa rozkładu $\mL\mU$ jest równa złożoności obliczen
 		   		   
     			\KwRet \X\;
 			} \caption{Rozwiązywanie układu równań z rozkładu $\mL\mU$ macierzy z wyborem elementu głównego.}\label{alg:LU-sol-pivot}
+			\normalsize
 \end{algorithm}
+	\normalsize
 
 \section{Wyniki eksperymentów}	
-	Utworzone metody zostały poddane testom - uśredniono wyniki czasowe oraz pamięciowe 100 prób dla losowych macierzy identycznego rozmiaru, zaś jako wielkość bloku przyjęto $\ell=4$. Rezultaty widoczne są na wykresach (Rysunek \ref{fig:1} i \ref{fig:2}). Sprawdzono także, jak prezentują się czasy rozwiązywania układów równań dla tej samej macierzy i różnych prawych stron z użyciem metody Gaussa i rozkładu $\mL\mU$ (Rysunek \ref{fig:3}).
+	Celem potwierdzenia poprawności implementowanych metod wygenerowano takie prawe strony, aby rozwiązaniem układu stał się wektor $(1,\ldots,1)^\mathrm T$. Tabela \ref{table:1} prezentuje błędy względne wyników, uzyskane dla tak przygotowanych układów równań.
+
+
+	Utworzone metody zostały poddane dalszym testom - uśredniono wyniki czasowe oraz pamięciowe 100 prób dla losowych macierzy identycznego rozmiaru, zaś jako wielkość bloku przyjęto $\ell=4$. Rezultaty widoczne są na wykresach (Rysunek \ref{fig:2} i \ref{fig:3}). Sprawdzono także, jak prezentują się czasy rozwiązywania układów równań dla tej samej macierzy i różnych prawych stron z użyciem metody Gaussa i rozkładu $\mL\mU$ (Rysunek \ref{fig:1} (b)), a także porównano czasy obliczeń metody eliminacji Gaussa z jej standardową wersją (Rysunek \ref{fig:1} (a)).	
+	
 	\begin{figure}[!h]
+		\subfloat[1.][Standardowa eliminacja Gaussa a metoda dostosowana do postaci macierzy]{\includegraphics[width=0.5\textwidth]{plots/time4.png}}
+		\subfloat[1.][Czas rozwiązywania jednego z układów równań dla tej samej macierzy (100 prób)]{\includegraphics[width=0.5\textwidth]{plots/time3.png}} 
+		\caption{}  
+		\label{fig:1}  
 	
 		\subfloat[1.][]{\includegraphics[width=0.5\textwidth]{plots/time1.png}} \hfill
 		\subfloat[2.][]{\includegraphics[width=0.5\textwidth]{plots/time2.png}}
 		\caption{Złożoność czasowa eliminacji Gaussa i rozkładu LU bez (a) oraz z (b) wyborem elementu głównego.}  
-		\label{fig:1} 
+		\label{fig:2} 
 		
 		\centering
 		\subfloat[1.][]{\includegraphics[width=0.5\textwidth]{plots/memory1.png}} \hfill
 		\subfloat[2.][]{\includegraphics[width=0.5\textwidth]{plots/memory2.png}}
 		\caption{Złożoność pamięciowa eliminacji Gaussa i rozkładu LU bez (a) oraz z (b) wyborem elementu głównego.}
-		\label{fig:2}
-		
-		\subfloat[1.][]{\includegraphics[width=0.9\textwidth]{plots/time3.png}}
-		\caption{Czas rozwiązywania jednego z układów równań dla tej samej macierzy (100 prób).}  
-		\label{fig:3}  			
+		\label{fig:3}
 	\end{figure}
+	
+	\begin{table}[!hpbt]
+        		\centering
+        		\footnotesize
+			\sisetup{
+				table-number-alignment = right,
+				table-figures-integer = 2,
+				table-figures-decimal = 16,
+				table-figures-exponent = 2
+			}
+			\begin{tabular}{|c|S|S|S|} \toprule
+				{} & \multicolumn{3}{c|}{Rozmiar macierzy}	\\ \midrule
+				{metoda} & {$n=16$} & {$n=10000$} & {$n=50000$} \\ \midrule
+				Gauss & 6.383782391594657e-16 & 1.040205776165185e-13 & 1.932760415264822e-13 \\ 
+	 			Gauss z wyborem & 3.065703529144609e-16 & 5.320922653862027e-16 & 5.145451947624984e-16 \\
+	 			$\mL\mU$ & 8.794620319638098e-16 & 8.968695564214933e-15 & 1.8605011639754745e-13 \\ 
+	 			$\mL\mU$ z wyborem & 2.288783399261118e-16  & 5.186001368086655e-16  & 5.031405319253065e-16  \\ \bottomrule
+	 		\end{tabular}
+	 		\caption{Wartość błędu względnego rozwiązania układu równań z macierzami różnych wielkości dla implementowanych metod.}
+			\label{table:1}
+		\end{table}
+		
 \section{Wnioski}
-	Wykresy na Rysunku \ref{fig:1} pokazują, że implementacja rozwiązania zadanego problemu ma wymaganą liniową złożoność obliczeniową. 
+	Poprawność działania zaimplementowanych metod widoczna jest w Tabeli 1 --- uzyskano bardzo niewielkie wartości błędów względnych, przy czym są one zauważalnie mniejsze są dla algorytmów z częściowym wyborem elementu głównego.
+	
+	Analiza Rysunku \ref{fig:1} (a) pozwala potwierdzić, że przez dostosowanie algorytmu do charakterystycznej postaci macierzy można uzyskać znacznie lepszą złożoność obliczeniową (w tym przypadku udało się uzyskać $O(n)$ z metody o złożoności sześciennej).
+	
+	Wykresy na Rysunku \ref{fig:2} pokazują, że implementacja rozwiązania zadanego problemu ma wymaganą liniową złożoność obliczeniową. 
 	Uzyskane czasy dla metody eliminacji Gaussa pokrywają się z rezultatami przy wykorzystaniu rozkładu $\mL\mU$ oraz analogicznie ma to miejsce dla odpowiadających metod z częściowym wyborem elementu głównego.
 	
 	Zauważalny jest niemal 12-krotnie dłuższy średni czas rozwiązywania metodami z wyborem elementu głównego niż w przypadku ich standardowych wersji. Jednak pomimo tak drastycznej różnicy warto mieć na uwadze, że wykorzystanie tych wolniejszych wariantów niekiedy może być nieuniknione (np. przy próbie rozwiązania układów z zerami na diagonali).
 	
-	Złożoność wykorzystania pamięci widoczna na Rysunku \ref{fig:2} jest liniowa dla funkcji bez wyboru elementu głównego oraz paraboliczna dla ich wolniejszych wersji.
+	Złożoność pamięciowa widoczna na Rysunku \ref{fig:3} jest liniowa dla funkcji bez wyboru elementu głównego oraz kwadratowa dla ich wolniejszych wersji --- wynika to najprawdopodobniej z konieczności wypełniania macierzy powodowanego permutacjami wierszy.
 	
-	Rysunek \ref{fig:3} jasno przedstawia, że wykorzystanie rozkładu $\mL\mU$ jest o wiele efektywniejsze w przypadku rozwiązywania wielu układów równań z tą sama macierzą. Znajduje to swoje potwierdzenie w teorii --- etap eliminacji Gaussa jest wtedy wykonywany jedynie raz, pozwalając na znaczne obniżenie całkowitego czasu rozwiązywania. 
+	Rysunek \ref{fig:1} (b) jasno przedstawia, że wykorzystanie rozkładu $\mL\mU$ jest o wiele efektywniejsze w przypadku rozwiązywania wielu układów równań z tą sama macierzą. Znajduje to swoje teoretyczne potwierdzenie --- etap rozkładu macierzy (eliminacja Gaussa) jest wtedy wykonywany jedynie raz, pozwalając na znaczne obniżenie całkowitego czasu rozwiązywania. 
+	
+	Problem w trafny sposób pokazuje, że algorytmy rozwiązywania układów równań można zmodyfikować w taki sposób, aby, dostosowane do struktury zadanej macierzy, osiągały o wiele lepszą złożoność obliczeniową.
 	
 	
 \end{document}
